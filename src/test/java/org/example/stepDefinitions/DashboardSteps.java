@@ -1,10 +1,11 @@
 package org.example.stepDefinitions;
 
-import io.cucumber.java.Before;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+
+import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
@@ -33,7 +34,7 @@ public class DashboardSteps extends Utils {
     ValidatableResponse valRes;
     static int userId;
 
-    @Before
+    @ Before
     public void dummyApi() throws InterruptedException {
 
         given().when().get("https://dummy.restapiexample.com/api/v1/employees");
@@ -679,6 +680,7 @@ public class DashboardSteps extends Utils {
 
         deactivateUserRes=reqSpec.when().post("/v2/organisationManagement/organisations/"+orgId+"/users/deactivate");
     }
+
 
     @When("Activate a user with orgId {int}")
     public void activate_a_user_with_org_id(Integer orgId) throws IOException {
