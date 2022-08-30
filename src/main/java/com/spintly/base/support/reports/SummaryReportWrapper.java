@@ -136,7 +136,6 @@ public class SummaryReportWrapper {
             }
         } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
     static  Path  newName(Path oldName, String newNameString) throws IOException {
@@ -260,7 +259,7 @@ public class SummaryReportWrapper {
            else
                result = new File(System.getProperty("RESULTMAINDIR") +"/" + PropertyUtility.getResultConfigProperties("MERGED_SUMMARY_FILE"));
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(ReportDesigner.class.getResourceAsStream("/" + "Templates/newsummarytemplate.html")));
+            BufferedReader br = new BufferedReader(new InputStreamReader(ReportDesigner.class.getResourceAsStream("/" + "Templates/summarytemplate.html")));
             String s;
             String totalStr = "";
             String listString = String.join("", summaryData);
@@ -316,7 +315,7 @@ public class SummaryReportWrapper {
             else
                 result = new File(System.getProperty("RESULTMAINDIR")  + "/" + PropertyUtility.getResultConfigProperties("MERGED_COUNT_FILE"));
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(ReportDesigner.class.getResourceAsStream("/" + "Templates/newresultcounttemplate.html")));
+            BufferedReader br = new BufferedReader(new InputStreamReader(ReportDesigner.class.getResourceAsStream("/" + "Templates/resultcounttemplate.html")));
             String s;
             String totalStr = "";
             String listString = String.join("", summaryData);

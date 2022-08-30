@@ -21,6 +21,7 @@ public class PropertyUtility {
 
     public static void loadProperties() {
         properties = new Properties();
+        System.out.println(CONFIG_PROPERY_FILE);
         try (InputStream inputStream = PropertyUtility.class.getResourceAsStream(CONFIG_PROPERY_FILE)) {
             properties.load(inputStream);
             if(!environment.equals("") && !targetPlatform.equals("")){properties.setProperty("target.platform", targetPlatform);properties.setProperty("environment", environment);}

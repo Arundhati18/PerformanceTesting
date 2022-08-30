@@ -1,6 +1,8 @@
 package org.example.stepDefinitions;
 
 
+import com.spintly.base.core.DriverBase;
+import com.spintly.base.managers.ResultManager;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -11,17 +13,15 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.apiguardian.api.API;
 import org.example.runner.RunSuite;
 import org.example.utility.Utils;
 import org.hamcrest.Matchers;
-import org.junit.After;
-import org.junit.runner.RunWith;
+
 
 import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
-import static org.junit.Assert.assertEquals;
+
 
 
 public class DashboardSteps extends Utils {
@@ -33,23 +33,15 @@ public class DashboardSteps extends Utils {
             deactivateUserRes, activateUserRes;
     ValidatableResponse valRes;
     static int userId;
+    DriverBase driverBase = new DriverBase();
 
     @ Before
     public void dummyApi() throws InterruptedException {
-
         given().when().get("https://dummy.restapiexample.com/api/v1/employees");
     }
 
 
-    //@After
-    public void afterTest() throws InterruptedException {
-        for (int i = 1; i <= 5; i++) {
-            Thread.sleep(60000);
 
-            System.out.println("Run End!");
-            new RunSuite();
-        }
-    }
     @Given("Get {string}")
     public void get_(String str1) throws IOException {
         // Write code here that turns the phrase above into concrete actions
@@ -60,7 +52,7 @@ public class DashboardSteps extends Utils {
     @Then("the API call got success with status code {int}")
     public void the_api_call_got_successwith_status_code(int expectedStatusCode) {
         // Write code here that turns the phrase above into concrete actions
-        assertEquals(expectedStatusCode,response.getStatusCode());
+        driverBase.testStepAssert.isEquals(expectedStatusCode,response.getStatusCode(),"","","");
     }
 
 
@@ -76,7 +68,7 @@ public class DashboardSteps extends Utils {
     @Then("{string} in response is {string}")
     public void in_response_is(String keyValue, String expectedValue) {
         // Write code here that turns the phrase above into concrete actions
-        assertEquals(expectedValue,getJsonPath(response,keyValue));
+        driverBase.testStepAssert.isEquals(expectedValue,getJsonPath(response,keyValue),"","","");
     }
 
 
@@ -85,6 +77,7 @@ public class DashboardSteps extends Utils {
         // Write code here that turns the phrase above into concrete actions
         reqSpec=given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
                 .body("{}");
+        ResultManager.log("","",false);
     }
 
     @When("user calls {string} with orgId {int}")
@@ -204,7 +197,7 @@ public class DashboardSteps extends Utils {
                 break;
         }
 
-
+        ResultManager.log("","",false);
     }
 
     @Given("Get Access history with {string}")
@@ -482,39 +475,39 @@ public class DashboardSteps extends Utils {
 
         switch (request){
             case "accessHistory":{
-                assertEquals(expectedStatusCode,accHistoryRes.getStatusCode());
+                driverBase.testStepAssert.isEquals(expectedStatusCode,accHistoryRes.getStatusCode(),"","","");
                 break;
             }
             case "deleteResponse":{
-                assertEquals(expectedStatusCode,deleteRes.getStatusCode());
+                driverBase.testStepAssert.isEquals(expectedStatusCode,deleteRes.getStatusCode(),"","","");
                 break;
             }
             case "userDetails":{
-                assertEquals(expectedStatusCode,detailsUserRes.getStatusCode());
+                driverBase.testStepAssert.isEquals(expectedStatusCode,detailsUserRes.getStatusCode(),"","","");
                 break;
             }
             case "userShiftDetails":{
-                assertEquals(expectedStatusCode,shiftDetailsUserRes.getStatusCode());
+                driverBase.testStepAssert.isEquals(expectedStatusCode,shiftDetailsUserRes.getStatusCode(),"","","");
                 break;
             }
             case "editUser":{
-                assertEquals(expectedStatusCode,editUserRes.getStatusCode());
+                driverBase.testStepAssert.isEquals(expectedStatusCode,editUserRes.getStatusCode(),"","","");
                 break;
             }
             case "getPermission":{
-                assertEquals(expectedStatusCode,getPermissionRes.getStatusCode());
+                driverBase.testStepAssert.isEquals(expectedStatusCode,getPermissionRes.getStatusCode(),"","","");
                 break;
             }
             case "patchPermission":{
-                assertEquals(expectedStatusCode,patchPermissionRes.getStatusCode());
+                driverBase.testStepAssert.isEquals(expectedStatusCode,patchPermissionRes.getStatusCode(),"","","");
                 break;
             }
             case "deactivateUser":{
-                assertEquals(expectedStatusCode,deactivateUserRes.getStatusCode());
+                driverBase.testStepAssert.isEquals(expectedStatusCode,deactivateUserRes.getStatusCode(),"","","");
                 break;
             }
             case "activateUser":{
-                assertEquals(expectedStatusCode,activateUserRes.getStatusCode());
+                driverBase.testStepAssert.isEquals(expectedStatusCode,activateUserRes.getStatusCode(),"","","");
                 break;
             }
         }
@@ -524,39 +517,39 @@ public class DashboardSteps extends Utils {
     public void in_response_is_for(String keyValue, String expectedValue, String request){
         switch (request) {
             case "accessHistory": {
-                assertEquals(expectedValue,getJsonPath(accHistoryRes,keyValue));
+                driverBase.testStepAssert.isEquals(expectedValue,getJsonPath(accHistoryRes,keyValue),"","","");
                 break;
             }
             case "deleteResponse":{
-                assertEquals(expectedValue,getJsonPath(deleteRes,keyValue));
+                driverBase.testStepAssert.isEquals(expectedValue,getJsonPath(deleteRes,keyValue),"","","");
                 break;
             }
             case "userDetails":{
-                assertEquals(expectedValue,getJsonPath(detailsUserRes,keyValue));
+                driverBase.testStepAssert.isEquals(expectedValue,getJsonPath(detailsUserRes,keyValue),"","","");
                 break;
             }
             case "userShiftDetails":{
-                assertEquals(expectedValue,getJsonPath(shiftDetailsUserRes,keyValue));
+                driverBase.testStepAssert.isEquals(expectedValue,getJsonPath(shiftDetailsUserRes,keyValue),"","","");
                 break;
             }
             case "editUser":{
-                assertEquals(expectedValue,getJsonPath(editUserRes,keyValue));
+                driverBase.testStepAssert.isEquals(expectedValue,getJsonPath(editUserRes,keyValue),"","","");
                 break;
             }
             case "getPermission": {
-                assertEquals(expectedValue,getJsonPath(getPermissionRes,keyValue));
+                driverBase.testStepAssert.isEquals(expectedValue,getJsonPath(getPermissionRes,keyValue),"","","");
                 break;
             }
             case "patchPermission":{
-                assertEquals(expectedValue,getJsonPath(patchPermissionRes,keyValue));
+                driverBase.testStepAssert.isEquals(expectedValue,getJsonPath(patchPermissionRes,keyValue),"","","");
                 break;
             }
             case "deactivateUser":{
-                assertEquals(expectedValue,getJsonPath(deactivateUserRes,keyValue));
+                driverBase.testStepAssert.isEquals(expectedValue,getJsonPath(deactivateUserRes,keyValue),"","","");
                 break;
             }
             case "activateUser":{
-                assertEquals(expectedValue,getJsonPath(activateUserRes,keyValue));
+                driverBase.testStepAssert.isEquals(expectedValue,getJsonPath(activateUserRes,keyValue),"","","");
                 break;
             }
         }

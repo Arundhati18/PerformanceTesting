@@ -18,7 +18,6 @@ public class ReportBase extends DriverBase{
 		this.detailsFolderPath=FileUtility.getSuiteResource(PropertyUtility.getResultConfigProperties("RESULT_DIRECTORY"),resultFolder  );
 		System.setProperty("RESULTDIR",resultFolder);
 		System.setProperty("RESULTMAINDIR",PropertyUtility.getResultConfigProperties("RESULT_DIRECTORY"));
-		this.screenshotFolder=this.detailsFolderPath+PropertyUtility.getResultConfigProperties("SCREENSHOTS_DIRECTORY");
 		this.miscFolder=this.detailsFolderPath+PropertyUtility.getResultConfigProperties("MISC_DIRECTORY");
 		this.logFolder=this.detailsFolderPath+PropertyUtility.getResultConfigProperties("LOG_DIRECTORY");
 		reportDesigner= new ReportDesigner(this.detailsFolderPath,this.screenshotFolder,this.miscFolder,this.logFolder);
@@ -30,7 +29,6 @@ public class ReportBase extends DriverBase{
 	private void createInitialFolder() throws Exception{
 		try {
 			FileUtility.makeFolder(this.detailsFolderPath);
-			FileUtility.makeFolder(this.screenshotFolder);
 			FileUtility.makeFolder(this.miscFolder);
 			FileUtility.copyFile(FileUtility.getSuiteResource(PropertyUtility.getResultConfigProperties("LOGO_DIRECTORY"), PropertyUtility.getResultConfigProperties("LOGO_FILENAME")),this.miscFolder+"/"+PropertyUtility.getResultConfigProperties("LOGO_FILENAME"));
 			FileUtility.copyFile(FileUtility.getSuiteResource(PropertyUtility.getResultConfigProperties("LOGO_DIRECTORY"), PropertyUtility.getResultConfigProperties("DOWNLOAD_LOGO")),this.miscFolder+"/"+PropertyUtility.getResultConfigProperties("DOWNLOAD_LOGO"));

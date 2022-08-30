@@ -34,7 +34,7 @@ public class TestAssert {
         }
     }
 
-    public void isEquals(String actualValue, Object expectedValue, String expectedText, String sucessMessage, String errorMessage) {
+    public void isEquals(Object actualValue, Object expectedValue, String expectedText, String sucessMessage, String errorMessage) {
         try {
             Assert.assertEquals(expectedValue, actualValue);
             ResultManager.pass(expectedText, sucessMessage, true);

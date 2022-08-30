@@ -64,16 +64,7 @@ public class ResultManager extends DriverBase {
     }
 
     public static Map<String, String> getDataMap(String name, String expected, String actual, String logType, Boolean... screenDump) {
-        ScreenshotUtility screenshotManager = new ScreenshotUtility();
         Map<String, String> data = new HashMap<String, String>();
-        try {
-            if (screenDump.length > 0) {
-                if (screenDump[0] == true)
-                    data.put("screenDump", PropertyUtility.getResultConfigProperties("SCREENSHOTS_DIRECTORY") + "/" + screenshotManager.screenshot(reportBase.getTestScreenShotFolderName()));
-            }
-        } catch (IOException e) {
-            logger.error("Error while capturing/copying screenshot" + e.getMessage());
-        }
         data.put("name", name);
         data.put("type", logType);
         data.put("expected", expected);

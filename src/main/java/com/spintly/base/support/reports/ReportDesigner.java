@@ -74,7 +74,7 @@ public class ReportDesigner extends DriverBase {
 
 			File result;
 			BufferedReader br ;
-			br = new BufferedReader(new InputStreamReader(ReportDesigner.class.getResourceAsStream("/" + "Templates/newresulttemplate.html")));
+			br = new BufferedReader(new InputStreamReader(ReportDesigner.class.getResourceAsStream("/" + "Templates/resulttemplate.html")));
 
 			if(System.getProperty("Parallel").toString().equals("true")) {
 				result = new File(detailsFolderPath + this.featureName.replace(".feature", "").replace(" ", "") + ".html");
@@ -159,7 +159,7 @@ public class ReportDesigner extends DriverBase {
 		testStepStart = testStepEnd == null ? startTime : testStepEnd;
 		testStepEnd = new Date();
 		int stepCount= testStepCount+1;
-		String reason = screenDumpLink((String) eventData.get("actual"), eventData);
+		String reason = (String) eventData.get("actual");
 		String str = "<tr>";
 
 		str = str + "<td>"+stepCount+".</td>";
@@ -194,35 +194,6 @@ public class ReportDesigner extends DriverBase {
 			stackTraceArray.add(str);
 		}
 		else {stackTraceArray.add("");}
-	}
-
-	private String screenDumpLink(String message, Map<String, String> eventData) {
-		String sDumpFile;
-		try {
-			sDumpFile = (String) (eventData.get("screenDump"));
-
-		} catch (Exception e) {
-
-			return message;
-		}
-
-		if (sDumpFile == null) {
-			return message;
-		}
-
-
-		String path = sDumpFile.replace('\\', '/');
-		logger.detail("Screenshot Path :  "+ path );
-		String str  = "<div style=\"color:red; font-weight: bold\" class=\""+uniqueId+"\">\n" +
-				"                                <img alt=\""+this.mainFolderName+"\"class=\"screenshots\" src=\""+downloadPath+"\" onclick=\"showScreeshot(this)\"> \"View screenshot here\"\n" +
-				"                            </div>\n" +
-				"                            <div class=\"modal"+uniqueId+"\" style=\"display: none; position: fixed; z-index: 1; padding-top: 100px; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9);\">\n" +
-				"                                <button id=\""+uniqueId+"\" class=\"close\" onclick=\"closeScreenshot(this)\">x</button>\n" +
-				"                                <img class=\"modal-content screenshots\" src=\""+path+"\" alt=\""+this.mainFolderName+"\" style=\"width:1000px\">\n" +
-				"                                <div class=\"caption\">"+path+"</div>\n" +
-				"                            </div>";
-
-		return message +str;
 	}
 
 	public void endTestCase(boolean isFailed, boolean isSkipped) {
