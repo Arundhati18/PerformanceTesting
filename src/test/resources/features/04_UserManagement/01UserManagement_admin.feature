@@ -171,7 +171,7 @@ Feature: User Management for Admin
     When user calls "addUser" with orgId 560
     And verify user "deactivateUser1" is added in 560
     And Deactivate a user with orgId 560
-    #And Activate a user with orgId 560
+    And Activate a user with orgId 560
     And Delete user with payload with orgId 560
     And the API call got success with status code 200 for "deactivateUser"
     And "type" in response is "success" for "deactivateUser"
@@ -189,7 +189,6 @@ Feature: User Management for Admin
     And the API call got success with status code 200 for "activateUser"
     And "type" in response is "success" for "activateUser"
     And response time is less than 500 ms for "activateUser"
-
 
 
   @user

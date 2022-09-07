@@ -1,6 +1,7 @@
 package com.spintly.base.managers;
 
 import com.spintly.base.support.logger.LogUtility;
+import org.hamcrest.Matchers;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
@@ -36,12 +37,24 @@ public class TestAssert {
 
     public void isEquals(Object actualValue, Object expectedValue, String expectedText, String sucessMessage, String errorMessage) {
         try {
-            Assert.assertEquals(expectedValue, actualValue);
+            Assert.assertEquals(actualValue,expectedValue);
             ResultManager.pass(expectedText, sucessMessage, true);
 
         } catch (AssertionError e) {
             // logger.detail("Actual Value : "+actualValue+" Expected Value : "+expectedValue);
             ResultManager.error(expectedText, errorMessage, e.getMessage(), true);
+        }
+        logger.detail("Actual Value : " + actualValue + " | Expected Value : " + expectedValue);
+    }
+
+    public void isLess(long actualValue, long expectedValue, String expectedText, String sucessMessage, String errorMessage) {
+        try {
+            Assert.assertTrue(actualValue<expectedValue);
+            ResultManager.pass(expectedText, sucessMessage, true);
+
+        } catch (AssertionError e) {
+            // logger.detail("Actual Value : "+actualValue+" Expected Value : "+expectedValue);
+            ResultManager.fail(expectedText, errorMessage,  true);
         }
         logger.detail("Actual Value : " + actualValue + " | Expected Value : " + expectedValue);
     }

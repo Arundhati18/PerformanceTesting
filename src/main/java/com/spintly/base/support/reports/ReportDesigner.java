@@ -286,11 +286,14 @@ public class ReportDesigner extends DriverBase {
 		long diff = d2.getTime() - d1.getTime();
 
 		long diffSeconds = diff / 1000 % 60;
+		//long diffMilliSeconds=diffSeconds*1000;
 		long diffMinutes = diff / (60 * 1000) % 60;
 		long diffHours = diff / (60 * 60 * 1000) % 24;
 		try {
 			String diffTime = cal(String.valueOf(diffHours)) + ":" + cal(String.valueOf(diffMinutes)) + ":"
 					+ cal(String.valueOf(diffSeconds));
+
+			//String diffTime=cal(String.valueOf(diffMilliSeconds));
 			return diffTime;
 		} catch (Exception e) {
 			logger.handleError("Error in calculating duration in HTML report", e);
