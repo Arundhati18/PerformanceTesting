@@ -215,14 +215,14 @@ public class ReportDesigner extends DriverBase {
 				"                    <p>"+tcName+"</p>\n" +
 				"                    <p>Tags : "+tags+"</p>\n" +
 				"  					 <p class=\"ReqURL\">"+(String) variableContext.getScenarioContext("ReqURL")+"</p>"+
-				"                </td>" + status + str+"</td><td class=\""+uniqueId+"\"><button type=\"button\" class=\"btn btn-primary\" onclick=\"showSteps(this)\">Show Steps</button></td></tr>";
+				"                    </td>"+"<td style=\"font-weight:bold\";>"+(String) variableContext.getScenarioContext("METHOD")+"</td>" + status + str+"</td><td class=\""+uniqueId+"\"><button type=\"button\" class=\"btn btn-primary\" onclick=\"showSteps(this)\">Show Steps</button></td></tr>";
 			summaryArray.add(str1);
 		}
 		else {
 			//check testng assert and local flag as well
 			if (!isFailed && !isTcVerifyFailed) {
 				status = "<td class=\"status\">\n" +"<div class=\"indicator\" style=\"background-color: #54b33c94;\">Pass</div>\n" + "</td>";
-				str =  "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms"+  "</td><td>" + "-";
+				str =  "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms"+"</td><td>"+"-";
 				passed++;
 			} else {
 				try {
@@ -242,7 +242,7 @@ public class ReportDesigner extends DriverBase {
 					status = "<td class=\"status\">\n" +
 							"                    <div class=\"indicator\" style=\"background-color: skyblue;\">Inconclusive</div>\n" +
 							"                </td>";
-					str = "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms" + "</td> <td>" + "-";
+					str = "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms" + "</td><td>" + "-";
 				} else if (((String) VariableContext.getObject().getScenarioContext("PASS_WITH_OBSERVATIONS")).equals("TRUE")) {
 					passed++;
 					status = "<td class=\"status\">\n" +
@@ -266,9 +266,9 @@ public class ReportDesigner extends DriverBase {
 
 			str1 = "<tr><td class=\"casenumber\">"+(testCases-1)+".</td>"+"<td>\n" +
 					"                    <p>"+tcName+"</p>\n" +
-					"                    <p>Tags : "+tags+
+					"                    <p>Tags : "+tags+"</p>"+
 					"					 <p class=\"ReqURL\">"+(String) variableContext.getScenarioContext("ReqURL")+"</p>"+
-					"                </td>" + status + str+"</td><td class=\""+uniqueId+"\"><button type=\"button\" class=\"btn btn-primary\" onclick=\"showSteps(this)\">Show Steps</button></td></tr>";
+					"                </td>"+"<td style=\"font-weight:bold\";>"+(String) variableContext.getScenarioContext("METHOD")+"</td>" + status + str+"</td><td class=\""+uniqueId+"\"><button type=\"button\" class=\"btn btn-primary\" onclick=\"showSteps(this)\">Show Steps</button></td></tr>";
 			summaryArray.add(str1);
 		}
 

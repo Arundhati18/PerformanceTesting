@@ -109,8 +109,12 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().get(path);
 
+                variableContext.setScenarioContext("METHOD","GET");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
@@ -118,6 +122,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/organisationManagement/organisations/" + orgId + "/statistics";
                 response = reqSpec
                         .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
@@ -129,6 +135,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().post(path);
 
+                variableContext.setScenarioContext("METHOD","POST");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
@@ -138,6 +146,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/attendanceManagement/organisations/" + orgId + "/dashboard-data/forAdmin";
                 response = reqSpec
                         .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
@@ -149,6 +159,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().post(path);
 
+                variableContext.setScenarioContext("METHOD","POST");
+
                 ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
                         utils.getGlobalValue("saamsApiURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
@@ -158,6 +170,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/organisationManagement/users/profile";
                 response = reqSpec
                         .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
@@ -169,6 +183,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().post(path);
 
+                variableContext.setScenarioContext("METHOD","POST");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
@@ -178,6 +194,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/activityLogs/organisations/" + orgId + "/audits";
                 response = reqSpec
                         .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
 
                 ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
                         utils.getGlobalValue("saamsApiURL") + path, false);
@@ -189,6 +207,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().post(path);
 
+                variableContext.setScenarioContext("METHOD","POST");
+
                 ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
                         utils.getGlobalValue("saamsApiURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
@@ -198,6 +218,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/activityLogs/organisations/" + orgId + "/activities/pdf";
                 response = reqSpec
                         .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
 
                 ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
                         utils.getGlobalValue("saamsApiURL") + path, false);
@@ -209,6 +231,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().post(path);
 
+                variableContext.setScenarioContext("METHOD","POST");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
@@ -218,6 +242,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/organisationManagement/organisations/" + orgId + "/fireAlarm/reset";
                 response = reqSpec
                         .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
@@ -229,6 +255,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().post(path);
 
+                variableContext.setScenarioContext("METHOD","POST");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
@@ -238,6 +266,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/organisationManagement/organisations/" + orgId + "/users/list";
                 response = reqSpec
                         .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
@@ -249,6 +279,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().get(path);
 
+                variableContext.setScenarioContext("METHOD","GET");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
@@ -258,6 +290,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/organisationManagement/organisations/" + orgId + "/cards/list";
                 response = reqSpec
                         .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
@@ -269,6 +303,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().post(path);
 
+                variableContext.setScenarioContext("METHOD","POST");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
@@ -278,6 +314,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/organisationManagement/organisations/" + orgId + "/cards/list/pdf";
                 response = reqSpec
                         .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
@@ -289,6 +327,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().post(path);
 
+                variableContext.setScenarioContext("METHOD","POST");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
@@ -298,6 +338,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/organisationManagement/organisations/" + orgId + "/users/getPdf";
                 response = reqSpec
                         .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
@@ -309,6 +351,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().post(path);
 
+                variableContext.setScenarioContext("METHOD","POST");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
@@ -318,6 +362,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/organisationManagement/v2/organisations/" + orgId + "/devices";
                 response = reqSpec
                         .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
@@ -472,6 +518,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().get(path);
 
+                variableContext.setScenarioContext("METHOD","GET");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
@@ -481,6 +529,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/organisationManagement/organisations/" + orgId + "/accessPoint/" + id + "/users/permissions";
                 response = reqSpec
                         .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
@@ -492,6 +542,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().patch(path);
 
+                variableContext.setScenarioContext("METHOD","PATCH");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
@@ -502,6 +554,8 @@ public class DashboardSteps extends DriverBase {
                 response = reqSpec
                         .when().post(path);
 
+                variableContext.setScenarioContext("METHOD","POST");
+
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
@@ -511,6 +565,8 @@ public class DashboardSteps extends DriverBase {
                 path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + id + "/unassignCard";
                 response = reqSpec
                         .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
