@@ -34,7 +34,7 @@ Feature: User Management for Manager
       |no filter|
       |filter   |
 
-  @umam4
+  @umm4
   Scenario Outline: Download pdf of Active User List
     Given Download "pdf" List of "active" users with "<payload>"
     When user calls "PdfUserList" with orgId 10

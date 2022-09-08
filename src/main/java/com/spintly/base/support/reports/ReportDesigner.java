@@ -126,10 +126,10 @@ public class ReportDesigner extends DriverBase {
 	public void addTestCaseEntryInDetailsTable(String name, String featureName) {
 		uniqueId = RandomDataGenerator.getData("{RANDOM_STRING}",10);
 		name= name.replace(",","");
-
+		String URL = (String) variableContext.getScenarioContext("ReqURL");
 		String str = "<div class=\"table"+uniqueId+" testcaselistname\" style=\"display: none;\">\n" +
 				"            <p class=\"tagname\">"+name+"</p>\n" +
-				"            <p class=\"taglist\">Tags : "+tags+"</p>\n" +
+				"            <p class=\"taglist\">Tags : "+tags+"<br>"+(String) variableContext.getScenarioContext("ReqURL")+" </p>\n" +
 				"        </div>\n" +
 				"        <div class=\"scrolling-div table"+uniqueId+"\">\n" +
 				"            <table class=\"step-details table"+uniqueId+"\" style=\"display: none;\">\n" +
@@ -210,19 +210,19 @@ public class ReportDesigner extends DriverBase {
 			status = "<td class=\"status\">\n" +
 					"                    <div class=\"indicator\" style=\"background-color: skyblue;\">Skipped</div>\n" +
 					"                </td>";
-			str = "<td>" + this.startTime + "</td> <td>" + this.testFinish + "</td> <td>" + calculateDuration(this.testFinish, this.startTime);
+			str = "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms" + "</td> <td>" + "-";
 			str1 = "<tr><td class=\"casenumber\">"+(testCases-1)+".</td>"+"<td>\n" +
 				"                    <p>"+tcName+"</p>\n" +
 				"                    <p>Tags : "+tags+"</p>\n" +
+				"  					 <p class=\"ReqURL\">"+(String) variableContext.getScenarioContext("ReqURL")+"</p>"+
 				"                </td>" + status + str+"</td><td class=\""+uniqueId+"\"><button type=\"button\" class=\"btn btn-primary\" onclick=\"showSteps(this)\">Show Steps</button></td></tr>";
 			summaryArray.add(str1);
 		}
 		else {
 			//check testng assert and local flag as well
 			if (!isFailed && !isTcVerifyFailed) {
-				status = "<td class=\"status\">\n" +
-						"                    <div class=\"indicator\" style=\"background-color: #54b33c94;\">Pass</div>\n" +
-						"                </td>";
+				status = "<td class=\"status\">\n" +"<div class=\"indicator\" style=\"background-color: #54b33c94;\">Pass</div>\n" + "</td>";
+				str =  "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms"+  "</td><td>" + "-";
 				passed++;
 			} else {
 				try {
@@ -242,29 +242,32 @@ public class ReportDesigner extends DriverBase {
 					status = "<td class=\"status\">\n" +
 							"                    <div class=\"indicator\" style=\"background-color: skyblue;\">Inconclusive</div>\n" +
 							"                </td>";
+					str = "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms" + "</td> <td>" + "-";
 				} else if (((String) VariableContext.getObject().getScenarioContext("PASS_WITH_OBSERVATIONS")).equals("TRUE")) {
 					passed++;
 					status = "<td class=\"status\">\n" +
 							"                    <div class=\"indicator\" style=\"background-color: orange;\">Observations</div>\n" +
 							"                </td>";
+					str = "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms" + "</td> <td>" + "-";
 				} else {
 					failed++;
 					status = "<td class=\"status\">\n" +
 							"                    <div class=\"indicator\" style=\"background-color: red;color:white;font-weight:700;\">Fail</div>\n" +
 							"                </td>";
+					str = "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms"+  "</td><td>" + reason;
 				}
+
 				detailsArray.add(st);
 				String str2 = "<td>*</td><td align='left'>" + tcName + "</td>" + status + "<td align='left'>" + reason + "</td>";
 				failureArray.add(str2);
 				failureArray.addAll(stackTraceArray);
 
 			}
-			str =  "<td>" + this.startTime
-					+ "</td><td>" + this.testFinish + "</td><td>" + calculateDuration(this.testFinish, this.startTime);
 
 			str1 = "<tr><td class=\"casenumber\">"+(testCases-1)+".</td>"+"<td>\n" +
 					"                    <p>"+tcName+"</p>\n" +
-					"                    <p>Tags : "+tags+"</p>\n" +
+					"                    <p>Tags : "+tags+
+					"					 <p class=\"ReqURL\">"+(String) variableContext.getScenarioContext("ReqURL")+"</p>"+
 					"                </td>" + status + str+"</td><td class=\""+uniqueId+"\"><button type=\"button\" class=\"btn btn-primary\" onclick=\"showSteps(this)\">Show Steps</button></td></tr>";
 			summaryArray.add(str1);
 		}

@@ -2,6 +2,7 @@ package org.example.stepDefinitions;
 
 
 import com.spintly.base.core.DriverBase;
+import com.spintly.base.core.VariableContext;
 import com.spintly.base.managers.ResultManager;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
@@ -24,14 +25,16 @@ import static io.restassured.RestAssured.given;
 
 
 
-public class DashboardSteps extends Utils {
+public class DashboardSteps extends DriverBase {
 
     RequestSpecification reqSpec;
+    Utils utils = new Utils();
     ResponseSpecification resSpec;
     Response response, deleteRes, accHistoryRes, detailsUserRes,
             shiftDetailsUserRes, editUserRes, getPermissionRes, patchPermissionRes,
             deactivateUserRes, activateUserRes;
     ValidatableResponse valRes;
+
     static int userId;
 
     String reqBody = null, path = null;
@@ -46,7 +49,7 @@ public class DashboardSteps extends Utils {
     @Given("Get {string}")
     public void get_(String str1) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         ResultManager.log("-", "-", false);
     }
@@ -69,16 +72,18 @@ public class DashboardSteps extends Utils {
         //System.out.printf(response.time() + "\n");
         //ResultManager.log("Less than 500ms", response.getTime() + "ms", false);
 
+        Long responseTime = response.time();
+        variableContext.setScenarioContext("ResponseTime",String.valueOf(responseTime));
+
         driverBase.testStepAssert.isLess(response.time(),expectedResponseTime ,
                 "Response time: Less than "+expectedResponseTime, "Response time: "+response.time(), "Error! Response time: " + response.time());
-
     }
 
 
     @Then("{string} in response is {string}")
     public void in_response_is(String keyValue, String expectedValue) {
         // Write code here that turns the phrase above into concrete actions
-        driverBase.testStepAssert.isEquals(getJsonPath(response, keyValue), expectedValue,
+        driverBase.testStepAssert.isEquals(utils.getJsonPath(response, keyValue), expectedValue,
                 "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!"+response.asString());
     }
 
@@ -88,7 +93,7 @@ public class DashboardSteps extends Utils {
         // Write code here that turns the phrase above into concrete actions
         reqBody = "{}";
 
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
     }
@@ -104,8 +109,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().get(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "statistics":
@@ -113,8 +119,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "accessHistory":
@@ -122,8 +129,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "dashboardData":
@@ -131,8 +139,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().get(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "postDashboardData":
@@ -140,8 +149,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("saamsApiURL") + path,
-                        getGlobalValue("saamsApiURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
                 break;
 
             case "userProfile":
@@ -149,8 +159,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().get(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "organisationData":
@@ -158,8 +169,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "organisationalChanges":
@@ -167,8 +179,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("saamsApiURL") + path,
-                        getGlobalValue("saamsApiURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
                 break;
 
             case "downloadExcel":
@@ -176,8 +189,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("saamsApiURL") + path,
-                        getGlobalValue("saamsApiURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
                 break;
 
             case "downloadPdf":
@@ -185,8 +199,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("saamsApiURL") + path,
-                        getGlobalValue("saamsApiURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
                 break;
 
             case "accessHistoryDownload":
@@ -194,8 +209,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "FireAlarmReset":
@@ -203,8 +219,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().get(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "accessPoints":
@@ -212,8 +229,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "UserList":
@@ -221,8 +239,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "FormData":
@@ -230,8 +249,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().get(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "cardManagement":
@@ -239,8 +259,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "cardManagementExcel":
@@ -248,8 +269,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "cardManagementPdf":
@@ -257,8 +279,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "ExcelUserList":
@@ -266,8 +289,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "PdfUserList":
@@ -275,8 +299,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "addUser":
@@ -284,8 +309,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "devicesList":
@@ -293,8 +319,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
         }
     }
@@ -302,7 +329,7 @@ public class DashboardSteps extends Utils {
     @Given("Get Access history with {string}")
     public void get_access_history_with(String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         if (payload.equalsIgnoreCase("no filter")) {
 
@@ -326,7 +353,7 @@ public class DashboardSteps extends Utils {
         // Write code here that turns the phrase above into concrete actions
         reqBody = "{}";
 
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("saamsApiURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -335,7 +362,7 @@ public class DashboardSteps extends Utils {
     @Given("Post Organisation data with {string}")
     public void post_organisation_data_with(String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         if (payload.equalsIgnoreCase("filters")) {
             reqBody = "{\"filters\":{\"accessPoints\":{\"sites\":[]}},\"fields\":[\"accessPoints\",\"attributes\",\"sites\"]}";
@@ -359,7 +386,7 @@ public class DashboardSteps extends Utils {
         // Write code here that turns the phrase above into concrete actions
         reqBody = "{\"fields\":[]}";
 
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -370,7 +397,7 @@ public class DashboardSteps extends Utils {
     public void get_changes_with(String module, String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
 
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("saamsApiURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
         if (payload.equalsIgnoreCase("no filter")) {
 
             if (module.equalsIgnoreCase("org")) {
@@ -407,7 +434,7 @@ public class DashboardSteps extends Utils {
     public void download_access_history_excel_with(String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
 
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         if (payload.equalsIgnoreCase("no filter")) {
             reqBody = "{\"filters\":{\"employeeId\":\"\",\"name\":\"\",\"location\":\"\",\"start\":null,\"end\":null,\"accessRange\":{\"startDate\":\"\",\"endDate\":\"\"},\"sites\":[],\"terms\":[],\"s\":{\"employeeId\":\"\",\"name\":\"\"}},\"pagination\":{\"page\":1,\"perPage\":25}}";
@@ -423,7 +450,7 @@ public class DashboardSteps extends Utils {
     public void get_access_points_with(String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
 
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         if (payload.equalsIgnoreCase("no filter")) {
             reqBody = "{\"filters\":{\"sites\":null},\"pagination\":{\"perPage\":25,\"page\":1}}";
@@ -445,8 +472,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().get(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "apPermissions":
@@ -454,8 +482,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().get(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "patchPermissions":
@@ -463,8 +492,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().patch(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "assignCard":
@@ -472,8 +502,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
             case "unassignCard":
@@ -481,8 +512,9 @@ public class DashboardSteps extends Utils {
                 response = reqSpec
                         .when().post(path);
 
-                ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                        getGlobalValue("apiSpintlyURL") + path, false);
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
         }
     }
@@ -491,7 +523,7 @@ public class DashboardSteps extends Utils {
     public void get_list_of_users_with(String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqBody = "{\"pagination\":{\"page\":1,\"perPage\":-1,\"per_page\":-1},\"filters\":{}}";
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -501,7 +533,7 @@ public class DashboardSteps extends Utils {
     public void patch_users_permission_with(String patch) throws IOException {
         // Write code here that turns the phrase above into concrete actions
 
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         if (patch.equalsIgnoreCase("assign")) {
             reqBody = "{\"permissionsToAdd\":[{\"id\":126945,\"name\":\"abc101\",\"email\":null}],\"permissionsToRemove\":[]}";
@@ -517,7 +549,7 @@ public class DashboardSteps extends Utils {
     @Given("List of cards with {string}")
     public void list_of_cards_with(String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         if (payload.equalsIgnoreCase("no filter")) {
             reqBody = "{\"filters\":{},\"pagination\":{\"perPage\":25,\"currentPage\":1,\"page\":1}}";
@@ -532,7 +564,7 @@ public class DashboardSteps extends Utils {
     @Given("Download {string} list of cards with {string}")
     public void download_list_of_cards_with(String file, String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         if (file.equalsIgnoreCase("excel")) {
             if (payload.equalsIgnoreCase("no filter")) {
@@ -558,7 +590,7 @@ public class DashboardSteps extends Utils {
     @Given("{string} card to user")
     public void card_to_user(String operation) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         if (operation.equalsIgnoreCase("assign")) {
             reqBody = "{\"credentialId\":\"1006089\"}";
@@ -574,7 +606,7 @@ public class DashboardSteps extends Utils {
     public void organisation_data_for_admin_for_active_user() throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqBody = "{\"fields\":[\"attributes\",\"roles\"]}";
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -583,7 +615,7 @@ public class DashboardSteps extends Utils {
     @Given("List of {string} users with {string}")
     public void list_of_active_users_with(String user, String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         if (payload.equalsIgnoreCase("no filter")) {
             reqBody = "{\"pagination\":{\"page\":1,\"perPage\":25},\"filters\":{\"userType\":[\"" + user + "\"],\"terms\":[]}}";
@@ -598,7 +630,7 @@ public class DashboardSteps extends Utils {
     @Given("Download {string} List of {string} users with {string}")
     public void download_list_of_active_users_with(String file, String user, String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         if (payload.equalsIgnoreCase("no filter")) {
             reqBody = "{\"filters\":{\"userType\":[\"" + user + "\"],\"terms\":[],\"name\":\"\",\"s\":{\"name\":\"\"}},\"pagination\":{\"perPage\":-1,\"page\":1}}";
@@ -614,7 +646,7 @@ public class DashboardSteps extends Utils {
     public void add_user_with_payload(String name) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqBody = "{\"users\":[{\"accessExpiresAt\":null,\"email\":\"\",\"employeeCode\":\"\",\"gps\":false,\"name\":\"" + name + "\",\"phone\":\"+919878980990\",\"reportingTo\":\"\",\"roles\":[1397],\"terms\":[],\"accessPoints\":[717],\"gender\":\"\",\"joiningDate\":\"2022-08-11\",\"probationPeriod\":0,\"probationPeriodEnabled\":false,\"mobile\":true}]}";
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -622,7 +654,7 @@ public class DashboardSteps extends Utils {
 
     @And("verify user {string} is added in {int}")
     public void verify_user_is_added(String name, int orgId) throws IOException {
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body("{\"pagination\":{\"page\":1,\"perPage\":25},\"filters\":{\"userType\":[\"active\"],\"terms\":[],\"name\":\"" + name + "\",\"s\":{\"name\":\"" + name + "\"}}}");
 
         String responseBody = reqSpec.when().post("/v2/organisationManagement/organisations/" + orgId + "/users/list")
@@ -638,7 +670,7 @@ public class DashboardSteps extends Utils {
     public void delete_user_with_payload_with_orgId(int orgId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqBody = "{\"replaceManager\":[],\"userIds\":[" + userId + "]}";
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -646,8 +678,8 @@ public class DashboardSteps extends Utils {
         path = "/v2/organisationManagement/organisations/" + orgId + "/users/delete";
         deleteRes = reqSpec.when().post(path);
 
-        ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                getGlobalValue("apiSpintlyURL") + path, false);
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
     }
 
     @And("the API call got success with status code {int} for {string}")
@@ -706,47 +738,47 @@ public class DashboardSteps extends Utils {
     public void in_response_is_for(String keyValue, String expectedValue, String request) {
         switch (request) {
             case "accessHistory": {
-                driverBase.testStepAssert.isEquals(getJsonPath(accHistoryRes, keyValue), expectedValue,
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(accHistoryRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
             case "deleteResponse": {
-                driverBase.testStepAssert.isEquals(getJsonPath(deleteRes, keyValue), expectedValue,
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(deleteRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
             case "userDetails": {
-                driverBase.testStepAssert.isEquals(getJsonPath(detailsUserRes, keyValue), expectedValue,
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(detailsUserRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
             case "userShiftDetails": {
-                driverBase.testStepAssert.isEquals(getJsonPath(shiftDetailsUserRes, keyValue), expectedValue,
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(shiftDetailsUserRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
             case "editUser": {
-                driverBase.testStepAssert.isEquals(getJsonPath(editUserRes, keyValue), expectedValue,
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(editUserRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
             case "getPermission": {
-                driverBase.testStepAssert.isEquals(getJsonPath(getPermissionRes, keyValue), expectedValue,
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(getPermissionRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
             case "patchPermission": {
-                driverBase.testStepAssert.isEquals(getJsonPath(patchPermissionRes, keyValue), expectedValue,
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(patchPermissionRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
             case "deactivateUser": {
-                driverBase.testStepAssert.isEquals(getJsonPath(deactivateUserRes, keyValue), expectedValue,
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(deactivateUserRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
             case "activateUser": {
-                driverBase.testStepAssert.isEquals(getJsonPath(activateUserRes, keyValue), expectedValue,
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(activateUserRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
@@ -854,44 +886,44 @@ public class DashboardSteps extends Utils {
     public void display_access_history_with_orgId(int orgId) throws IOException {
 
         reqBody = "{\"filters\":{\"employeeId\":\"\",\"name\":\"\",\"location\":\"\",\"start\":\"\",\"end\":\"\",\"users\":[\"" + userId + "\"]},\"pagination\":{\"page\":1,\"perPage\":25}}";
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL")).body(reqBody);
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
 
         path = "/organisationManagement/v6/organisations/" + orgId + "/accessHistory";
         accHistoryRes = reqSpec.when().post(path);
 
-        ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                getGlobalValue("apiSpintlyURL") + path, false);
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
     }
 
     @And("Display user details with orgId {int}")
     public void display_user_details_with_orgId(int orgId) throws IOException {
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         path = "/organisationManagement/v1/organisations/" + orgId + "/users/" + userId;
         detailsUserRes = reqSpec.when().get(path);
 
-        ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                getGlobalValue("apiSpintlyURL") + path, false);
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
     }
 
     @When("Display user shift details")
     public void display_user_shift_details() throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         path = "/v2/attendanceManagement/users/" + userId + "/userDetails";
         shiftDetailsUserRes = reqSpec.when().get(path);
 
-        ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                getGlobalValue("apiSpintlyURL") + path, false);
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
     }
 
     @When("Patch user details with orgId {int}")
     public void patch_user_details_with_orgId(int orgId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqBody = "{\"user\":{\"id\":" + userId + ",\"accessorId\":120110,\"name\":\"updatedUser1\",\"email\":null,\"phone\":\"+919878980990\",\"roles\":[1397],\"reportees\":[],\"reportingTo\":null,\"createdAt\":\"2022-08-04T19:17:34.968Z\",\"isSignedUp\":false,\"cardAssigned\":false,\"accessExpiresAt\":null,\"accessExpired\":false,\"approveDeviceLock\":false,\"attributes\":[],\"deactivatedOn\":null,\"employeeCode\":null,\"gps\":false,\"probationPeriod\":0,\"gender\":null,\"joiningDate\":\"2022-08-05\",\"terms\":[],\"mobile\":true}}";
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -900,27 +932,27 @@ public class DashboardSteps extends Utils {
         path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + userId;
         editUserRes = reqSpec.when().patch(path);
 
-        ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                getGlobalValue("apiSpintlyURL") + path, false);
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
     }
 
     @When("Get Permissions of user with orgId {int}")
     public void get_permissions_of_user_with_orgId(int orgId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + userId + "/permissions";
         getPermissionRes = reqSpec.when().get(path);
 
-        ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                getGlobalValue("apiSpintlyURL") + path, false);
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
     }
 
     @When("Update Permissions of user with orgId {int}")
     public void update_permissions_of_user_with_orgId(int orgId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqBody = "{\"permissionsToAdd\":[{\"id\":718,\"name\":\"three in one Attendance \"}],\"permissionsToRemove\":[{\"id\":2655,\"name\":\"Test door 1\"},{\"id\":717,\"name\":\"Main doorr\"}]}";
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -929,15 +961,15 @@ public class DashboardSteps extends Utils {
         patchPermissionRes = reqSpec.when().patch(path);
 
 
-        ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                getGlobalValue("apiSpintlyURL") + path, false);
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
     }
 
     @When("Deactivate a user with orgId {int}")
     public void deactivate_a_user_with_org_id(Integer orgId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqBody = "{\"userIds\":[" + userId + "],\"replaceManager\":[]}";
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -945,8 +977,8 @@ public class DashboardSteps extends Utils {
         path = "/v2/organisationManagement/organisations/" + orgId + "/users/deactivate";
         deactivateUserRes = reqSpec.when().post(path);
 
-        ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                getGlobalValue("apiSpintlyURL") + path, false);
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
     }
 
 
@@ -954,7 +986,7 @@ public class DashboardSteps extends Utils {
     public void activate_a_user_with_org_id(Integer orgId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqBody = "{\"user\":{\"accessExpiresAt\":null,\"email\":null,\"employeeCode\":\"\",\"gps\":false,\"name\":\"deactivateUser1\",\"phone\":\"+919878980990\",\"reportingTo\":\"\",\"roles\":[1397],\"terms\":[],\"accessPoints\":[717],\"gender\":\"\",\"joiningDate\":\"2022-08-12\",\"probationPeriod\":0,\"probationPeriodEnabled\":false,\"id\":" + userId + ",\"mobile\":true}}";
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"))
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -962,14 +994,14 @@ public class DashboardSteps extends Utils {
         path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + userId + "/activate";
         activateUserRes = reqSpec.when().patch(path);
 
-        ResultManager.log(getGlobalValue("apiSpintlyURL") + path,
-                getGlobalValue("apiSpintlyURL") + path, false);
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
     }
 
     @Given("Get List of devices with {string}")
     public void get_list_of_devices_with(String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(requestSpecification()).baseUri(getGlobalValue("apiSpintlyURL"));
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         if (payload.equalsIgnoreCase("no filter")) {
             reqBody = "{\"pagination\":{\"page\":1,\"perPage\":25},\"filters\":{\"serialNo\":\"\",\"deviceType\":\"\",\"status\":\"\",\"siteId\":null,\"accessPointId\":null}}";

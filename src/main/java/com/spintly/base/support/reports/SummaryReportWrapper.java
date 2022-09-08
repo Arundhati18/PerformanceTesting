@@ -62,8 +62,11 @@ public class SummaryReportWrapper {
                     //Parse HTML file and extract data
                     Document doc = Jsoup.parse(in, null);
                     Element table = doc.select("table[class='parent']").get(0); //select the first table.
+                    Element durationTable = doc.select("table[class='parent-summary']").get(0);
 
                     Elements rows = table.select("tr");
+                    Elements durationRows = durationTable.select("tr");
+
                     int featureTotal = Integer.parseInt(doc.getElementById("pass").val().contains("--") ? "0" : doc.getElementById("pass").val())+Integer.parseInt(doc.getElementById("fail").val().contains("--") ? "0" : doc.getElementById("fail").val())+ Integer.parseInt(doc.getElementById("inconclusive").val().contains("--") ? "0" : doc.getElementById("inconclusive").val())+Integer.parseInt(doc.getElementById("skipped").val().contains("--") ? "0" : doc.getElementById("skipped").val());
                     int featurePass = Integer.parseInt(doc.getElementById("pass").val().contains("--") ? "0" : doc.getElementById("pass").val());
                     int featureFail = Integer.parseInt(doc.getElementById("fail").val().contains("--") ? "0" : doc.getElementById("fail").val());
@@ -72,8 +75,8 @@ public class SummaryReportWrapper {
 
                     String featureSummary = "[TOTAL : "+featureTotal+" | PASS : "+ featurePass +" | FAIL : "+ featureFail + " | INCONCLUSIVE : " + featureInconclusive + " | SKIPPED : " + featureSkipped+ "]";
                     String str = "<tr>\n" +
-                            "                <td colspan=\"6\">FEATURE : "+in.getName().toString().replace(".html", "")+" "+featureSummary+"</td>\n" +
-                            "                <td colspan=\"2\" style=\"width: 6px;\"><a href=\""+subFolder + "/" + in.getName()+"\"> EXECUTION REPORT : "+in.getName()+"</a></td>\n" +
+                            "                <td colspan=\"4\" style=\"font-size: 14px;\">FEATURE : "+in.getName().toString().replace(".html", "")+" "+featureSummary+"</td>\n" +
+                            "                <td colspan=\"2\" style=\"width: 6px;font-size: 12px;\"><a href=\""+subFolder + "/" + in.getName()+"\"> EXECUTION REPORT : "+in.getName()+"</a></td>\n" +
                             "            </tr>";
 //                    summaryData.add("<tr> </tr>");
 //                    summaryData.add(" <td colspan=3 style='text-align:left;'> FEATURE : " + in.getName().toString().replace(".html", "") +" "+ featureSummary+" </td>");
@@ -86,6 +89,16 @@ public class SummaryReportWrapper {
                     inConclusiveCount = inConclusiveCount + featureInconclusive;
                     skippedCount = skippedCount + featureSkipped;
 
+
+                    Element durationRow = durationRows.get(durationRows.size()-1);
+                    Elements durationCols = durationRow.select("td");
+
+                    String startTime = durationCols.get(5).text();
+                    String endTime = durationCols.get(6).text();
+                    storeStartTime(startTime);
+                    storeEndTime(endTime);
+
+
                     for (int i = 1; i < rows.size(); i++) { //first row is the col names so skip it.
                         Element row = rows.get(i);
                         Elements cols = row.select("td");
@@ -93,14 +106,6 @@ public class SummaryReportWrapper {
                         //cols.remove((cols.size()-1));
                         String data = cols.toString();
                         //data = data.replace(cols.get(2).toString(), "");
-                        if (i == 1) {
-                            String startTime = cols.get(2).text();
-                            storeStartTime(startTime);
-                        }
-                        if (i == rows.size() - 1) {
-                            String startTime = cols.get(3).text();
-                            storeEndTime(startTime);
-                        }
                         summaryData.add("<tr><td class=\"casenumber\">" + testCount + ".</td>");
                         summaryData.add(data+"</tr>");
                         testCount++;
