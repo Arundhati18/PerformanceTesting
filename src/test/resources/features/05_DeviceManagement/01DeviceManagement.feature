@@ -2,7 +2,7 @@
 @deviceManagement
 Feature: Device Management
 
-  @dm1
+  @dvm1
   Scenario: Organisation Data
     Given Post Organisation data with "deviceFields"
     When user calls "organisationData" with orgId 560
@@ -10,7 +10,7 @@ Feature: Device Management
     And response time is less than 500 ms
     And "type" in response is "success"
 
-  @dm2
+  @dvm2
   Scenario Outline: List of Devices
     Given Get List of devices with "<payload>"
     When user calls "devicesList" with orgId 560

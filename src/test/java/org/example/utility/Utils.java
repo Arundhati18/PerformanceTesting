@@ -1,5 +1,6 @@
 package org.example.utility;
 
+import com.spintly.base.support.properties.PropertyUtility;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -39,11 +40,7 @@ public class Utils {
 
     //get global values
     public String getGlobalValue(String key) throws IOException {
-        Properties prop=new Properties();
-        FileInputStream fis=new FileInputStream("src/main/resources/Properties/config.properties");
-        prop.load(fis);
-        return prop.getProperty(key);
-
+        return PropertyUtility.getProperty(key);
     }
 
     //Parse json response body
@@ -52,4 +49,6 @@ public class Utils {
         JsonPath js=new JsonPath(responseBody);
         return js.get(key).toString();
     }
+
+
 }

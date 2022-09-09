@@ -52,7 +52,7 @@ Feature: Card Management
   @cm5
   Scenario Outline: Assign/Unassign cards to a user
     Given "<operation>" card to user
-    When user calls "<op>" with orgId 560 for 126945
+    When user calls "<op>" with orgId 560 for 28947
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
