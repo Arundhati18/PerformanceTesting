@@ -14,105 +14,91 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.build.timestamp.format>yyyy_MM_dd_HHmmss</maven.build.timestamp.format>
+    <NameWithtimestamp>Test_Run_${maven.build.timestamp}</NameWithtimestamp>
+    <ResultFolder>Results/${NameWithtimestamp}/</ResultFolder>
+    <cucumber.version>3.0.2</cucumber.version>
+    <testng.version>6.14.3</testng.version>
+    <surefire.maven.plugin.version>2.22.0</surefire.maven.plugin.version>
+    <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+    <cucumber.jvm.parallel.version>5.0.0</cucumber.jvm.parallel.version>
+    <commons.io.version>1.3.2</commons.io.version>
+    <joda.time.version>2.10</joda.time.version>
+    <gherkin.version>5.0.0</gherkin.version>
+    <cucumber.jvm.deps>1.0.6</cucumber.jvm.deps>
+    <log4j.version>1.2.17</log4j.version>
+    <joda.time>2.10</joda.time>
+    <my.sql.server.version>8.0.13</my.sql.server.version>
   </properties>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <testFailureIgnore>true</testFailureIgnore>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>net.masterthought</groupId>
-        <artifactId>maven-cucumber-reporting</artifactId>
-        <version>5.7.1</version>
-        <executions>
-          <execution>
-            <id>execution</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <projectName>cucumber-jvm-example</projectName>
-              <!-- optional, per documentation set this to "true" to bypass generation of Cucumber Reports entirely, defaults to false if not specified -->
-              <skip>false</skip>
-              <!-- output directory for the generated report -->
-              <outputDirectory>${project.build.directory}</outputDirectory>
-              <!-- optional, defaults to outputDirectory if not specified -->
-              <inputDirectory>${project.build.directory}/jsonReports</inputDirectory>
-              <jsonFiles>
-                <!-- supports wildcard or name pattern -->
-                <param>**/*.json</param>
-              </jsonFiles>
+<!--  <build>-->
+<!--    <plugins>-->
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-surefire-plugin</artifactId>-->
+<!--        <configuration>-->
+<!--          <testFailureIgnore>true</testFailureIgnore>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
+<!--      <plugin>-->
+<!--        <groupId>net.masterthought</groupId>-->
+<!--        <artifactId>maven-cucumber-reporting</artifactId>-->
+<!--        <version>5.7.1</version>-->
+<!--        <executions>-->
+<!--          <execution>-->
+<!--            <id>execution</id>-->
+<!--            <phase>verify</phase>-->
+<!--            <goals>-->
+<!--              <goal>generate</goal>-->
+<!--            </goals>-->
+<!--            <configuration>-->
+<!--              <projectName>cucumber-jvm-example</projectName>-->
+<!--              &lt;!&ndash; optional, per documentation set this to "true" to bypass generation of Cucumber Reports entirely, defaults to false if not specified &ndash;&gt;-->
+<!--              <skip>false</skip>-->
+<!--              &lt;!&ndash; output directory for the generated report &ndash;&gt;-->
+<!--              <outputDirectory>${project.build.directory}</outputDirectory>-->
+<!--              &lt;!&ndash; optional, defaults to outputDirectory if not specified &ndash;&gt;-->
+<!--              <inputDirectory>${project.build.directory}/jsonReports</inputDirectory>-->
+<!--              <jsonFiles>-->
+<!--                &lt;!&ndash; supports wildcard or name pattern &ndash;&gt;-->
+<!--                <param>**/*.json</param>-->
+<!--              </jsonFiles>-->
 
-              <mergeFeaturesById>false</mergeFeaturesById>
-              <!-- optional, set true to get a final report with mvn mlatest results of the same test from different test runs -->
-              <mergeFeaturesWithRetest>false</mergeFeaturesWithRetest>
-              <!-- optional, set true to fail build on test failures -->
-              <checkBuildResult>false</checkBuildResult>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>8</source>
-          <target>8</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+<!--              <mergeFeaturesById>false</mergeFeaturesById>-->
+<!--              &lt;!&ndash; optional, set true to get a final report with mvn mlatest results of the same test from different test runs &ndash;&gt;-->
+<!--              <mergeFeaturesWithRetest>false</mergeFeaturesWithRetest>-->
+<!--              &lt;!&ndash; optional, set true to fail build on test failures &ndash;&gt;-->
+<!--              <checkBuildResult>false</checkBuildResult>-->
+<!--            </configuration>-->
+<!--          </execution>-->
+<!--        </executions>-->
+<!--      </plugin>-->
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-compiler-plugin</artifactId>-->
+<!--        <configuration>-->
+<!--          <source>8</source>-->
+<!--          <target>8</target>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
+<!--    </plugins>-->
+<!--  </build>-->
+
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
 
   <dependencies>
     <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-java</artifactId>
-      <version>7.4.1</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>6.14.3</version>
-    </dependency>
-
-    <dependency>
-      <groupId>joda-time</groupId>
-      <artifactId>joda-time</artifactId>
-      <version>2.10</version>
-    </dependency>
-
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.17</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jsoup</groupId>
-      <artifactId>jsoup</artifactId>
-      <version>1.12.1</version>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-core -->
-    <dependency>
-      <groupId>io.cucumber</groupId>
-      <artifactId>cucumber-core</artifactId>
-      <version>7.6.0</version>
-    </dependency>
-
-    <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
-      <version>5.1.1</version>
+      <version>4.3.0</version>
     </dependency>
 
     <dependency>
@@ -125,23 +111,6 @@
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <version>2.11.0</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-collections</groupId>
-      <artifactId>commons-collections</artifactId>
-      <version>3.2.2</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20180130</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.google.code.gson</groupId>
-      <artifactId>gson</artifactId>
-      <version>2.8.5</version>
     </dependency>
 
     <dependency>
@@ -175,43 +144,283 @@
     </dependency>
 
     <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-email</artifactId>
+      <version>1.5</version>
+    </dependency>
+
+    <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-core</artifactId>
-      <version>3.0.2</version>
+      <version>${cucumber.version}</version>
     </dependency>
 
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-testng</artifactId>
-      <version>3.0.2</version>
+      <version>${cucumber.version}</version>
     </dependency>
 
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-java</artifactId>
-      <version>3.0.2</version>
+      <version>${cucumber.version}</version>
     </dependency>
 
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>gherkin</artifactId>
-      <version>5.0.0</version>
+      <version>${gherkin.version}</version>
     </dependency>
 
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-jvm-deps</artifactId>
-      <version>1.0.6</version>
+      <version>${cucumber.jvm.deps}</version>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>io.cucumber</groupId>
       <artifactId>cucumber-picocontainer</artifactId>
+      <version>${cucumber.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>${testng.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>joda-time</groupId>
+      <artifactId>joda-time</artifactId>
+      <version>${joda.time}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.9</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20180130</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-devtools-v102</artifactId>
+      <version>4.3.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>json-path</artifactId>
+      <version>4.3.0</version>
+    </dependency>
+
+
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.8.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sun.mail</groupId>
+      <artifactId>javax.mail</artifactId>
+      <version>1.6.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jsoup</groupId>
+      <artifactId>jsoup</artifactId>
+      <version>1.12.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>3.2.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+      <version>RELEASE</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
+    <dependency>
+      <groupId>org.apache.pdfbox</groupId>
+      <artifactId>pdfbox</artifactId>
+      <version>3.0.0-RC1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>4.1.2</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.xmlbeans</groupId>
+          <artifactId>xmlbeans</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml-schemas</artifactId>
+      <version>4.1.2</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>4.1.2</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans -->
+    <dependency>
+      <groupId>org.apache.xmlbeans</groupId>
+      <artifactId>xmlbeans</artifactId>
       <version>3.0.2</version>
     </dependency>
 
+
   </dependencies>
+
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.plugin.version}</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <executable>C:\Program Files\Java\jdk1.8.0_131\bin\javac</executable>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.temyers</groupId>
+        <artifactId>cucumber-jvm-parallel-plugin</artifactId>
+        <version>${cucumber.jvm.parallel.version}</version>
+        <executions>
+          <execution>
+            <id>generateRunnersWeb</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>generateRunners</goal>
+            </goals>
+            <configuration>
+              <glue>
+                <package>com.spintly.stepDefinitions</package>
+              </glue>
+              <outputDirectory>${project.build.directory}\generated-test-sources\cucumber
+              </outputDirectory>
+              <featuresDirectory>src/test/resources/features/
+              </featuresDirectory>
+              <cucumberOutputDir>${ResultFolder}\defaultReport</cucumberOutputDir>
+              <plugins>
+                <plugin>
+                  <name>json</name>
+                </plugin>
+                <plugin>
+                  <name>com.example.CustomHtmlFormatter</name>
+                  <extension>html</extension>
+                </plugin>
+              </plugins>
+              <strict>true</strict>
+              <monochrome>true</monochrome>
+              <tags>
+              </tags>
+              <useTestNG>true</useTestNG>
+              <customVmTemplate>\src\test\java\com\spintly\runner\parallel-runner.vm</customVmTemplate>
+              <parallelScheme>FEATURE</parallelScheme>
+              <namingScheme>pattern</namingScheme>
+              <namingPattern>Feature{c}IT</namingPattern>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${surefire.maven.plugin.version}</version>
+        <executions>
+          <execution>
+            <id>acceptance-test</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <configuration>
+              <runOrder>alphabetical</runOrder>
+              <systemPropertyVariables>
+                <skip>false</skip>
+                <properties>
+                  <property>
+                    <name>usedefaultlisteners</name>
+                    <value>false</value><!--  disabling default listeners is optional -->
+                  </property>
+                </properties>
+                <LogFilePath>${ResultFolder}</LogFilePath>
+                <NameWithtimestamp>${NameWithtimestamp}</NameWithtimestamp>
+                <test.Device>${test.Device}</test.Device>
+                <test.Platform>${test.Platform}</test.Platform>
+                <test.Environment>${test.Environment}</test.Environment>
+                <test.Category>${test.Category}</test.Category>
+              </systemPropertyVariables>
+              <testFailureIgnore>true</testFailureIgnore>
+              <forkCount>${acceptance.test.parallel.count}</forkCount>
+              <reuseForks>false</reuseForks>
+              <includes>
+                <include>**/*IT.class</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <mainClass>com.spintly.base.support.reports.SummaryReportWrapper</mainClass>
+          <arguments>
+            <argument>${ResultFolder}</argument>
+            <argument>${test.Platform}</argument>
+            <argument>${test.Category}</argument>
+            <argument>${test.Environment}</argument>
+          </arguments>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 
 
 </project>
