@@ -1,4 +1,4 @@
-package org.example.utility;
+package com.spintly.utility;
 
 import com.spintly.base.support.properties.PropertyUtility;
 import io.restassured.builder.RequestSpecBuilder;
