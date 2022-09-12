@@ -1,9 +1,9 @@
-package org.example.stepDefinitions;
+package com.spintly.stepDefinitions;
 
 
 import com.spintly.base.core.DriverBase;
-import com.spintly.base.core.VariableContext;
 import com.spintly.base.managers.ResultManager;
+import com.spintly.utility.Utils;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -14,9 +14,6 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.example.runner.RunSuite;
-import org.example.utility.Utils;
-import org.hamcrest.Matchers;
 
 
 import java.io.IOException;
@@ -50,7 +47,6 @@ public class DashboardSteps extends DriverBase {
     public void get_(String str1) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
-
         ResultManager.log("-", "-", false);
     }
 

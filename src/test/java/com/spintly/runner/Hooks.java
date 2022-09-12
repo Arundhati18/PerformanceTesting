@@ -1,4 +1,4 @@
-package org.example.runner;
+package com.spintly.runner;
 
 import com.spintly.base.core.DriverContext;
 import com.spintly.base.core.ReportBase;
@@ -16,7 +16,6 @@ import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
-import java.io.File;
 import java.io.IOException;
 
 import static io.restassured.RestAssured.given;
