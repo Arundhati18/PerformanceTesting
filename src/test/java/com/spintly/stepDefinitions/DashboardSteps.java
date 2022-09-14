@@ -72,7 +72,7 @@ public class DashboardSteps extends DriverBase {
         variableContext.setScenarioContext("ResponseTime",String.valueOf(responseTime));
 
         driverBase.testStepAssert.isLess(response.time(),expectedResponseTime ,
-                "Response time: Less than "+expectedResponseTime, "Response time: "+response.time(), "Error! Response time: " + response.time());
+                "Response time: Less than "+expectedResponseTime, "Response time: "+response.time(), "Response time greater than 500ms");
     }
 
 
@@ -849,7 +849,7 @@ public class DashboardSteps extends DriverBase {
 
                 driverBase.testStepAssert.isLess(accHistoryRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+accHistoryRes.time(),
-                        "Error! Response time: " + accHistoryRes.time());
+                        "Response time greater than 500ms");
                 break;
             }
             case "deleteResponse": {
@@ -860,7 +860,7 @@ public class DashboardSteps extends DriverBase {
 
                 driverBase.testStepAssert.isLess(deleteRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+deleteRes.time(),
-                        "Error! Response time: " + deleteRes.time());
+                        "Response time greater than 500ms");
                 break;
             }
             case "userDetails": {
@@ -871,7 +871,7 @@ public class DashboardSteps extends DriverBase {
 
                 driverBase.testStepAssert.isLess(detailsUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+detailsUserRes.time(),
-                        "Error! Response time: " + detailsUserRes.time());
+                        "Response time greater than 500ms");
                 break;
             }
             case "userShiftDetails": {
@@ -882,7 +882,7 @@ public class DashboardSteps extends DriverBase {
 
                 driverBase.testStepAssert.isLess(shiftDetailsUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+shiftDetailsUserRes.time(),
-                        "Error! Response time: " + shiftDetailsUserRes.time());
+                        "Response time greater than 500ms");
                 break;
             }
             case "editUser": {
@@ -893,7 +893,7 @@ public class DashboardSteps extends DriverBase {
 
                 driverBase.testStepAssert.isLess(editUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+editUserRes.time(),
-                        "Error! Response time: " + editUserRes.time());
+                        "Response time greater than 500ms");
                 break;
             }
             case "getPermission": {
@@ -904,7 +904,7 @@ public class DashboardSteps extends DriverBase {
 
                 driverBase.testStepAssert.isLess(getPermissionRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+getPermissionRes.time(),
-                        "Error! Response time: " + getPermissionRes.time());
+                        "Response time greater than 500ms");
                 break;
             }
             case "patchPermission": {
@@ -915,7 +915,7 @@ public class DashboardSteps extends DriverBase {
 
                 driverBase.testStepAssert.isLess(patchPermissionRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+patchPermissionRes.time(),
-                        "Error! Response time: " + patchPermissionRes.time());
+                        "Response time greater than 500ms");
                 break;
             }
             case "deactivateUser": {
@@ -926,7 +926,7 @@ public class DashboardSteps extends DriverBase {
 
                 driverBase.testStepAssert.isLess(deactivateUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+deactivateUserRes.time(),
-                        "Error! Response time: " + deactivateUserRes.time());
+                        "Response time greater than 500ms");
                 break;
             }
             case "activateUser": {
@@ -937,7 +937,7 @@ public class DashboardSteps extends DriverBase {
 
                 driverBase.testStepAssert.isLess(activateUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+activateUserRes.time(),
-                        "Error! Response time: " + activateUserRes.time());
+                        "Response time greater than 500ms");
                 break;
             }
         }
@@ -1012,7 +1012,7 @@ public class DashboardSteps extends DriverBase {
     @When("Update Permissions of user with orgId {int}")
     public void update_permissions_of_user_with_orgId(int orgId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody = "{\"permissionsToAdd\":[{\"id\":718,\"name\":\"three in one Attendance \"}],\"permissionsToRemove\":[{\"id\":2655,\"name\":\"Test door 1\"},{\"id\":717,\"name\":\"Main doorr\"}]}";
+        reqBody = "{\"permissionsToAdd\":[{\"id\":2655,\"name\":\"Test door 1\"}],\"permissionsToRemove\":[{\"id\":717,\"name\":\"Main doorr\"}]}";
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
