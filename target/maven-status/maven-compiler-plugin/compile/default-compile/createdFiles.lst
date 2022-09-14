@@ -3,6 +3,7 @@ com\spintly\base\core\PageBase$LocatorType.class
 com\spintly\base\core\ReportBase.class
 com\spintly\base\managers\ResultManager.class
 com\spintly\base\enums\EnumCollection$ResultType.class
+com\spintly\SuiteSetup$1.class
 com\spintly\base\support\reports\ReportDesigner.class
 com\spintly\base\utilities\ApiHelper.class
 com\spintly\base\enums\EnumCollection$CharacterTypeSets.class
@@ -10,7 +11,6 @@ com\spintly\base\support\selenium\ScreenshotUtility.class
 com\spintly\base\support\reports\SummaryReportWrapper.class
 com\spintly\base\utilities\FileUtility.class
 com\spintly\base\core\DriverContext.class
-org\example\App.class
 com\spintly\base\support\exception\ExceptionHandler.class
 com\spintly\base\support\cucumberEvents\StepsStore.class
 com\spintly\base\support\properties\PropertyUtility.class
@@ -24,3 +24,4 @@ com\spintly\base\enums\EnumCollection.class
 com\spintly\base\support\cucumberEvents\EventsHandler$1.class
 com\spintly\base\managers\TestVerify.class
 com\spintly\base\support\logger\LogUtility.class
+com\spintly\SuiteSetup.class

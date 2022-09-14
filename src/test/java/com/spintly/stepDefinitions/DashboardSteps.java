@@ -845,90 +845,99 @@ public class DashboardSteps extends DriverBase {
 //                valRes = accHistoryRes.then();
 //                valRes.time(Matchers.lessThan(expectedResponseTime));
 //                System.out.printf(accHistoryRes.time() + "\n");
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(accHistoryRes.time()));
 
                 driverBase.testStepAssert.isLess(accHistoryRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+accHistoryRes.time(),
-                        "Error! Response time: " + response.time());
+                        "Error! Response time: " + accHistoryRes.time());
                 break;
             }
             case "deleteResponse": {
                 /*valRes = deleteRes.then();
                 valRes.time(Matchers.lessThan(expectedResponseTime));
                 System.out.printf(deleteRes.time() + "\n");*/
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(deleteRes.time()));
 
                 driverBase.testStepAssert.isLess(deleteRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+deleteRes.time(),
-                        "Error! Response time: " + response.time());
+                        "Error! Response time: " + deleteRes.time());
                 break;
             }
             case "userDetails": {
                 /*valRes = detailsUserRes.then();
                 valRes.time(Matchers.lessThan(expectedResponseTime));
                 System.out.printf(detailsUserRes.time() + "\n");*/
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(detailsUserRes.time()));
 
                 driverBase.testStepAssert.isLess(detailsUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+detailsUserRes.time(),
-                        "Error! Response time: " + response.time());
+                        "Error! Response time: " + detailsUserRes.time());
                 break;
             }
             case "userShiftDetails": {
                 /*valRes = shiftDetailsUserRes.then();
                 valRes.time(Matchers.lessThan(expectedResponseTime));
                 System.out.printf(shiftDetailsUserRes.time() + "\n");*/
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(shiftDetailsUserRes.time()));
 
                 driverBase.testStepAssert.isLess(shiftDetailsUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+shiftDetailsUserRes.time(),
-                        "Error! Response time: " + response.time());
+                        "Error! Response time: " + shiftDetailsUserRes.time());
                 break;
             }
             case "editUser": {
                 /*valRes = editUserRes.then();
                 valRes.time(Matchers.lessThan(expectedResponseTime));
                 System.out.printf(editUserRes.time() + "\n");*/
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(editUserRes.time()));
 
                 driverBase.testStepAssert.isLess(editUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+editUserRes.time(),
-                        "Error! Response time: " + response.time());
+                        "Error! Response time: " + editUserRes.time());
                 break;
             }
             case "getPermission": {
                 /*valRes = getPermissionRes.then();
                 valRes.time(Matchers.lessThan(expectedResponseTime));
                 System.out.printf(getPermissionRes.time() + "\n");*/
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(getPermissionRes.time()));
 
                 driverBase.testStepAssert.isLess(getPermissionRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+getPermissionRes.time(),
-                        "Error! Response time: " + response.time());
+                        "Error! Response time: " + getPermissionRes.time());
                 break;
             }
             case "patchPermission": {
                 /*valRes = patchPermissionRes.then();
                 valRes.time(Matchers.lessThan(expectedResponseTime));
                 System.out.printf(patchPermissionRes.time() + "\n");*/
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(patchPermissionRes.time()));
 
                 driverBase.testStepAssert.isLess(patchPermissionRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+patchPermissionRes.time(),
-                        "Error! Response time: " + response.time());
+                        "Error! Response time: " + patchPermissionRes.time());
                 break;
             }
             case "deactivateUser": {
                 /*valRes = deactivateUserRes.then();
                 valRes.time(Matchers.lessThan(expectedResponseTime));
                 System.out.printf(deactivateUserRes.time() + "\n");*/
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(deactivateUserRes.time()));
 
                 driverBase.testStepAssert.isLess(deactivateUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+deactivateUserRes.time(),
-                        "Error! Response time: " + response.time());
+                        "Error! Response time: " + deactivateUserRes.time());
                 break;
             }
             case "activateUser": {
                /* valRes = activateUserRes.then();
                 valRes.time(Matchers.lessThan(expectedResponseTime));
                 System.out.printf(activateUserRes.time() + "\n");*/
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(activateUserRes.time()));
 
                 driverBase.testStepAssert.isLess(activateUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+activateUserRes.time(),
-                        "Error! Response time: " + response.time());
+                        "Error! Response time: " + activateUserRes.time());
                 break;
             }
         }
