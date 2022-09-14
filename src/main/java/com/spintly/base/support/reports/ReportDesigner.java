@@ -215,7 +215,7 @@ public class ReportDesigner extends DriverBase {
 				"                    <p>"+tcName+"</p>\n" +
 				"                    <p>Tags : "+tags+"</p>\n" +
 				"  					 <p class=\"ReqURL\">"+(String) variableContext.getScenarioContext("ReqURL")+"</p>"+
-				"                    </td>"+"<td style=\"font-weight:bold\";>"+(String) variableContext.getScenarioContext("METHOD")+"</td>" + status + str+"</td><td class=\""+uniqueId+"\"><button type=\"button\" class=\"btn btn-primary\" onclick=\"showSteps(this)\">Show Steps</button></td></tr>";
+				"                    </td>"+"<td style=\"font-weight:bold\";>"+(String) variableContext.getScenarioContext("METHOD")+"</td>" + status + str+"</td><td class=\""+uniqueId+"\"><button type=\"button\" class=\"btn btn-primary\" onclick=\"showSteps(this)\">Show Details</button></td></tr>";
 			summaryArray.add(str1);
 		}
 		else {
@@ -268,7 +268,7 @@ public class ReportDesigner extends DriverBase {
 					"                    <p>"+tcName+"</p>\n" +
 					"                    <p>Tags : "+tags+"</p>"+
 					"					 <p class=\"ReqURL\">"+(String) variableContext.getScenarioContext("ReqURL")+"</p>"+
-					"                </td>"+"<td style=\"font-weight:bold\";>"+(String) variableContext.getScenarioContext("METHOD")+"</td>" + status + str+"</td><td class=\""+uniqueId+"\"><button type=\"button\" class=\"btn btn-primary\" onclick=\"showSteps(this)\">Show Steps</button></td></tr>";
+					"                </td>"+"<td style=\"font-weight:bold\";>"+(String) variableContext.getScenarioContext("METHOD")+"</td>" + status + str+"</td><td class=\""+uniqueId+"\"><button type=\"button\" class=\"btn btn-primary\" onclick=\"showSteps(this)\">Show Details</button></td></tr>";
 			summaryArray.add(str1);
 		}
 
