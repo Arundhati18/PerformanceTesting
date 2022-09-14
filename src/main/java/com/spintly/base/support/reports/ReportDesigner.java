@@ -165,13 +165,13 @@ public class ReportDesigner extends DriverBase {
 		str = str + "<td>"+stepCount+".</td>";
 		str = str + "<td>"+eventData.get("name").toString()+"</td>";
 		if (eventData.get("type").toString() == "PASSED") {
-			str = str + "<td style='background-color:#54b33c94;'>" + eventData.get("type").toString() + "</td>";
+			str = str + "<td style='background-color:#02b51a;color:black;font-weight:700'>" + eventData.get("type").toString() + "</td>";
 		}
 		else if (eventData.get("type").toString() == "WARNING") {
-			str = str + "<td style='background-color:orange;'>" + eventData.get("type").toString() + "</td>";
+			str = str + "<td style='background-color:orange;color:black;font-weight:700'>" + eventData.get("type").toString() + "</td>";
 		}
 		else {
-			str = str + "<td style='background-color:pink;'>" + eventData.get("type").toString() + "</td>";
+			str = str + "<td style='background-color:red;color:white;font-weight:700'>" + eventData.get("type").toString() + "</td>";
 		}
 
 		str = str + "<td>" + eventData.get("expected").toString() + "</td>";
@@ -221,7 +221,7 @@ public class ReportDesigner extends DriverBase {
 		else {
 			//check testng assert and local flag as well
 			if (!isFailed && !isTcVerifyFailed) {
-				status = "<td class=\"status\">\n" +"<div class=\"indicator\" style=\"background-color: #54b33c94;\">Pass</div>\n" + "</td>";
+				status = "<td class=\"status\">\n" +"<div class=\"indicator\" style=\"background-color: #02b51a;color:black;font-weight:700\">Pass</div>\n" + "</td>";
 				str =  "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms"+"</td><td>"+"-";
 				passed++;
 			} else {
