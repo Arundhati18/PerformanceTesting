@@ -240,13 +240,13 @@ public class ReportDesigner extends DriverBase {
 				if (reason == "") {
 					VariableContext.getObject().setScenarioContext("FAILURE", "TRUE");
 					status = "<td class=\"status\">\n" +
-							"                    <div class=\"indicator\" style=\"background-color: skyblue;\">Inconclusive</div>\n" +
+							"                    <div class=\"indicator\" style=\"background-color: #ff9900;color:black;font-weight:700\">Inconclusive</div>\n" +
 							"                </td>";
 					str = "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms" + "</td><td>" + "-";
 				} else if (((String) VariableContext.getObject().getScenarioContext("PASS_WITH_OBSERVATIONS")).equals("TRUE")) {
 					passed++;
 					status = "<td class=\"status\">\n" +
-							"                    <div class=\"indicator\" style=\"background-color: orange;\">Observations</div>\n" +
+							"                    <div class=\"indicator\" style=\"background-color: orange;color:black;font-weight:700;\">Observations</div>\n" +
 							"                </td>";
 					str = "<td style=\"font-weight:bold;\">" + (String) variableContext.getScenarioContext("ResponseTime") +"ms" + "</td> <td>" + "-";
 				} else {
