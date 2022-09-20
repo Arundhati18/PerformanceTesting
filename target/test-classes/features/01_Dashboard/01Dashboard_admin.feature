@@ -13,7 +13,7 @@ Feature: Dashboard Module for Admin
 
 
   @da2
-  Scenario: Access history
+  Scenario: Access history on Dashboard
     Given Get Access history with "no filter"
     When user calls "accessHistory" with orgId 560
     Then the API call got success with status code 200
@@ -53,8 +53,18 @@ Feature: Dashboard Module for Admin
     And response time is less than 500 ms
     And "type" in response is "success"
 
+  @da7
+  Scenario: Organisation Data
+    Given Post Organisation data with "filters"
+    When user calls "organisationData" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
-
-
-
-
+  @da8
+  Scenario: Organisation Data
+    Given Post Organisation data with "fields"
+    When user calls "organisationData" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"

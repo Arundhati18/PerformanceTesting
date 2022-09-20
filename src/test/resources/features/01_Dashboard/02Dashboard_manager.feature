@@ -12,7 +12,7 @@ Feature: Dashboard Module for Manager
     And "type" in response is "success"
 
   @dm2
-  Scenario: Post Dashboard data for admin
+  Scenario: Post Dashboard for admin
     Given Post dashboard data for admin
     When user calls "postDashboardData" with orgId 10
     Then the API call got success with status code 200
@@ -28,8 +28,8 @@ Feature: Dashboard Module for Manager
     And "type" in response is "success"
 
   @dm4
-  Scenario: Access history
-    Given Get Access history with "no filter"
+  Scenario: Access history on Dashboard
+    Given Get Access history with "no filter with arrays"
     When user calls "accessHistory" with orgId 10
     Then the API call got success with status code 200
     And response time is less than 500 ms
