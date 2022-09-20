@@ -55,7 +55,7 @@ public class DashboardSteps extends DriverBase {
     public void the_api_call_got_successwith_status_code(int expectedStatusCode) {
         // Write code here that turns the phrase above into concrete actions
         driverBase.testStepAssert.isEquals(response.getStatusCode(), expectedStatusCode,
-                "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + response.getStatusLine());
+                "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + response.getStatusLine()+"\nResponse body:"+response.body().asString());
     }
 
 
@@ -127,7 +127,7 @@ public class DashboardSteps extends DriverBase {
                 break;
 
             case "accessHistory":
-                path = "/organisationManagement/v6/organisations/" + orgId + "/accessHistory";
+                path = "/organisationManagement/v8/organisations/" + orgId + "/accessHistory";
                 response = reqSpec
                         .when().post(path);
 
@@ -198,7 +198,7 @@ public class DashboardSteps extends DriverBase {
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
                 break;
 
-            case "downloadExcel":
+            case "activityLogsExcel":
                 path = "/v2/activityLogs/organisations/" + orgId + "/activities/excel";
                 response = reqSpec
                         .when().post(path);
@@ -210,7 +210,7 @@ public class DashboardSteps extends DriverBase {
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
                 break;
 
-            case "downloadPdf":
+            case "activityLogsPdf":
                 path = "/v2/activityLogs/organisations/" + orgId + "/activities/pdf";
                 response = reqSpec
                         .when().post(path);
@@ -373,7 +373,11 @@ public class DashboardSteps extends DriverBase {
         // Write code here that turns the phrase above into concrete actions
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
-        if (payload.equalsIgnoreCase("no filter")) {
+        if(payload.equalsIgnoreCase("no filter")){
+            reqBody="{\"filters\":{\"employeeId\":\"\",\"name\":\"\",\"location\":\"\",\"start\":\"\",\"end\":\"\"},\"pagination\":{\"page\":1,\"perPage\":25}}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+        else if (payload.equalsIgnoreCase("no filter with arrays")) {
 
             reqBody = "{\"filters\":{\"employeeId\":\"\",\"name\":\"\",\"location\":\"\",\"start\":\"\",\"end\":\"\",\"terms\":[],\"sites\":[]},\"pagination\":{\"page\":1,\"perPage\":25}}";
             reqSpec = reqSpec.body(reqBody);

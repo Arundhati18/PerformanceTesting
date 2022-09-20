@@ -20,8 +20,8 @@ Feature: Dashboard Module for Frontdesk
     And "type" in response is "success"
 
   @df3
-  Scenario: Access history
-    Given Get Access history with "no filter"
+  Scenario: Access history on dashboard
+    Given Get Access history with "no filter with arrays"
     When user calls "accessHistory" with orgId 497
     Then the API call got success with status code 200
     And response time is less than 500 ms

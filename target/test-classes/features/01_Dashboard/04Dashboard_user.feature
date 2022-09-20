@@ -36,8 +36,8 @@ Feature: Dashboard Module for Spintly user
     And "type" in response is "success"
 
   @du5
-  Scenario: Access history
-    Given Get Access history with "no filter"
+  Scenario: Access history on Dashboard
+    Given Get Access history with "no filter with arrays"
     When user calls "accessHistory" with orgId 1087
     Then the API call got success with status code 200
     And response time is less than 500 ms
