@@ -384,7 +384,7 @@ public class DashboardSteps extends DriverBase {
 
         } else if (payload.equalsIgnoreCase("filter")) {
 
-            reqBody = "{\"filters\":{\"employeeId\":\"\",\"name\":\"\",\"location\":\"\",\"start\":\"2022-07-13 00:00:00 +05:30\",\"end\":\"2022-07-27 23:59:59 +05:30\",\"accessRange\":{\"startDate\":\"2022-07-12T18:30:00.000Z\",\"endDate\":\"2022-07-27T18:29:59.999Z\"},\"terms\":[],\"sites\":[]},\"pagination\":{\"page\":1,\"perPage\":25}}";
+            reqBody = "{\"filters\":{\"employeeId\":\"\",\"name\":\"\",\"location\":\"\",\"start\":\"2022-07-13 00:00:00 +05:30\",\"end\":\"2022-07-27 23:59:59 +05:30\",\"accessRange\":{\"startDate\":\"2022-07-12T18:30:00.000Z\",\"endDate\":\"2022-07-27T18:29:59.999Z\"},\"sites\":[],\"terms\":[]},\"pagination\":{\"page\":1,\"perPage\":25}}";
             reqSpec = reqSpec.body(reqBody);
         }
 
@@ -450,7 +450,7 @@ public class DashboardSteps extends DriverBase {
                 reqBody = "{\"filters\":{\"moduleName\":null,\"date\":null,\"performedBy\":null,\"auditType\":\"org\",\"transactionName\":null,\"toDate\":\"\",\"fromDate\":\"\"},\"pagination\":{\"perPage\":25,\"page\":1}}";
                 reqSpec = reqSpec.body(reqBody);
             } else if (module.equalsIgnoreCase("user")) {
-                reqBody = "{\"filters\":{\"moduleName\":null,\"date\":null,\"performedBy\":null,\"auditType\":\"user\",\"transactionName\":null,\"toDate\":\"\",\"fromDate\":\"\"},\"pagination\":{\"perPage\":25,\"page\":1}}";
+                reqBody = "{\"filters\":{\"moduleName\":null,\"date\":null,\"performedBy\":null,\"auditType\":\"user\",\"transactionName\":null},\"pagination\":{\"perPage\":25,\"page\":1}}";
                 reqSpec = reqSpec.body(reqBody);
             }
         } else if (payload.equalsIgnoreCase("filter")) {
