@@ -27,7 +27,7 @@ public class DashboardSteps extends DriverBase {
     RequestSpecification reqSpec;
     Utils utils = new Utils();
     ResponseSpecification resSpec;
-    Response response, deleteRes, accHistoryRes, detailsUserRes,
+    Response response, updateDoorRes, deleteRes, accHistoryRes, detailsUserRes,
             shiftDetailsUserRes, editUserRes, getPermissionRes, patchPermissionRes,
             deactivateUserRes, activateUserRes;
     ValidatableResponse valRes;
@@ -502,10 +502,47 @@ public class DashboardSteps extends DriverBase {
             reqBody = "{\"filters\":{\"sites\":null},\"pagination\":{\"perPage\":25,\"page\":1}}";
             reqSpec = reqSpec.body(reqBody);
         } else if (payload.equalsIgnoreCase("filter")) {
-            reqBody = "{\"filters\":{\"sites\":null,\"name\":\"Main door\"},\"pagination\":{\"perPage\":25,\"page\":1}}";
+            reqBody = "{\"filters\":{\"sites\":null,\"name\":\"Main doorr\"},\"pagination\":{\"perPage\":25,\"page\":1}}";
             reqSpec = reqSpec.body(reqBody);
         }
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+    }
+
+    @Given("{string} default door")
+    public void something_deafult_door(String payload) throws IOException {
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if (payload.equalsIgnoreCase("enable")) {
+            reqBody = "{\"isDefault\":true}";
+            reqSpec = reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("disable")) {
+            reqBody = "{\"isDefault\":false}";
+            reqSpec = reqSpec.body(reqBody);
+        }
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+    }
+
+    @Given("Update the door name to {string}")
+    public void update_the_door_name_to_something(String name) throws Throwable {
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        reqBody = "{\"name\":\""+name+"\"}";
+        reqSpec = reqSpec.body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+    }
+
+    @And("again update the door name to {string} with orgId {int} for {int}")
+    public void again_update_the_door_name_to_with_orgId_for(String name, int orgId, int id) throws IOException {
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        reqBody = "{\"name\":\""+name+"\"}";
+        reqSpec = reqSpec.body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+        updateDoorRes=reqSpec.when()
+                .patch("/v2/organisationManagement/organisations/" + orgId + "/accessPoint/" + id + "/");
     }
 
     @When("user calls {string} with orgId {int} for {int}")
@@ -519,6 +556,18 @@ public class DashboardSteps extends DriverBase {
                         .when().get(path);
 
                 variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "updateDoor":
+                path = "/v2/organisationManagement/organisations/" + orgId + "/accessPoint/" + id + "/";
+                response = reqSpec
+                        .when().patch(path);
+
+                variableContext.setScenarioContext("METHOD","PATCH");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
