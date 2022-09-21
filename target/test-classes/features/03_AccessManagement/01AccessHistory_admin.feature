@@ -36,14 +36,14 @@ Feature: Access History for Admin
     And "type" in response is "success"
 
   @aha4
-  Scenario: Access History excel download without filter
+  Scenario: Access History excel download without filters
     Given Download Access history excel with "no filter"
     When user calls "accessHistoryDownload" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @aha4
-  Scenario: Access History excel download with filter
+  Scenario: Access History excel download with filters
     Given Download Access history excel with "filter"
     When user calls "accessHistoryDownload" with orgId 560
     Then the API call got success with status code 200
