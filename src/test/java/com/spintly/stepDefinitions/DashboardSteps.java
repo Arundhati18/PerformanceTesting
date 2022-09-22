@@ -258,6 +258,18 @@ public class DashboardSteps extends DriverBase {
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
+            case "actionAP":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/accessPoint";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
             case "UserList":
                 path = "/v2/organisationManagement/organisations/" + orgId + "/users/list";
                 response = reqSpec
@@ -545,6 +557,26 @@ public class DashboardSteps extends DriverBase {
                 .patch("/v2/organisationManagement/organisations/" + orgId + "/accessPoint/" + id + "/");
     }
 
+    @Given("Post remote unlock")
+    public void post_remote_unlock() throws Throwable {
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        reqBody = "{}";
+        reqSpec = reqSpec.body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+    }
+
+    @Given("Post action on access point")
+    public void post_action_on_access_point() throws Throwable {
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        reqBody = "{\"isDefault\":true,\"accessPoints\":[2655]}";
+        reqSpec = reqSpec.body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+    }
+
     @When("user calls {string} with orgId {int} for {int}")
     public void user_calls_with_org_id_for(String module, int orgId, int id) throws IOException {
         // Write code here that turns the phrase above into concrete actions
@@ -568,6 +600,18 @@ public class DashboardSteps extends DriverBase {
                         .when().patch(path);
 
                 variableContext.setScenarioContext("METHOD","PATCH");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "remoteUnlock":
+                path="/organisationManagement/v2/organisations/"+orgId+"/accessPoint/"+id+"/remoteUnlock";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
