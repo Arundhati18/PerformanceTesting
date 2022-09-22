@@ -75,9 +75,9 @@ public class SummaryReportWrapper {
 
                     String featureSummary = "[TOTAL : "+featureTotal+" | PASS : "+ featurePass +" | FAIL : "+ featureFail + " | INCONCLUSIVE : " + featureInconclusive + " | SKIPPED : " + featureSkipped+ "]";
                     String str = "<tr>\n" +
-                            "                <td colspan=\"2\" style=\"font-size: 30px;\">FEATURE : "+in.getName().toString().replace(".html", "")+"</td>\n" +
+                            "                <td colspan=\"2\" style=\"font-size: 30px;font-weight: 900;\">FEATURE : "+in.getName().toString().replace(".html", "")+"</td>\n" +
                             "                <td colspan=\"4\" style=\"font-size: 17px;\">"+" "+featureSummary+"</td>\n"+
-                            "                <td colspan=\"2\" style=\"width: 6px;font-size: 12px;\"><a href=\""+subFolder + "/" + in.getName()+"\"> EXECUTION REPORT : "+in.getName()+"</a></td>\n" +
+                            "                <td colspan=\"2\" style=\"width: auto;font-size: 12px;\"><a href=\""+subFolder + "/" + in.getName()+"\"> EXECUTION REPORT : "+in.getName()+"</a></td>\n" +
                             "            </tr>";
 //                    summaryData.add("<tr> </tr>");
 //                    summaryData.add(" <td colspan=3 style='text-align:left;'> FEATURE : " + in.getName().toString().replace(".html", "") +" "+ featureSummary+" </td>");
