@@ -3,7 +3,7 @@
 Feature: Activity Logs
 
   @al1
-  Scenario: Organisation Data for admin
+  Scenario: Organisation Data
     Given Post Organisation data with "activityLogsFields"
     When user calls "organisationData" with orgId 560
     Then the API call got success with status code 200

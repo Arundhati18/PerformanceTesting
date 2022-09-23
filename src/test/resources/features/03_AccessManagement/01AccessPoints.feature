@@ -100,13 +100,17 @@ Feature: Access Points
     And "type" in response is "success"
 
   @ap11
-  Scenario Outline: Patch user permissions
-    Given Patch users permission with "<payload>"
+  Scenario: Assign user permissions to Access Point
+    Given Patch users permission with "assign"
     When user calls "patchPermissions" with orgId 560 for 717
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
-    Examples:
-      | payload |
-      | assign |
-      | unassign|
+
+  @ap11
+  Scenario: Unassign user permissions to Access Point
+    Given Patch users permission with "unassign"
+    When user calls "patchPermissions" with orgId 560 for 717
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"

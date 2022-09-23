@@ -4,7 +4,7 @@
 Feature: Access History for Frontdesk
 
   @ahf1
-  Scenario: Organisation Data for admin
+  Scenario: Organisation Data
     Given Post Organisation data with "fields"
     When user calls "organisationData" with orgId 497
     Then the API call got success with status code 200
@@ -12,7 +12,7 @@ Feature: Access History for Frontdesk
     And "type" in response is "success"
 
   @ahf2
-  Scenario: Organisation Data for admin
+  Scenario: Organisation Data
     Given Post Organisation data with "filters"
     When user calls "organisationData" with orgId 497
     Then the API call got success with status code 200
