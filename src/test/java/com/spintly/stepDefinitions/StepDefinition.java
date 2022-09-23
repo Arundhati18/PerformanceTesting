@@ -22,7 +22,7 @@ import static io.restassured.RestAssured.given;
 
 
 
-public class DashboardSteps extends DriverBase {
+public class StepDefinition extends DriverBase {
 
     RequestSpecification reqSpec;
     Utils utils = new Utils();
@@ -330,6 +330,18 @@ public class DashboardSteps extends DriverBase {
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
+            case "assignCardVisitor":
+                path="/v2/visitorManagement/organisations/"+orgId+"/visitorCard";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
             case "ExcelUserList":
                 path = "/v2/organisationManagement/organisations/" + orgId + "/users/excel";
                 response = reqSpec
@@ -434,6 +446,12 @@ public class DashboardSteps extends DriverBase {
         } else if (payload.equalsIgnoreCase("deviceFields")) {
             reqBody = "{\"fields\":[\"accessPoints\",\"sites\"]}";
             reqSpec = reqSpec.body(reqBody);
+        } else if(payload.equalsIgnoreCase("cardFields")){
+            reqBody="{\"fields\":[\"cardUsers\"]}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("userFields")) {
+            reqBody="{\"fields\":[\"users\"],\"deactivatedUsers\":false}";
+            reqSpec=reqSpec.body(reqBody);
         }
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
     }
@@ -717,7 +735,7 @@ public class DashboardSteps extends DriverBase {
 
         if (file.equalsIgnoreCase("excel")) {
             if (payload.equalsIgnoreCase("no filter")) {
-                reqBody = "{\"filters\":{},\"pagination\":{\"perPage\":25,\"currentPage\":1,\"page\":1}}";
+                reqBody = "{\"filters\":{\"credentialId\":\"\"},\"pagination\":{\"perPage\":25,\"currentPage\":1,\"page\":1}}";
                 reqSpec = reqSpec.body(reqBody);
             } else if (payload.equalsIgnoreCase("filter")) {
                 reqBody = "{\"filters\":{\"credentialId\":\"1006089\"},\"pagination\":{\"perPage\":25,\"currentPage\":1,\"page\":1}}";
@@ -736,8 +754,8 @@ public class DashboardSteps extends DriverBase {
     }
 
 
-    @Given("{string} card to user")
-    public void card_to_user(String operation) throws IOException {
+    @Given("{string} card to {string}")
+    public void card_to(String operation, String role) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
