@@ -389,6 +389,126 @@ public class StepDefinition extends DriverBase {
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
+
+            case "attendanceData":
+                path = "/v2/attendanceManagement/organisations/"+orgId+"/attendance-data/fetch";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "shifts":
+                path = "/v2/attendanceManagement/organisations/"+orgId+"/shifts";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "excelDailyView":
+                path = "/v2/attendanceManagement/organisations/"+orgId+"/attendance-data/fetch/excel";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "pdfDailyView":
+                path = "/v2/attendanceManagement/organisations/"+orgId+"/attendance-data/daily-view/pdf";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "weeklyMonthlyView":
+                path = "/v2/attendanceManagement/organisations/"+orgId+"/attendance-data/period/list";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "excelWeeklyMontlyView":
+                path="/v2/attendanceManagement/organisations/"+orgId+"/attendance-data/period/list/excel";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "pdfWeeklyMonthlyView":
+                path="/v2/attendanceManagement/organisations/"+orgId+"/attendance-data/weeklyMonthly-view/pdf";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "excelWeeklyMonthlyViewDetailed":
+                path="/v2/attendanceManagement/organisations/"+orgId+"/attendance-data/fetchDetailView/excel";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "pdfWeeklyMonthlyViewDetailed":
+                path="/v2/attendanceManagement/organisations/"+orgId+"/attendance-data/weeklyMonthly-detailed-view/pdf";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "calendar":
+                path="/v2/attendanceManagement/organisations/"+orgId+"/attendance-data/calendar";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
         }
     }
 
@@ -408,7 +528,7 @@ public class StepDefinition extends DriverBase {
 
         } else if (payload.equalsIgnoreCase("filter")) {
 
-            reqBody = "{\"filters\":{\"employeeId\":\"\",\"name\":\"\",\"location\":\"\",\"start\":\"2022-07-13 00:00:00 +05:30\",\"end\":\"2022-07-27 23:59:59 +05:30\",\"accessRange\":{\"startDate\":\"2022-07-12T18:30:00.000Z\",\"endDate\":\"2022-07-27T18:29:59.999Z\"},\"sites\":[],\"terms\":[]},\"pagination\":{\"page\":1,\"perPage\":25}}";
+            reqBody = "{\"filters\":{\"employeeId\":\"\",\"name\":\"\",\"location\":\"\",\"start\":\"2022-07-13 00:00:00 +05:30\",\"end\":\"2022-07-27 23:59:59 +05:30\",\"accessRange\":{\"startDate\":\"2022-07-12T18:30:00.000Z\",\"endDate\":\"2022-07-27T18:29:59.999Z\"},\"terms\":[],\"sites\":[]},\"pagination\":{\"page\":1,\"perPage\":25}}";
             reqSpec = reqSpec.body(reqBody);
         }
 
@@ -451,6 +571,9 @@ public class StepDefinition extends DriverBase {
             reqSpec=reqSpec.body(reqBody);
         } else if (payload.equalsIgnoreCase("userFields")) {
             reqBody="{\"fields\":[\"users\"],\"deactivatedUsers\":false}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("attendanceFields")){
+            reqBody="{\"fields\":[\"attributes\",\"roles\",\"accessPoints\",\"reportingManagers\",\"sites\",\"users\"]}";
             reqSpec=reqSpec.body(reqBody);
         }
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -1189,4 +1312,156 @@ public class StepDefinition extends DriverBase {
 
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
     }
+
+    @Given("Get daily view with {string}")
+    public void get_daily_view_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if(payload.equalsIgnoreCase("no filter")) {
+            reqBody = "{\"filters\":{\"currentStatus\":null,\"lateEntry\":null,\"earlyExit\":null,\"absent\":null,\"onLeave\":null,\"weekoffPresent\":null,\"shiftIds\":[],\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{}},\"forDate\":\"2022-09-24\",\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"}}}";
+            reqSpec = reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filter")) {
+            reqBody="{\"filters\":{\"currentStatus\":null,\"lateEntry\":null,\"earlyExit\":null,\"absent\":null,\"onLeave\":null,\"weekoffPresent\":null,\"shiftIds\":[],\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{\"employeeName\":\"abc\"}},\"forDate\":\"2022-09-24\",\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"}}}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Get shifts")
+    public void get_shifts() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+        ResultManager.log("-", "-", false);
+    }
+
+    @Given("Download file daily view with {string}")
+    public void download_file_daily_view_with(String payload) throws IOException{
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if (payload.equalsIgnoreCase("no filter")){
+            reqBody="{\"filters\":{\"currentStatus\":null,\"lateEntry\":null,\"earlyExit\":null,\"absent\":null,\"onLeave\":null,\"weekoffPresent\":null,\"shiftIds\":[],\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{\"employeeName\":\"\"}},\"forDate\":\"2022-09-24\",\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"orgName\":\"QA Organisation\"}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filter")) {
+            reqBody="{\"filters\":{\"currentStatus\":null,\"lateEntry\":null,\"earlyExit\":null,\"absent\":null,\"onLeave\":null,\"weekoffPresent\":null,\"shiftIds\":[],\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{\"employeeName\":\"abc\"}},\"forDate\":\"2022-09-24\",\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"orgName\":\"QA Organisation\"}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Get weekly view with {string}")
+    public void get_weekly_view_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if (payload.equalsIgnoreCase("no filter")){
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-09-17 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filter")) {
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-09-17 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Download file weekly view with {string}")
+    public void download_file_weekly_view_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if (payload.equalsIgnoreCase("no filter")){
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-09-17 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filter")) {
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-09-17 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Get monthly view with {string}")
+    public void get_monthly_view_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if (payload.equalsIgnoreCase("no filter")){
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-08-24 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filter")) {
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-08-24 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Download file monthly view with {string}")
+    public void download_file_monthly_view_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if (payload.equalsIgnoreCase("no filter")){
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-08-24 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filter")) {
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-08-24 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Get date range view with {string}")
+    public void get_date_range_view_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if (payload.equalsIgnoreCase("no filter")){
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-09-23 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filter")) {
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-09-23 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Download file date range view with {string}")
+    public void download_file_date_range_view_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if (payload.equalsIgnoreCase("no filter")){
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-09-23 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filter")) {
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-09-23 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Get calendar {string} view with {string}")
+    public void get_calendar_view_with(String type,String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+        if(type.equalsIgnoreCase("attendance")) {
+            if (payload.equalsIgnoreCase("no filter")) {
+                reqBody = "{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false}";
+                reqSpec = reqSpec.body(reqBody);
+            } else if (payload.equalsIgnoreCase("filter")) {
+                reqBody = "{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"abc\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false}";
+                reqSpec = reqSpec.body(reqBody);
+            }
+        } else if (type.equalsIgnoreCase("ot")) {
+            if (payload.equalsIgnoreCase("no filter")) {
+                reqBody = "{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true}";
+                reqSpec = reqSpec.body(reqBody);
+            } else if (payload.equalsIgnoreCase("filter")) {
+                reqBody = "{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"abc\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true}";
+                reqSpec = reqSpec.body(reqBody);
+            }
+        }
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
 }
