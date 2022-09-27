@@ -4,7 +4,7 @@
 Feature: User Management for Admin
 
   @uma1
-  Scenario: Organisation Data for admin
+  Scenario: Organisation Data
     Given Organisation data for admin for Active User
     When user calls "organisationData" with orgId 560
     Then the API call got success with status code 200

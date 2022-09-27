@@ -3,7 +3,7 @@
 Feature: Card Management
 
   @cm1
-  Scenario: Organisation Data for admin
+  Scenario: Organisation Data
     Given Post Organisation data with "cardFields"
     When user calls "organisationData" with orgId 560
     Then the API call got success with status code 200
@@ -73,17 +73,17 @@ Feature: Card Management
     And "type" in response is "success"
 
   @cm6
-  Scenario: Organisation Data for admin
+  Scenario: Organisation Data
     Given Post Organisation data with "userFields"
     When user calls "organisationData" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
 
-  @cm7
-  Scenario: Assign card to a visitor
-    Given "assign" card to "visitor"
-    When user calls "assignCardVisitor" with orgId 560
-    Then the API call got success with status code 200
-    And response time is less than 500 ms
-    And "type" in response is "success"
+#  @cm7
+#  Scenario: Assign card to a visitor
+#    Given "assign" card to "visitor"
+#    When user calls "assignCardVisitor" with orgId 560
+#    Then the API call got success with status code 200
+#    And response time is less than 500 ms
+#    And "type" in response is "success"

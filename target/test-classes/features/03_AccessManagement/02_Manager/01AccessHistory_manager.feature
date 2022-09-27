@@ -1,43 +1,50 @@
 @regression
 @accessHistory
-@accessHistoryFrontdesk
-Feature: Access History for Frontdesk
+@accessHistoryManager
+Feature: Access History for Manager
 
-  @ahf1
+  @ahm1
   Scenario: Organisation Data
     Given Post Organisation data with "fields"
-    When user calls "organisationData" with orgId 497
+    When user calls "organisationData" with orgId 10
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
 
-  @ahf2
+  @ahm2
   Scenario: Organisation Data
     Given Post Organisation data with "filters"
-    When user calls "organisationData" with orgId 497
+    When user calls "organisationData" with orgId 10
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
 
-  @ahf3
+  @ahm3
   Scenario: Access history without filters
-    Given Get Access history with "no filter"
-    When user calls "accessHistory" with orgId 497
+    Given Get Access history with "no filter with arrays"
+    When user calls "accessHistory" with orgId 10
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
 
-  @ahf3
+  @ahm3
   Scenario: Access history with filters
     Given Get Access history with "filter"
-    When user calls "accessHistory" with orgId 497
+    When user calls "accessHistory" with orgId 10
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
 
-  @ahf4
+  @ahm4
+  Scenario: Access History excel download without filters
+    Given Download Access history excel with "no filter"
+    When user calls "accessHistoryDownload" with orgId 10
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+
+  @ahm4
   Scenario: Access History excel download with filters
     Given Download Access history excel with "filter"
-    When user calls "accessHistoryDownload" with orgId 497
+    When user calls "accessHistoryDownload" with orgId 10
     Then the API call got success with status code 200
     And response time is less than 500 ms

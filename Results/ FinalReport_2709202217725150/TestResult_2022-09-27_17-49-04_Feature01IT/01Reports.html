@@ -1,0 +1,1079 @@
+<!DOCTYPE html><html lang="en"><head>    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>    <script type="text/javascript">        google.charts.load('current', {            packages: ['corechart']        });        google.charts.setOnLoadCallback(drawChart);        var attr;        function showSteps(clicked_object) {            attr = clicked_object.parentElement.getAttribute('class');            console.log(attr);            document.getElementsByClassName("test-cases-list")[0].style.display = "none";            document.getElementsByClassName("parent-div-test-steps")[0].style.display = "block";            document.getElementsByClassName("table" + attr)[0].style.display = "block";            document.getElementsByClassName("table" + attr)[1].style.display = "block";            document.getElementsByClassName("table" + attr)[2].style.display = "inline-table";        }        function closeSteps(clicked_object) {            attr = clicked_object.getAttribute('id');            document.getElementsByClassName("table" + attr)[0].style.display = "none";            document.getElementsByClassName("table" + attr)[1].style.display = "none";            document.getElementsByClassName("table" + attr)[2].style.display = "none";            document.getElementsByClassName("parent-div-test-steps")[0].style.display = "none";            document.getElementsByClassName("test-cases-list")[0].style.display = "revert";        }        function showScreeshot(clicked_object) {            attr = clicked_object.parentElement.getAttribute('class');            console.log(attr);            document.getElementsByClassName("modal" + attr)[0].style.display = "block";        }        function closeScreenshot(clicked_object) {            attr = clicked_object.getAttribute('id');            console.log(attr);            document.getElementsByClassName("modal" + attr)[0].style.display = "none";        }        function drawChart() {            var pass = parseInt(document.getElementById('pass').value);            var fail = parseInt(document.getElementById('fail').value);            var inconclusive = parseInt(document.getElementById('inconclusive').value);            var skipped = parseInt(document.getElementById('skipped').value);            document.getElementById("total-summary").innerHTML = (pass + fail + inconclusive + skipped).toString();            document.getElementById("pass-summary").innerHTML = pass.toString();            document.getElementById("fail-summary").innerHTML = fail.toString();            document.getElementById("inconclusive-summary").innerHTML = inconclusive.toString();            document.getElementById("skipped-summary").innerHTML = skipped.toString();            var data = google.visualization.arrayToDataTable([                ['Type', 'Count'],                ['Pass', pass],                ['Fail', fail],                ['Inconclusive', inconclusive],                ['Skipped', skipped]            ]);            var options = {                'title': 'Test Summary',                'width': 900,                'height': 300,                'backgroundColor': {                    fill: '#ffffff'                },                'chartArea': {                    'left': 600,                    'width': 400                },                colors: ['#02b51a', 'red', '#ff9900'],                is3D: true            };            var chart = new google.visualization.PieChart(document.getElementById('container'));            chart.draw(data, options);        }        function closeMain() {            document.getElementsByClassName("parent-div-test-steps")[0].style.display = "none";        }    </script>    <style>        body {            background-color: ghostwhite;            margin: 10px;        }        .parent {            background-color: azure;            margin: auto;            border-radius: 4px;            width: 93%;            box-shadow: -13px -4px 38px darkgrey;            margin-bottom: 60px;        }        .parent-summary {            background-color: azure;            margin: auto;            border-radius: 4px;            width: 90%;            box-shadow: -13px -4px 38px darkgrey;            text-align: center;            margin-bottom:100px;        }        table.parent-summary>tbody>tr {            border-width: 1.5px 0 0 0;            border-style: solid;            border-color: aliceblue;        }        table.parent>tbody>tr {            border-width: 1.5px 0 0 0;            border-style: solid;            border-color: turquoise;        }        table.parent>tbody>tr>td:nth-child(1),        table.parent>tbody>tr>td:nth-child(3),        table.parent>tbody>tr>td:nth-child(4),        table.parent>tbody>tr>td:nth-child(5),        table.parent>tbody>tr>td:nth-child(6) {            text-align: center;        }        table.parent-summary>tbody>tr>td:nth-child(1),        table.parent-summary>tbody>tr>td:nth-child(2),        table.parent-summary>tbody>tr>td:nth-child(3),        table.parent-summary>tbody>tr>td:nth-child(4),        table.parent-summary>tbody>tr>td:nth-child(5) {            text-align: center;        }        table.parent>tbody>tr>td {            font-size: 16px;            padding: 12px;            background-color: white;            font-family: 'Maven Pro', sans-serif;            text-align: center;        }        table.parent-summary>tbody>tr>td {            font-size: 25px;            padding: 15px;            background-color: white;            font-family: 'Maven Pro', sans-serif;        }        table.parent>thead>tr>th {            text-align: center;            padding: 15px;            color: aliceblue;            font-weight: 500;            font-size: 25px;        }        table.parent-summary>thead>tr>th {            text-align: center;            padding: 15px;            color: aliceblue;            font-weight: 500;            font-size: 25px;        }        .test-cases-list {            position: sticky;            top: 0px;            background-color: #010A43;        }        .test-cases-summary {            background-color: #010A43;        }        .indicator {            padding: 10px;            text-align: center;            border-radius: 25px;            width: auto;        }        table.parent>tbody>tr>td:nth-child(2)>p:nth-child(1) {            font-weight: normal;        }        table.parent>tbody>tr>td:nth-child(2)>p:nth-child(2) {            font-size: 9px;        }        table.parent>tbody>tr>td:nth-child(2)>p:nth-child(1),        table.parent>tbody>tr>td:nth-child(2)>p:nth-child(2) {            margin-bottom: 0px;            font-weight: 700;            font-size: 17px;            text-align-last: start;        }        table.parent>tbody>tr>td:nth-child(2) {            width: 500px;        }        .bg-modal {            width: 100%;            height: 100%;            background-color: rgba(0, 0, 0, 0.7);            top: 0;            left: 0px;            display: none;            justify-content: center;            align-items: center;        }        .modal-content {            width: 1200px;            height: 500px;            background-color: white;            border-radius: 4px;        }        .step-details {            top: 78px;            background-color: aliceblue;            border-radius: 2px;            width: 1482px;        }        table.step-details>thead:nth-child(1) {            background-color: navy;            border-width: 0px 0 6px 0;            border-color: aliceblue;            position: sticky;            top: 0px;        }        table.step-details>thead:nth-child(2) {            background-color: navy;            border-width: 0px 0 6px 0;            border-color: aliceblue;            position: sticky;            top: 0px;        }        table.step-details>thead>tr>th {            color: white;            padding: 15px;            font-size: 14px;            font-weight: 600;            text-align: center;        }        table.step-details>tbody>tr>td {            font-size: 13px;            padding: 10px;            background-color: aliceblue;            font-family: 'Maven Pro', sans-serif;        }        table.step-details>tbody>tr {            border-style: solid;            border-width: 2px 0 0 0;            border-color: gainsboro;        }        table.step-details>tbody>tr>td:nth-child(2) {            width: 275px;        }        table.step-details>tbody>tr>td:nth-child(4),        table.step-details>tbody>tr>td:nth-child(5) {            width: 505px;        }        /* table.step-details>tbody>tr>td:nth-child(5) {    position: relative;} */        table.step-details>tbody>tr>td:nth-child(3) {            border-width: 5px;            border-style: solid;            border-color: aliceblue;        }        table.step-details>tbody>tr>td:nth-child(1),        table.step-details>tbody>tr>td:nth-child(3),        table.step-details>tbody>tr>td:nth-child(4),        table.step-details>tbody>tr>td:nth-child(5) {            text-align: center;        }        .cancelbutton {            background-color: bisque;            width: 64px;            height: 31px;            position: absolute;            right: 11px;            top: 7px;            font-size: 14px;            color: black;        }        .scrolling-div {            top: 200px;            left: 177px;            overflow-y: auto;            height: 387px;            width: 1499px;            margin-left:auto ;            margin-right: auto;            display:none;        }        .testcaselistname {            /* position: absolute;            top: 65px;            left: 343px; */            background-color: rgba(0, 0, 0, 0.8);            color: floralwhite;            font-size: 25px;            font-family: monospace;            padding: 2px;            border-radius: 14px;            width: 768px;            margin-left: auto;            margin-right: auto;            margin-bottom:47px;        }        .taglist {            text-align: center;            font-size: 13px;            padding: 11px;            margin: 0 0 0 0;            color: yellow;        }        .tagname {            text-align: center;            padding: 11px;            font-size: 26px;        }        .parent-div-test-steps {            display: none;            position: fixed;            z-index: 1;            padding-top: 100px;            left: 0px;            top: 0px;            width: 100%;            height: 100%;            background-color: rgba(0, 0, 0, 0.9);        }        .caption {            margin: auto;            display: block;            width: 80%;            max-width: 700px;            text-align: center;            color: #ccc;            padding: 10px 0;            height: 150px;        }        .modal-content {            margin: auto;            display: block;            max-width: 2000px;        }        .close {            position: absolute;            top: 1px;            right: 17px;            color: cornsilk;            font-size: 24px;            font-weight: bold;            transition: 0.3s;            background-color: unset;        }        .report-title {            text-align: center;            color: aliceblue;            background-color: #010A43;            width: 90%;            padding: 12px;            border-radius: 5px;            margin: auto;            font-size: 26px;            margin-bottom: 100px;        }        .summarylink {            margin-left: 300px;            color: aliceblue;            font-size: 17px;        }        .feature-title {            font-weight: 100;        }        .casenumber {            font-weight: 600;        }        .close-main {            font-size: larger;            color: white;            font-weight: 600;            background-color: red;            width: 103px;            padding: 11px;            border-radius: 24px;            position: absolute;            bottom: 20px;            left: 0;            right: 0;            cursor: pointer;            margin: auto;        }        .ReqURL {            font-size: 15px;            font-weight: bold;            color: #b34700;            text-align: start;        }    </style>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <meta http-equiv="X-UA-Compatible" content="ie=edge">    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    <link>    <link rel="preconnect" href="https://fonts.googleapis.com">    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@100&display=swap" rel="stylesheet">    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro&display=swap" rel="stylesheet">    <!-- <link rel="stylesheet" href="css/tableStyle.css"> --></head><body><input name=0 type="hidden" id="pass" value=11 /><input name=1 type="hidden" id="fail" value=31 /><input name=2 type="hidden" id="inconclusive" value=0 /><input name=3 type="hidden" id="skipped" value=0 /><div>    <img id="spintlyimage" src=Misc/logo.PNG style="position: relative; top: 44px; left: 71px;height: 164px;">    <div id="container" style="position: relative;width: 525px;height: 259px;top: -164px;margin: 0 auto;bottom: 57px;"></div>    <h3 class="report-title">API Automation Test Report - 01Reports.feature<span><a href="../index.html" class ="summarylink"> Back To Summary</a></span></h3>    <table class="parent-summary">        <thead class="test-cases-summary">        <tr>            <th>Total</th>            <th>Pass</th>            <th>Fail</th>            <th>Inconclusive</th>            <th>Skipped</th>            <th>Start Time</th>            <th>End Time</th>            <th>Total Duration</th>        </tr>        </thead>        <tbody>        <tr>            <td id="total-summary"></td>            <td id="pass-summary"></td>            <td id="fail-summary"></td>            <td id="inconclusive-summary"></td>            <td id="skipped-summary"></td>            <td>Tue Sep 27 17:49:05 IST 2022</td>            <td>Tue Sep 27 17:51:48 IST 2022</td>            <td>00:02:43</td>        </tr>        </tbody>    </table></div><div class="parent-div-test-steps">    <div class="tableiWHOjVUNtp testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Daily view without filters</p>
+            <p class="taglist">Tags : [@regression, @ra1, @attendance, @reportsAdmin, @attendanceAdmin]<br> </p>
+        </div>
+        <div class="scrolling-div tableiWHOjVUNtp">
+            <table class="step-details tableiWHOjVUNtp" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="iWHOjVUNtp">
+                            Actual Result
+                            <button id="iWHOjVUNtp" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get daily view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"name":"ASC"}}}</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"name":"ASC"}}}</td></tr><tr><td>2.</td><td>user calls "attendanceData" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableRnlBrAxJtv testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Daily view with filters</p>
+            <p class="taglist">Tags : [@regression, @ra1, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch </p>
+        </div>
+        <div class="scrolling-div tableRnlBrAxJtv">
+            <table class="step-details tableRnlBrAxJtv" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="RnlBrAxJtv">
+                            Actual Result
+                            <button id="RnlBrAxJtv" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get daily view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{"employeeName":"abc"}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"name":"ASC"}}}</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{"employeeName":"abc"}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"name":"ASC"}}}</td></tr><tr><td>2.</td><td>user calls "attendanceData" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableTNpUsTTmDV testcaselistname" style="display: none;">
+            <p class="tagname">Display shifts</p>
+            <p class="taglist">Tags : [@regression, @attendance, @ra2, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch </p>
+        </div>
+        <div class="scrolling-div tableTNpUsTTmDV">
+            <table class="step-details tableTNpUsTTmDV" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="TNpUsTTmDV">
+                            Actual Result
+                            <button id="TNpUsTTmDV" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get shifts</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>-</td><td>-</td></tr><tr><td>2.</td><td>user calls "shifts" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/shifts</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/shifts</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Response time: Less than 500</td><td>Response time: 297</td></tr><tr><td>5.</td><td>"type" in response is "success"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>"type":"success"</td><td>"type":"success"</td></tr></tbody>
+            </table>
+        </div><div class="tableCTzKWVpnsj testcaselistname" style="display: none;">
+            <p class="tagname">Download Daily view Excel without filters</p>
+            <p class="taglist">Tags : [@regression, @ra3, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/shifts </p>
+        </div>
+        <div class="scrolling-div tableCTzKWVpnsj">
+            <table class="step-details tableCTzKWVpnsj" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="CTzKWVpnsj">
+                            Actual Result
+                            <button id="CTzKWVpnsj" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file daily view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{"employeeName":""}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"orgName":"QA Organisation"}</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{"employeeName":""}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelDailyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableWxJsKgIeDf testcaselistname" style="display: none;">
+            <p class="tagname">Download Daily view Excel with filters</p>
+            <p class="taglist">Tags : [@regression, @ra3, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch/excel </p>
+        </div>
+        <div class="scrolling-div tableWxJsKgIeDf">
+            <table class="step-details tableWxJsKgIeDf" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="WxJsKgIeDf">
+                            Actual Result
+                            <button id="WxJsKgIeDf" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file daily view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{"employeeName":"abc"}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"orgName":"QA Organisation"}</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{"employeeName":"abc"}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelDailyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Response time: Less than 500</td><td>Response time: 410</td></tr></tbody>
+            </table>
+        </div><div class="tableIBCdMrZeCq testcaselistname" style="display: none;">
+            <p class="tagname">Download Daily view Pdf without filters</p>
+            <p class="taglist">Tags : [@regression, @ra4, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch/excel </p>
+        </div>
+        <div class="scrolling-div tableIBCdMrZeCq">
+            <table class="step-details tableIBCdMrZeCq" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="IBCdMrZeCq">
+                            Actual Result
+                            <button id="IBCdMrZeCq" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file daily view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{"employeeName":""}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"orgName":"QA Organisation"}</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{"employeeName":""}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfDailyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/daily-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/daily-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tablebktYZRjJpq testcaselistname" style="display: none;">
+            <p class="tagname">Download Daily view Pdf with filters</p>
+            <p class="taglist">Tags : [@regression, @ra4, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/daily-view/pdf </p>
+        </div>
+        <div class="scrolling-div tablebktYZRjJpq">
+            <table class="step-details tablebktYZRjJpq" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="bktYZRjJpq">
+                            Actual Result
+                            <button id="bktYZRjJpq" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file daily view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{"employeeName":"abc"}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"orgName":"QA Organisation"}</td><td>Request body: {"filters":{"currentStatus":null,"lateEntry":null,"earlyExit":null,"absent":null,"onLeave":null,"weekoffPresent":null,"shiftIds":[],"userIds":[],"terms":null,"reportingManager":null,"roles":null,"search":{"employeeName":"abc"}},"forDate":"2022-09-24","tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfDailyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/daily-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/daily-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableePmBWTCXQF testcaselistname" style="display: none;">
+            <p class="tagname">Organisation Data</p>
+            <p class="taglist">Tags : [@regression, @ra5, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/daily-view/pdf </p>
+        </div>
+        <div class="scrolling-div tableePmBWTCXQF">
+            <table class="step-details tableePmBWTCXQF" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="ePmBWTCXQF">
+                            Actual Result
+                            <button id="ePmBWTCXQF" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Post Organisation data with "attendanceFields"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"fields":["attributes","roles","accessPoints","reportingManagers","sites","users"]}</td><td>Request body: {"fields":["attributes","roles","accessPoints","reportingManagers","sites","users"]}</td></tr><tr><td>2.</td><td>user calls "organisationData" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/organisationManagement/organisations/560/data</td><td>https://api.spintly.com/v2/organisationManagement/organisations/560/data</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Response time: Less than 500</td><td>Response time: 255</td></tr><tr><td>5.</td><td>"type" in response is "success"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>"type":"success"</td><td>"type":"success"</td></tr></tbody>
+            </table>
+        </div><div class="tableqfsTLFrlPp testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Weekly view without filters</p>
+            <p class="taglist">Tags : [@regression, @ra6, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/organisationManagement/organisations/560/data </p>
+        </div>
+        <div class="scrolling-div tableqfsTLFrlPp">
+            <table class="step-details tableqfsTLFrlPp" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="qfsTLFrlPp">
+                            Actual Result
+                            <button id="qfsTLFrlPp" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get weekly view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td></tr><tr><td>2.</td><td>user calls "weeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableJnarIbotKH testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Weekly view with filters</p>
+            <p class="taglist">Tags : [@regression, @ra6, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list </p>
+        </div>
+        <div class="scrolling-div tableJnarIbotKH">
+            <table class="step-details tableJnarIbotKH" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="JnarIbotKH">
+                            Actual Result
+                            <button id="JnarIbotKH" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get weekly view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td></tr><tr><td>2.</td><td>user calls "weeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableTzZVeDLcYV testcaselistname" style="display: none;">
+            <p class="tagname">Download Weekly view Excel(Overall view) without filters</p>
+            <p class="taglist">Tags : [@regression, @ra7, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list </p>
+        </div>
+        <div class="scrolling-div tableTzZVeDLcYV">
+            <table class="step-details tableTzZVeDLcYV" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="TzZVeDLcYV">
+                            Actual Result
+                            <button id="TzZVeDLcYV" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file weekly view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMontlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Response time: Less than 500</td><td>Response time: 468</td></tr></tbody>
+            </table>
+        </div><div class="tableEtBGZDstpr testcaselistname" style="display: none;">
+            <p class="tagname">Download Weekly view Excel(Overall view) with filters</p>
+            <p class="taglist">Tags : [@regression, @ra7, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel </p>
+        </div>
+        <div class="scrolling-div tableEtBGZDstpr">
+            <table class="step-details tableEtBGZDstpr" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="EtBGZDstpr">
+                            Actual Result
+                            <button id="EtBGZDstpr" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file weekly view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMontlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Response time: Less than 500</td><td>Response time: 354</td></tr></tbody>
+            </table>
+        </div><div class="tableRrWcdvoecH testcaselistname" style="display: none;">
+            <p class="tagname">Download Weekly view Pdf(Overall view) without filters</p>
+            <p class="taglist">Tags : [@regression, @ra8, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel </p>
+        </div>
+        <div class="scrolling-div tableRrWcdvoecH">
+            <table class="step-details tableRrWcdvoecH" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="RrWcdvoecH">
+                            Actual Result
+                            <button id="RrWcdvoecH" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file weekly view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableoRrkiPSEid testcaselistname" style="display: none;">
+            <p class="tagname">Download Weekly view Pdf(Overall view) with filters</p>
+            <p class="taglist">Tags : [@regression, @ra8, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf </p>
+        </div>
+        <div class="scrolling-div tableoRrkiPSEid">
+            <table class="step-details tableoRrkiPSEid" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="oRrkiPSEid">
+                            Actual Result
+                            <button id="oRrkiPSEid" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file weekly view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Response time: Less than 500</td><td>Response time: 465</td></tr><tr><td>5.</td><td>"type" in response is "success"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>"type":"success"</td><td>"type":"success"</td></tr></tbody>
+            </table>
+        </div><div class="tablepRMjYdAfcu testcaselistname" style="display: none;">
+            <p class="tagname">Download Weekly view Excel(Detailed view) without filters</p>
+            <p class="taglist">Tags : [@ra9, @regression, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf </p>
+        </div>
+        <div class="scrolling-div tablepRMjYdAfcu">
+            <table class="step-details tablepRMjYdAfcu" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="pRMjYdAfcu">
+                            Actual Result
+                            <button id="pRMjYdAfcu" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file weekly view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tablekiOMKlwimj testcaselistname" style="display: none;">
+            <p class="tagname">Download Weekly view Excel(Detailed view) with filters</p>
+            <p class="taglist">Tags : [@ra9, @regression, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel </p>
+        </div>
+        <div class="scrolling-div tablekiOMKlwimj">
+            <table class="step-details tablekiOMKlwimj" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="kiOMKlwimj">
+                            Actual Result
+                            <button id="kiOMKlwimj" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file weekly view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tabledmuxzFKMXh testcaselistname" style="display: none;">
+            <p class="tagname">Download Weekly view Pdf(Detailed view) without filters</p>
+            <p class="taglist">Tags : [@regression, @ra10, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel </p>
+        </div>
+        <div class="scrolling-div tabledmuxzFKMXh">
+            <table class="step-details tabledmuxzFKMXh" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="dmuxzFKMXh">
+                            Actual Result
+                            <button id="dmuxzFKMXh" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file weekly view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tablePnQNGJntmX testcaselistname" style="display: none;">
+            <p class="tagname">Download Weekly view Pdf(Detailed view) with filters</p>
+            <p class="taglist">Tags : [@regression, @ra10, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf </p>
+        </div>
+        <div class="scrolling-div tablePnQNGJntmX">
+            <table class="step-details tablePnQNGJntmX" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="PnQNGJntmX">
+                            Actual Result
+                            <button id="PnQNGJntmX" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file weekly view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-17 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tablePnSDaftfyh testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Monthly view without filters</p>
+            <p class="taglist">Tags : [@ra11, @regression, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf </p>
+        </div>
+        <div class="scrolling-div tablePnSDaftfyh">
+            <table class="step-details tablePnSDaftfyh" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="PnSDaftfyh">
+                            Actual Result
+                            <button id="PnSDaftfyh" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get monthly view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td></tr><tr><td>2.</td><td>user calls "weeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableZuHYbFEKAR testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Monthly view with filters</p>
+            <p class="taglist">Tags : [@ra11, @regression, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list </p>
+        </div>
+        <div class="scrolling-div tableZuHYbFEKAR">
+            <table class="step-details tableZuHYbFEKAR" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="ZuHYbFEKAR">
+                            Actual Result
+                            <button id="ZuHYbFEKAR" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get monthly view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td></tr><tr><td>2.</td><td>user calls "weeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tablegassHfVWEJ testcaselistname" style="display: none;">
+            <p class="tagname">Download Monthly view Excel(Overall view) without filters</p>
+            <p class="taglist">Tags : [@regression, @ra12, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list </p>
+        </div>
+        <div class="scrolling-div tablegassHfVWEJ">
+            <table class="step-details tablegassHfVWEJ" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="gassHfVWEJ">
+                            Actual Result
+                            <button id="gassHfVWEJ" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file monthly view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMontlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Response time: Less than 500</td><td>Response time: 422</td></tr></tbody>
+            </table>
+        </div><div class="tablerxqOTYHbro testcaselistname" style="display: none;">
+            <p class="tagname">Download Monthly view Excel(Overall view) with filters</p>
+            <p class="taglist">Tags : [@regression, @ra12, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel </p>
+        </div>
+        <div class="scrolling-div tablerxqOTYHbro">
+            <table class="step-details tablerxqOTYHbro" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="rxqOTYHbro">
+                            Actual Result
+                            <button id="rxqOTYHbro" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file monthly view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMontlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Response time: Less than 500</td><td>Response time: 441</td></tr></tbody>
+            </table>
+        </div><div class="tablenrvVVvfhkE testcaselistname" style="display: none;">
+            <p class="tagname">Download Weekly view Pdf(Overall view) without filters</p>
+            <p class="taglist">Tags : [@regression, @ra13, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel </p>
+        </div>
+        <div class="scrolling-div tablenrvVVvfhkE">
+            <table class="step-details tablenrvVVvfhkE" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="nrvVVvfhkE">
+                            Actual Result
+                            <button id="nrvVVvfhkE" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file monthly view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tablefgbJichASS testcaselistname" style="display: none;">
+            <p class="tagname">Download Daily view Pdf(Overall view) with filters</p>
+            <p class="taglist">Tags : [@regression, @ra13, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf </p>
+        </div>
+        <div class="scrolling-div tablefgbJichASS">
+            <table class="step-details tablefgbJichASS" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="fgbJichASS">
+                            Actual Result
+                            <button id="fgbJichASS" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file monthly view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tablewnpksLuHdQ testcaselistname" style="display: none;">
+            <p class="tagname">Download Monthly view Excel(Detailed view) without filters</p>
+            <p class="taglist">Tags : [@regression, @ra14, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf </p>
+        </div>
+        <div class="scrolling-div tablewnpksLuHdQ">
+            <table class="step-details tablewnpksLuHdQ" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="wnpksLuHdQ">
+                            Actual Result
+                            <button id="wnpksLuHdQ" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file monthly view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tablePAxvWqXkXP testcaselistname" style="display: none;">
+            <p class="tagname">Download Monthly view Excel(Detailed view) with filters</p>
+            <p class="taglist">Tags : [@regression, @ra14, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel </p>
+        </div>
+        <div class="scrolling-div tablePAxvWqXkXP">
+            <table class="step-details tablePAxvWqXkXP" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="PAxvWqXkXP">
+                            Actual Result
+                            <button id="PAxvWqXkXP" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file monthly view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableHTPhwulTFg testcaselistname" style="display: none;">
+            <p class="tagname">Download Monthly view Pdf(Detailed view) without filters</p>
+            <p class="taglist">Tags : [@regression, @ra15, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel </p>
+        </div>
+        <div class="scrolling-div tableHTPhwulTFg">
+            <table class="step-details tableHTPhwulTFg" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="HTPhwulTFg">
+                            Actual Result
+                            <button id="HTPhwulTFg" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file monthly view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableHRqaFnAESA testcaselistname" style="display: none;">
+            <p class="tagname">Download Monthly view Pdf(Detailed view) with filters</p>
+            <p class="taglist">Tags : [@regression, @ra15, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf </p>
+        </div>
+        <div class="scrolling-div tableHRqaFnAESA">
+            <table class="step-details tableHRqaFnAESA" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="HRqaFnAESA">
+                            Actual Result
+                            <button id="HRqaFnAESA" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file monthly view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-08-24 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableUfgtGepmSh testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Date range view without filters</p>
+            <p class="taglist">Tags : [@regression, @attendance, @reportsAdmin, @attendanceAdmin, @ra16]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf </p>
+        </div>
+        <div class="scrolling-div tableUfgtGepmSh">
+            <table class="step-details tableUfgtGepmSh" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="UfgtGepmSh">
+                            Actual Result
+                            <button id="UfgtGepmSh" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get date range view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td></tr><tr><td>2.</td><td>user calls "weeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableUApkIlYhaB testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Date range view with filters</p>
+            <p class="taglist">Tags : [@regression, @attendance, @reportsAdmin, @attendanceAdmin, @ra16]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list </p>
+        </div>
+        <div class="scrolling-div tableUApkIlYhaB">
+            <table class="step-details tableUApkIlYhaB" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="UApkIlYhaB">
+                            Actual Result
+                            <button id="UApkIlYhaB" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get date range view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":25},"order":{"user_id":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30"}</td></tr><tr><td>2.</td><td>user calls "weeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Response time: Less than 500</td><td>Response time: 484</td></tr><tr><td>5.</td><td>"type" in response is "success"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>"type":"success"</td><td>"type":"success"</td></tr></tbody>
+            </table>
+        </div><div class="tablefchvotlyKC testcaselistname" style="display: none;">
+            <p class="tagname">Download Date range view Excel(Overall view) without filters</p>
+            <p class="taglist">Tags : [@regression, @attendance, @reportsAdmin, @ra17, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list </p>
+        </div>
+        <div class="scrolling-div tablefchvotlyKC">
+            <table class="step-details tablefchvotlyKC" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="fchvotlyKC">
+                            Actual Result
+                            <button id="fchvotlyKC" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file date range view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMontlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Response time: Less than 500</td><td>Response time: 355</td></tr></tbody>
+            </table>
+        </div><div class="tablekaMHvCGZRh testcaselistname" style="display: none;">
+            <p class="tagname">Download Date range view Excel(Overall view) with filters</p>
+            <p class="taglist">Tags : [@regression, @attendance, @reportsAdmin, @ra17, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel </p>
+        </div>
+        <div class="scrolling-div tablekaMHvCGZRh">
+            <table class="step-details tablekaMHvCGZRh" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="kaMHvCGZRh">
+                            Actual Result
+                            <button id="kaMHvCGZRh" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file date range view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMontlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableUpTectoxAV testcaselistname" style="display: none;">
+            <p class="tagname">Download Date range view Pdf(Overall view) without filters</p>
+            <p class="taglist">Tags : [@regression, @attendance, @ra18, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel </p>
+        </div>
+        <div class="scrolling-div tableUpTectoxAV">
+            <table class="step-details tableUpTectoxAV" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="UpTectoxAV">
+                            Actual Result
+                            <button id="UpTectoxAV" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file date range view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableVaJDQyxTLg testcaselistname" style="display: none;">
+            <p class="tagname">Download Date range view Pdf(Overall view) with filters</p>
+            <p class="taglist">Tags : [@regression, @attendance, @ra18, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf </p>
+        </div>
+        <div class="scrolling-div tableVaJDQyxTLg">
+            <table class="step-details tableVaJDQyxTLg" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="VaJDQyxTLg">
+                            Actual Result
+                            <button id="VaJDQyxTLg" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file date range view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyView" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableGMOMzXkcqI testcaselistname" style="display: none;">
+            <p class="tagname">Download Date range view Excel(Detailed view) without filters</p>
+            <p class="taglist">Tags : [@regression, @ra19, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf </p>
+        </div>
+        <div class="scrolling-div tableGMOMzXkcqI">
+            <table class="step-details tableGMOMzXkcqI" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="GMOMzXkcqI">
+                            Actual Result
+                            <button id="GMOMzXkcqI" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file date range view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableOJohbAfFVF testcaselistname" style="display: none;">
+            <p class="tagname">Download Date range view Excel(Detailed view) with filters</p>
+            <p class="taglist">Tags : [@regression, @ra19, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel </p>
+        </div>
+        <div class="scrolling-div tableOJohbAfFVF">
+            <table class="step-details tableOJohbAfFVF" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="OJohbAfFVF">
+                            Actual Result
+                            <button id="OJohbAfFVF" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file date range view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "excelWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableJSUiIMdyUV testcaselistname" style="display: none;">
+            <p class="tagname">Download Date range view Pdf(Detailed view) without filters</p>
+            <p class="taglist">Tags : [@regression, @ra20, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel </p>
+        </div>
+        <div class="scrolling-div tableJSUiIMdyUV">
+            <table class="step-details tableJSUiIMdyUV" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="JSUiIMdyUV">
+                            Actual Result
+                            <button id="JSUiIMdyUV" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file date range view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":""},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tablearEjAoZpjt testcaselistname" style="display: none;">
+            <p class="tagname">Download Date range view Pdf(Detailed view) with filters</p>
+            <p class="taglist">Tags : [@regression, @ra20, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf </p>
+        </div>
+        <div class="scrolling-div tablearEjAoZpjt">
+            <table class="step-details tablearEjAoZpjt" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="arEjAoZpjt">
+                            Actual Result
+                            <button id="arEjAoZpjt" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Download file date range view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td><td>Request body: {"tableOptions":{"pagination":{"page":1,"per_page":-1},"order":{"name":"ASC"}},"filters":{"userIds":[],"terms":[],"roles":"","attributes":{},"reportingManager":"","search":{"employeeName":"abc"}},"startDate":"2022-09-23 00:00:00 +05:30","endDate":"2022-09-24 23:59:59 +05:30","orgName":"QA Organisation"}</td></tr><tr><td>2.</td><td>user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tablebpLQIpKwAR testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Calendar-Attendance without filters</p>
+            <p class="taglist">Tags : [@regression, @ra21, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf </p>
+        </div>
+        <div class="scrolling-div tablebpLQIpKwAR">
+            <table class="step-details tablebpLQIpKwAR" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="bpLQIpKwAR">
+                            Actual Result
+                            <button id="bpLQIpKwAR" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get calendar "attendance" view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: null</td><td>Request body: null</td></tr><tr><td>2.</td><td>user calls "calendar" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:red;color:white;font-weight:700'>ERROR</td><td>Status code: 200 OK</td><td>Error! Status Code: HTTP/1.1 500 Internal Server Error
+Response body:{"type":"error","message":"Cannot read property 'roles' of undefined"}</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableWBIWPXxpXs testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Calendar-Attendance without filters</p>
+            <p class="taglist">Tags : [@regression, @ra21, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar </p>
+        </div>
+        <div class="scrolling-div tableWBIWPXxpXs">
+            <table class="step-details tableWBIWPXxpXs" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="WBIWPXxpXs">
+                            Actual Result
+                            <button id="WBIWPXxpXs" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get calendar "attendance" view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: null</td><td>Request body: null</td></tr><tr><td>2.</td><td>user calls "calendar" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:red;color:white;font-weight:700'>ERROR</td><td>Status code: 200 OK</td><td>Error! Status Code: HTTP/1.1 500 Internal Server Error
+Response body:{"type":"error","message":"Cannot read property 'roles' of undefined"}</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableHsPdQDNanZ testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Calendar-OT without filters</p>
+            <p class="taglist">Tags : [@ra22, @regression, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar </p>
+        </div>
+        <div class="scrolling-div tableHsPdQDNanZ">
+            <table class="step-details tableHsPdQDNanZ" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="HsPdQDNanZ">
+                            Actual Result
+                            <button id="HsPdQDNanZ" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get calendar "ot" view with "no filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"pagination":{"page":1,"per_page":25},"order":{"name":"ASC"},"filters":{"search":{}},"forMonth":"2022-09","toggleReport":1,"attendanceDataFlag":false,"overtimeDataFlag":true}</td><td>Request body: {"pagination":{"page":1,"per_page":25},"order":{"name":"ASC"},"filters":{"search":{}},"forMonth":"2022-09","toggleReport":1,"attendanceDataFlag":false,"overtimeDataFlag":true}</td></tr><tr><td>2.</td><td>user calls "calendar" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:red;color:white;font-weight:700'>FAILED</td><td>Response time: Less than 500</td><td>Response time greater than 500ms</td></tr><tr><td + rightspan+ ><td colspan='7' style='text-align: left;'>NOTE: Some steps are SKIPPED or FAILED. Please refer to logs for more details</td></tr></tbody>
+            </table>
+        </div><div class="tableNjDRpRrebk testcaselistname" style="display: none;">
+            <p class="tagname">Fetch Calendar-OT without filters</p>
+            <p class="taglist">Tags : [@ra22, @regression, @attendance, @reportsAdmin, @attendanceAdmin]<br>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar </p>
+        </div>
+        <div class="scrolling-div tableNjDRpRrebk">
+            <table class="step-details tableNjDRpRrebk" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>Sr. No</th>
+                        <th>Test Step</th>
+                        <th>Step Result</th>
+                        <th>Expected Result</th>
+                        <th class="NjDRpRrebk">
+                            Actual Result
+                            <button id="NjDRpRrebk" type="button" class="btn btn-primary cancelbutton" onclick="closeSteps(this)">Close</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody><tr><td>1.</td><td>Get calendar "ot" view with "filter"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Request body: {"pagination":{"page":1,"per_page":25},"order":{"name":"ASC"},"filters":{"search":{"employeeName":"abc"}},"forMonth":"2022-09","toggleReport":1,"attendanceDataFlag":false,"overtimeDataFlag":true}</td><td>Request body: {"pagination":{"page":1,"per_page":25},"order":{"name":"ASC"},"filters":{"search":{"employeeName":"abc"}},"forMonth":"2022-09","toggleReport":1,"attendanceDataFlag":false,"overtimeDataFlag":true}</td></tr><tr><td>2.</td><td>user calls "calendar" with orgId 560</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</td><td>https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</td></tr><tr><td>3.</td><td>the API call got success with status code 200</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Status code: 200 OK</td><td>Status code: 200 OK</td></tr><tr><td>4.</td><td>response time is less than 500 ms</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>Response time: Less than 500</td><td>Response time: 458</td></tr><tr><td>5.</td><td>"type" in response is "success"</td><td style='background-color:#02b51a;color:black;font-weight:700'>PASSED</td><td>"type":"success"</td><td>"type":"success"</td></tr></tbody>
+            </table>
+        </div></div><table class="parent">    <thead class="test-cases-list">    <tr>        <th>Sr. No</th>        <th>Test Case Title</th>        <th>Method</th>        <th>Status</th>        <th>Response Time</th>        <th>Reason For Failure</th>        <th>Steps</th>    </tr>    </thead>    <tbody>    <tr><td class="casenumber">1.</td><td>
+                    <p>Fetch Daily view without filters</p>
+                    <p>Tags : [@regression, @ra1, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">847ms</td><td>Response time greater than 500ms</td><td class="iWHOjVUNtp"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">2.</td><td>
+                    <p>Fetch Daily view with filters</p>
+                    <p>Tags : [@regression, @ra1, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">532ms</td><td>Response time greater than 500ms</td><td class="RnlBrAxJtv"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">3.</td><td>
+                    <p>Display shifts</p>
+                    <p>Tags : [@regression, @attendance, @ra2, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/shifts</p>                </td><td style="font-weight:bold";>GET</td><td class="status">
+<div class="indicator" style="background-color: #02b51a;color:black;font-weight:700">Pass</div>
+</td><td style="font-weight:bold;">297ms</td><td>-</td><td class="TNpUsTTmDV"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">4.</td><td>
+                    <p>Download Daily view Excel without filters</p>
+                    <p>Tags : [@regression, @ra3, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">587ms</td><td>Response time greater than 500ms</td><td class="CTzKWVpnsj"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">5.</td><td>
+                    <p>Download Daily view Excel with filters</p>
+                    <p>Tags : [@regression, @ra3, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetch/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+<div class="indicator" style="background-color: #02b51a;color:black;font-weight:700">Pass</div>
+</td><td style="font-weight:bold;">410ms</td><td>-</td><td class="WxJsKgIeDf"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">6.</td><td>
+                    <p>Download Daily view Pdf without filters</p>
+                    <p>Tags : [@regression, @ra4, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/daily-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">930ms</td><td>Response time greater than 500ms</td><td class="IBCdMrZeCq"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">7.</td><td>
+                    <p>Download Daily view Pdf with filters</p>
+                    <p>Tags : [@regression, @ra4, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/daily-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">851ms</td><td>Response time greater than 500ms</td><td class="bktYZRjJpq"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">8.</td><td>
+                    <p>Organisation Data</p>
+                    <p>Tags : [@regression, @ra5, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/organisationManagement/organisations/560/data</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+<div class="indicator" style="background-color: #02b51a;color:black;font-weight:700">Pass</div>
+</td><td style="font-weight:bold;">255ms</td><td>-</td><td class="ePmBWTCXQF"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">9.</td><td>
+                    <p>Fetch Weekly view without filters</p>
+                    <p>Tags : [@regression, @ra6, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">686ms</td><td>Response time greater than 500ms</td><td class="qfsTLFrlPp"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">10.</td><td>
+                    <p>Fetch Weekly view with filters</p>
+                    <p>Tags : [@regression, @ra6, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">1107ms</td><td>Response time greater than 500ms</td><td class="JnarIbotKH"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">11.</td><td>
+                    <p>Download Weekly view Excel(Overall view) without filters</p>
+                    <p>Tags : [@regression, @ra7, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+<div class="indicator" style="background-color: #02b51a;color:black;font-weight:700">Pass</div>
+</td><td style="font-weight:bold;">468ms</td><td>-</td><td class="TzZVeDLcYV"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">12.</td><td>
+                    <p>Download Weekly view Excel(Overall view) with filters</p>
+                    <p>Tags : [@regression, @ra7, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+<div class="indicator" style="background-color: #02b51a;color:black;font-weight:700">Pass</div>
+</td><td style="font-weight:bold;">354ms</td><td>-</td><td class="EtBGZDstpr"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">13.</td><td>
+                    <p>Download Weekly view Pdf(Overall view) without filters</p>
+                    <p>Tags : [@regression, @ra8, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">648ms</td><td>Response time greater than 500ms</td><td class="RrWcdvoecH"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">14.</td><td>
+                    <p>Download Weekly view Pdf(Overall view) with filters</p>
+                    <p>Tags : [@regression, @ra8, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+<div class="indicator" style="background-color: #02b51a;color:black;font-weight:700">Pass</div>
+</td><td style="font-weight:bold;">465ms</td><td>-</td><td class="oRrkiPSEid"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">15.</td><td>
+                    <p>Download Weekly view Excel(Detailed view) without filters</p>
+                    <p>Tags : [@ra9, @regression, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">1473ms</td><td>Response time greater than 500ms</td><td class="pRMjYdAfcu"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">16.</td><td>
+                    <p>Download Weekly view Excel(Detailed view) with filters</p>
+                    <p>Tags : [@ra9, @regression, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">1465ms</td><td>Response time greater than 500ms</td><td class="kiOMKlwimj"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">17.</td><td>
+                    <p>Download Weekly view Pdf(Detailed view) without filters</p>
+                    <p>Tags : [@regression, @ra10, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">1697ms</td><td>Response time greater than 500ms</td><td class="dmuxzFKMXh"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">18.</td><td>
+                    <p>Download Weekly view Pdf(Detailed view) with filters</p>
+                    <p>Tags : [@regression, @ra10, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">1854ms</td><td>Response time greater than 500ms</td><td class="PnQNGJntmX"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">19.</td><td>
+                    <p>Fetch Monthly view without filters</p>
+                    <p>Tags : [@ra11, @regression, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">576ms</td><td>Response time greater than 500ms</td><td class="PnSDaftfyh"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">20.</td><td>
+                    <p>Fetch Monthly view with filters</p>
+                    <p>Tags : [@ra11, @regression, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">1036ms</td><td>Response time greater than 500ms</td><td class="ZuHYbFEKAR"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">21.</td><td>
+                    <p>Download Monthly view Excel(Overall view) without filters</p>
+                    <p>Tags : [@regression, @ra12, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+<div class="indicator" style="background-color: #02b51a;color:black;font-weight:700">Pass</div>
+</td><td style="font-weight:bold;">422ms</td><td>-</td><td class="gassHfVWEJ"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">22.</td><td>
+                    <p>Download Monthly view Excel(Overall view) with filters</p>
+                    <p>Tags : [@regression, @ra12, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+<div class="indicator" style="background-color: #02b51a;color:black;font-weight:700">Pass</div>
+</td><td style="font-weight:bold;">441ms</td><td>-</td><td class="rxqOTYHbro"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">23.</td><td>
+                    <p>Download Weekly view Pdf(Overall view) without filters</p>
+                    <p>Tags : [@regression, @ra13, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">1177ms</td><td>Response time greater than 500ms</td><td class="nrvVVvfhkE"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">24.</td><td>
+                    <p>Download Daily view Pdf(Overall view) with filters</p>
+                    <p>Tags : [@regression, @ra13, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">557ms</td><td>Response time greater than 500ms</td><td class="fgbJichASS"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">25.</td><td>
+                    <p>Download Monthly view Excel(Detailed view) without filters</p>
+                    <p>Tags : [@regression, @ra14, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">4530ms</td><td>Response time greater than 500ms</td><td class="wnpksLuHdQ"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">26.</td><td>
+                    <p>Download Monthly view Excel(Detailed view) with filters</p>
+                    <p>Tags : [@regression, @ra14, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">3036ms</td><td>Response time greater than 500ms</td><td class="PAxvWqXkXP"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">27.</td><td>
+                    <p>Download Monthly view Pdf(Detailed view) without filters</p>
+                    <p>Tags : [@regression, @ra15, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">3598ms</td><td>Response time greater than 500ms</td><td class="HTPhwulTFg"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">28.</td><td>
+                    <p>Download Monthly view Pdf(Detailed view) with filters</p>
+                    <p>Tags : [@regression, @ra15, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">4864ms</td><td>Response time greater than 500ms</td><td class="HRqaFnAESA"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">29.</td><td>
+                    <p>Fetch Date range view without filters</p>
+                    <p>Tags : [@regression, @attendance, @reportsAdmin, @attendanceAdmin, @ra16]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">663ms</td><td>Response time greater than 500ms</td><td class="UfgtGepmSh"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">30.</td><td>
+                    <p>Fetch Date range view with filters</p>
+                    <p>Tags : [@regression, @attendance, @reportsAdmin, @attendanceAdmin, @ra16]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+<div class="indicator" style="background-color: #02b51a;color:black;font-weight:700">Pass</div>
+</td><td style="font-weight:bold;">484ms</td><td>-</td><td class="UApkIlYhaB"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">31.</td><td>
+                    <p>Download Date range view Excel(Overall view) without filters</p>
+                    <p>Tags : [@regression, @attendance, @reportsAdmin, @ra17, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+<div class="indicator" style="background-color: #02b51a;color:black;font-weight:700">Pass</div>
+</td><td style="font-weight:bold;">355ms</td><td>-</td><td class="fchvotlyKC"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">32.</td><td>
+                    <p>Download Date range view Excel(Overall view) with filters</p>
+                    <p>Tags : [@regression, @attendance, @reportsAdmin, @ra17, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/period/list/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">824ms</td><td>Response time greater than 500ms</td><td class="kaMHvCGZRh"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">33.</td><td>
+                    <p>Download Date range view Pdf(Overall view) without filters</p>
+                    <p>Tags : [@regression, @attendance, @ra18, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">3446ms</td><td>Response time greater than 500ms</td><td class="UpTectoxAV"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">34.</td><td>
+                    <p>Download Date range view Pdf(Overall view) with filters</p>
+                    <p>Tags : [@regression, @attendance, @ra18, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">3347ms</td><td>Response time greater than 500ms</td><td class="VaJDQyxTLg"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">35.</td><td>
+                    <p>Download Date range view Excel(Detailed view) without filters</p>
+                    <p>Tags : [@regression, @ra19, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">702ms</td><td>Response time greater than 500ms</td><td class="GMOMzXkcqI"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">36.</td><td>
+                    <p>Download Date range view Excel(Detailed view) with filters</p>
+                    <p>Tags : [@regression, @ra19, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/fetchDetailView/excel</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">877ms</td><td>Response time greater than 500ms</td><td class="OJohbAfFVF"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">37.</td><td>
+                    <p>Download Date range view Pdf(Detailed view) without filters</p>
+                    <p>Tags : [@regression, @ra20, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">908ms</td><td>Response time greater than 500ms</td><td class="JSUiIMdyUV"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">38.</td><td>
+                    <p>Download Date range view Pdf(Detailed view) with filters</p>
+                    <p>Tags : [@regression, @ra20, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/weeklyMonthly-detailed-view/pdf</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">830ms</td><td>Response time greater than 500ms</td><td class="arEjAoZpjt"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">39.</td><td>
+                    <p>Fetch Calendar-Attendance without filters</p>
+                    <p>Tags : [@regression, @ra21, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">830ms</td><td>Error! Status Code: HTTP/1.1 500 Internal Server Error
+Response body:{"type":"error","message":"Cannot read property 'roles' of undefined"}</td><td class="bpLQIpKwAR"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">40.</td><td>
+                    <p>Fetch Calendar-Attendance without filters</p>
+                    <p>Tags : [@regression, @ra21, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">830ms</td><td>Error! Status Code: HTTP/1.1 500 Internal Server Error
+Response body:{"type":"error","message":"Cannot read property 'roles' of undefined"}</td><td class="WBIWPXxpXs"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">41.</td><td>
+                    <p>Fetch Calendar-OT without filters</p>
+                    <p>Tags : [@ra22, @regression, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td style="font-weight:bold;">899ms</td><td>Response time greater than 500ms</td><td class="HsPdQDNanZ"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr><tr><td class="casenumber">42.</td><td>
+                    <p>Fetch Calendar-OT without filters</p>
+                    <p>Tags : [@ra22, @regression, @attendance, @reportsAdmin, @attendanceAdmin]</p>					 <p class="ReqURL">https://api.spintly.com/v2/attendanceManagement/organisations/560/attendance-data/calendar</p>                </td><td style="font-weight:bold";>POST</td><td class="status">
+<div class="indicator" style="background-color: #02b51a;color:black;font-weight:700">Pass</div>
+</td><td style="font-weight:bold;">458ms</td><td>-</td><td class="NjDRpRrebk"><button type="button" class="btn btn-primary" onclick="showSteps(this)">Show Details</button></td></tr>    </tbody></table><table class="table" style="width: 100%; display:none;" colspan=4 border="3"><br><br><br>    <th colspan="4">EXECUTION REPORT - 01Reports.feature</th>    <tr class="header2" >        <td><b>Sr.#</b></td>        <td><b>Testcase Title</b></td>        <td><b>Status</b></td>        <td><b>Reason</b></td>    </tr>    <tr class="header"><tr class='header'><td>*</td><td align='left'>Fetch Daily view without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Fetch Daily view with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Daily view Excel without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Daily view Pdf without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Daily view Pdf with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Fetch Weekly view without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Fetch Weekly view with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Weekly view Pdf(Overall view) without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Weekly view Excel(Detailed view) without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Weekly view Excel(Detailed view) with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Weekly view Pdf(Detailed view) without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Weekly view Pdf(Detailed view) with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Fetch Monthly view without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Fetch Monthly view with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Weekly view Pdf(Overall view) without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Daily view Pdf(Overall view) with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Monthly view Excel(Detailed view) without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Monthly view Excel(Detailed view) with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Monthly view Pdf(Detailed view) without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Monthly view Pdf(Detailed view) with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Fetch Date range view without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Date range view Excel(Overall view) with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Date range view Pdf(Overall view) without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Date range view Pdf(Overall view) with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Date range view Excel(Detailed view) without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Date range view Excel(Detailed view) with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Date range view Pdf(Detailed view) without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Download Date range view Pdf(Detailed view) with filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Fetch Calendar-Attendance without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Error! Status Code: HTTP/1.1 500 Internal Server Error
+Response body:{"type":"error","message":"Cannot read property 'roles' of undefined"}</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>ERROR| Step : the API call got success with status code 200, Expected is : Status code: 200 OK and Actual is : Error! Status Code: HTTP/1.1 500 Internal Server Error
+Response body:{"type":"error","message":"Cannot read property 'roles' of undefined"} | Stacktrace expected [200] but found [500] ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Fetch Calendar-Attendance without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Error! Status Code: HTTP/1.1 500 Internal Server Error
+Response body:{"type":"error","message":"Cannot read property 'roles' of undefined"}</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>ERROR| Step : the API call got success with status code 200, Expected is : Status code: 200 OK and Actual is : Error! Status Code: HTTP/1.1 500 Internal Server Error
+Response body:{"type":"error","message":"Cannot read property 'roles' of undefined"} | Stacktrace expected [200] but found [500] ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr><tr class='header'><td>*</td><td align='left'>Fetch Calendar-OT without filters</td><td class="status">
+                    <div class="indicator" style="background-color: red;color:white;font-weight:700;">Fail</div>
+                </td><td align='left'>Response time greater than 500ms</td></tr><tr class='header'><tr><td + rightSpan + ></td><td colspan=8 align='left'>Error Log : <div class='maincontent'><div class='content'>FAIL| Step : response time is less than 500 ms Actual is : Response time greater than 500ms ...</div><div class='txtcol'><a>Show More</a></div></div></td></tr></table></body></html>
