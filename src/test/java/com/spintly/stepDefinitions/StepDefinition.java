@@ -1364,17 +1364,27 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
     }
 
-    @Given("Get daily view with {string}")
-    public void get_daily_view_with(String payload) throws IOException {
+    @Given("Get daily view with {string} for {string}")
+    public void get_daily_view_with_for(String payload, String role) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
-        if(payload.equalsIgnoreCase("no filter")) {
-            reqBody = "{\"filters\":{\"currentStatus\":null,\"lateEntry\":null,\"earlyExit\":null,\"absent\":null,\"onLeave\":null,\"weekoffPresent\":null,\"shiftIds\":[],\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{}},\"forDate\":\"2022-09-24\",\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"}}}";
-            reqSpec = reqSpec.body(reqBody);
-        } else if (payload.equalsIgnoreCase("filter")) {
-            reqBody="{\"filters\":{\"currentStatus\":null,\"lateEntry\":null,\"earlyExit\":null,\"absent\":null,\"onLeave\":null,\"weekoffPresent\":null,\"shiftIds\":[],\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{\"employeeName\":\"user\"}},\"forDate\":\"2022-09-24\",\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"}}}";
-            reqSpec=reqSpec.body(reqBody);
+        if(role.equalsIgnoreCase("admin")){
+            if(payload.equalsIgnoreCase("no filter")) {
+                reqBody = "{\"filters\":{\"currentStatus\":null,\"lateEntry\":null,\"earlyExit\":null,\"absent\":null,\"onLeave\":null,\"weekoffPresent\":null,\"shiftIds\":[],\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{}},\"forDate\":\"2022-09-24\",\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"}}}";
+                reqSpec = reqSpec.body(reqBody);
+            } else if (payload.equalsIgnoreCase("filter")) {
+                reqBody="{\"filters\":{\"currentStatus\":null,\"lateEntry\":null,\"earlyExit\":null,\"absent\":null,\"onLeave\":null,\"weekoffPresent\":null,\"shiftIds\":[],\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{\"employeeName\":\"user\"}},\"forDate\":\"2022-09-24\",\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"}}}";
+                reqSpec=reqSpec.body(reqBody);
+            }
+        } else if (role.equalsIgnoreCase("manager")) {
+            if(payload.equalsIgnoreCase("no filter")) {
+                reqBody = "{\"filters\":{\"currentStatus\":null,\"lateEntry\":null,\"earlyExit\":null,\"absent\":null,\"onLeave\":null,\"weekoffPresent\":null,\"shiftIds\":[],\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{}},\"forDate\":\"2022-09-29\",\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"}}}";
+                reqSpec = reqSpec.body(reqBody);
+            } else if (payload.equalsIgnoreCase("filter")) {
+                reqBody="{\"filters\":{\"currentStatus\":null,\"lateEntry\":null,\"earlyExit\":null,\"absent\":null,\"onLeave\":null,\"weekoffPresent\":null,\"shiftIds\":[],\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{\"employeeName\":\"user\"}},\"forDate\":\"2022-09-29\",\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"}},\"orgName\":\"Testing Mrinq Tech LLP V2\"}";
+                reqSpec=reqSpec.body(reqBody);
+            }
         }
 
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);

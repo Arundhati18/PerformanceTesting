@@ -6,7 +6,7 @@ Feature: Reports for Manager
 
   @rm1
   Scenario: Fetch Daily view without filters
-    Given Get daily view with "no filter"
+    Given Get daily view with "no filter" for "manager"
     When user calls "attendanceData" with orgId 10
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -14,7 +14,7 @@ Feature: Reports for Manager
 
   @rm1
   Scenario: Fetch Daily view with filters
-    Given Get daily view with "filter"
+    Given Get daily view with "filter" for "manager"
     When user calls "attendanceData" with orgId 10
     Then the API call got success with status code 200
     And response time is less than 500 ms
