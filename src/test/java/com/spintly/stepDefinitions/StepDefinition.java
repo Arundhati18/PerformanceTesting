@@ -1429,23 +1429,32 @@ public class StepDefinition extends DriverBase {
             reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-09-17 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
             reqSpec=reqSpec.body(reqBody);
         } else if (payload.equalsIgnoreCase("filter")) {
-            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-09-17 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"user\"}},\"startDate\":\"2022-09-17 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
             reqSpec=reqSpec.body(reqBody);
         }
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
     }
 
-    @Given("Download file weekly view with {string}")
-    public void download_file_weekly_view_with(String payload) throws IOException {
+    @Given("Download file weekly view with {string} for {string}")
+    public void download_file_weekly_view_with(String payload, String role) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
-
-        if (payload.equalsIgnoreCase("no filter")){
-            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-09-17 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
-            reqSpec=reqSpec.body(reqBody);
-        } else if (payload.equalsIgnoreCase("filter")) {
-            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-09-17 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
-            reqSpec=reqSpec.body(reqBody);
+        if(role.equalsIgnoreCase("admin")) {
+            if (payload.equalsIgnoreCase("no filter")) {
+                reqBody = "{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-09-17 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+                reqSpec = reqSpec.body(reqBody);
+            } else if (payload.equalsIgnoreCase("filter")) {
+                reqBody = "{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"user\"}},\"startDate\":\"2022-09-17 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+                reqSpec = reqSpec.body(reqBody);
+            }
+        } else if (role.equalsIgnoreCase("manager")) {
+            if (payload.equalsIgnoreCase("no filter")) {
+                reqBody = "{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-09-23 00:00:00 +05:30\",\"endDate\":\"2022-09-30 23:59:59 +05:30\",\"orgName\":\"Testing Mrinq Tech LLP V2\"}";
+                reqSpec = reqSpec.body(reqBody);
+            } else if (payload.equalsIgnoreCase("filter")) {
+                reqBody = "{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"user\"}},\"startDate\":\"2022-09-23 00:00:00 +05:30\",\"endDate\":\"2022-09-30 23:59:59 +05:30\",\"orgName\":\"Testing Mrinq Tech LLP V2\"}";
+                reqSpec = reqSpec.body(reqBody);
+            }
         }
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
     }

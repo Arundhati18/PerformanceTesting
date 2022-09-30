@@ -84,21 +84,21 @@ Feature: Reports for Admin
 
   @ra7
   Scenario: Download Weekly view Excel(Overall view) without filters
-    Given Download file weekly view with "no filter"
+    Given Download file weekly view with "no filter" for "admin"
     When user calls "excelWeeklyMontlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra7
   Scenario: Download Weekly view Excel(Overall view) with filters
-    Given Download file weekly view with "filter"
+    Given Download file weekly view with "filter" for "admin"
     When user calls "excelWeeklyMontlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra8
   Scenario: Download Weekly view Pdf(Overall view) without filters
-    Given Download file weekly view with "no filter"
+    Given Download file weekly view with "no filter" for "admin"
     When user calls "pdfWeeklyMonthlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -106,7 +106,7 @@ Feature: Reports for Admin
 
   @ra8
   Scenario: Download Weekly view Pdf(Overall view) with filters
-    Given Download file weekly view with "filter"
+    Given Download file weekly view with "filter" for "admin"
     When user calls "pdfWeeklyMonthlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -114,21 +114,21 @@ Feature: Reports for Admin
 
   @ra9
   Scenario: Download Weekly view Excel(Detailed view) without filters
-    Given Download file weekly view with "no filter"
+    Given Download file weekly view with "no filter" for "admin"
     When user calls "excelWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra9
   Scenario: Download Weekly view Excel(Detailed view) with filters
-    Given Download file weekly view with "filter"
+    Given Download file weekly view with "filter" for "admin"
     When user calls "excelWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra10
   Scenario: Download Weekly view Pdf(Detailed view) without filters
-    Given Download file weekly view with "no filter"
+    Given Download file weekly view with "no filter" for "admin"
     When user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -136,7 +136,7 @@ Feature: Reports for Admin
 
   @ra10
   Scenario: Download Weekly view Pdf(Detailed view) with filters
-    Given Download file weekly view with "filter"
+    Given Download file weekly view with "filter" for "admin"
     When user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms

@@ -81,3 +81,63 @@ Feature: Reports for Manager
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
+
+  @rm7
+  Scenario: Download Weekly view Excel(Overall view) without filters
+    Given Download file weekly view with "no filter" for "manager"
+    When user calls "excelWeeklyMontlyView" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+
+  @rm7
+  Scenario: Download Weekly view Excel(Overall view) with filters
+    Given Download file weekly view with "filter" for "manager"
+    When user calls "excelWeeklyMontlyView" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+
+  @rm8
+  Scenario: Download Weekly view Pdf(Overall view) without filters
+    Given Download file weekly view with "no filter" for "manager"
+    When user calls "pdfWeeklyMonthlyView" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @rm8
+  Scenario: Download Weekly view Pdf(Overall view) with filters
+    Given Download file weekly view with "filter" for "manager"
+    When user calls "pdfWeeklyMonthlyView" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @rm9
+  Scenario: Download Weekly view Excel(Detailed view) without filters
+    Given Download file weekly view with "no filter" for "manager"
+    When user calls "excelWeeklyMonthlyViewDetailed" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+
+  @rm9
+  Scenario: Download Weekly view Excel(Detailed view) with filters
+    Given Download file weekly view with "filter" for "manager"
+    When user calls "excelWeeklyMonthlyViewDetailed" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+
+  @rm10
+  Scenario: Download Weekly view Pdf(Detailed view) without filters
+    Given Download file weekly view with "no filter" for "manager"
+    When user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @rm10
+  Scenario: Download Weekly view Pdf(Detailed view) with filters
+    Given Download file weekly view with "filter" for "manager"
+    When user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
