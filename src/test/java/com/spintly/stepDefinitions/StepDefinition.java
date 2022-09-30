@@ -47,7 +47,7 @@ public class StepDefinition extends DriverBase {
     public void get_(String str1) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
-        //ResultManager.log("-", "-", false);
+        ResultManager.log("-", "-", false);
     }
 
 

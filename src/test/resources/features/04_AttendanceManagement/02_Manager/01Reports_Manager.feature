@@ -141,4 +141,3 @@ Feature: Reports for Manager
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
-
