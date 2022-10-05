@@ -29,10 +29,10 @@ public class StepDefinition extends DriverBase {
     ResponseSpecification resSpec;
     Response response, updateDoorRes, deleteRes, accHistoryRes, detailsUserRes,
             shiftDetailsUserRes, editUserRes, getPermissionRes, patchPermissionRes,
-            deactivateUserRes, activateUserRes;
+            deactivateUserRes, activateUserRes, detailsLeaveRes,updateLeaveRes, deleteLeaveRes;
     ValidatableResponse valRes;
 
-    static int userId;
+    static int userId, leaveId;
 
     String reqBody = null, path = null;
     DriverBase driverBase = new DriverBase();
@@ -557,6 +557,30 @@ public class StepDefinition extends DriverBase {
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
+
+            case "getLeaveTypes":
+                path="/v2/leaveManagement/leaveType/organisations/"+orgId+"/leaveTypes";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "createLeave":
+                path="/v2/leaveManagement/leaveType/organisations/"+orgId+"/leaveTypes/";
+                response = reqSpec
+                        .when().put(path);
+
+                variableContext.setScenarioContext("METHOD","PUT");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
         }
     }
 
@@ -1072,6 +1096,21 @@ public class StepDefinition extends DriverBase {
                         "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + activateUserRes.getStatusLine());
                 break;
             }
+            case "getLeaveDetails":{
+                driverBase.testStepAssert.isEquals(detailsLeaveRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + detailsLeaveRes.getStatusLine());
+                break;
+            }
+            case "updateLeaveDetails":{
+                driverBase.testStepAssert.isEquals(updateLeaveRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + updateLeaveRes.getStatusLine());
+                break;
+            }
+            case "deleteLeaveResponse":{
+                driverBase.testStepAssert.isEquals(deleteLeaveRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + deleteLeaveRes.getStatusLine());
+                break;
+            }
         }
     }
 
@@ -1120,6 +1159,21 @@ public class StepDefinition extends DriverBase {
             }
             case "activateUser": {
                 driverBase.testStepAssert.isEquals(utils.getJsonPath(activateUserRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "getLeaveDetails":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(detailsLeaveRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "updateLeaveDetails":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(updateLeaveRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "deleteLeaveResponse":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(deleteLeaveRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
@@ -1226,6 +1280,30 @@ public class StepDefinition extends DriverBase {
 
                 driverBase.testStepAssert.isLess(activateUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+activateUserRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "getLeaveDetails":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(detailsLeaveRes.time()));
+
+                driverBase.testStepAssert.isLess(detailsLeaveRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+detailsLeaveRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "updateLeaveDetails":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(updateLeaveRes.time()));
+
+                driverBase.testStepAssert.isLess(updateLeaveRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+updateLeaveRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "deleteLeaveResponse":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(deleteLeaveRes.time()));
+
+                driverBase.testStepAssert.isLess(deleteLeaveRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+deleteLeaveRes.time(),
                         "Response time greater than 500ms");
                 break;
             }
@@ -1468,23 +1546,32 @@ public class StepDefinition extends DriverBase {
             reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-08-24 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
             reqSpec=reqSpec.body(reqBody);
         } else if (payload.equalsIgnoreCase("filter")) {
-            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-08-24 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
+            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"user_id\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"user\"}},\"startDate\":\"2022-08-24 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\"}";
             reqSpec=reqSpec.body(reqBody);
         }
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
     }
 
-    @Given("Download file monthly view with {string}")
-    public void download_file_monthly_view_with(String payload) throws IOException {
+    @Given("Download file monthly view with {string} for {string}")
+    public void download_file_monthly_view_with_for(String payload, String role) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
-
-        if (payload.equalsIgnoreCase("no filter")){
-            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-08-24 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
-            reqSpec=reqSpec.body(reqBody);
-        } else if (payload.equalsIgnoreCase("filter")) {
-            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-08-24 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
-            reqSpec=reqSpec.body(reqBody);
+        if(role.equalsIgnoreCase("admin")) {
+            if (payload.equalsIgnoreCase("no filter")) {
+                reqBody = "{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-08-24 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+                reqSpec = reqSpec.body(reqBody);
+            } else if (payload.equalsIgnoreCase("filter")) {
+                reqBody = "{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"user\"}},\"startDate\":\"2022-08-24 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+                reqSpec = reqSpec.body(reqBody);
+            }
+        }else if(role.equalsIgnoreCase("manager")){
+            if(payload.equalsIgnoreCase("no filter")){
+                reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-08-30 00:00:00 +05:30\",\"endDate\":\"2022-09-30 23:59:59 +05:30\",\"orgName\":\"Testing Mrinq Tech LLP V2\"}";
+                reqSpec=reqSpec.body(reqBody);
+            } else if (payload.equalsIgnoreCase("filter")) {
+                reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"user\"}},\"startDate\":\"2022-08-30 00:00:00 +05:30\",\"endDate\":\"2022-09-30 23:59:59 +05:30\",\"orgName\":\"Testing Mrinq Tech LLP V2\"}";
+                reqSpec=reqSpec.body(reqBody);
+            }
         }
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
     }
@@ -1504,17 +1591,27 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
     }
 
-    @Given("Download file date range view with {string}")
-    public void download_file_date_range_view_with(String payload) throws IOException {
+    @Given("Download file date range view with {string} for {string}")
+    public void download_file_date_range_view_with(String payload, String role) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
-        if (payload.equalsIgnoreCase("no filter")){
-            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-09-23 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
-            reqSpec=reqSpec.body(reqBody);
-        } else if (payload.equalsIgnoreCase("filter")) {
-            reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-09-23 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
-            reqSpec=reqSpec.body(reqBody);
+        if(role.equalsIgnoreCase("admin")) {
+            if (payload.equalsIgnoreCase("no filter")) {
+                reqBody = "{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-09-23 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+                reqSpec = reqSpec.body(reqBody);
+            } else if (payload.equalsIgnoreCase("filter")) {
+                reqBody = "{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"abc\"}},\"startDate\":\"2022-09-23 00:00:00 +05:30\",\"endDate\":\"2022-09-24 23:59:59 +05:30\",\"orgName\":\"QA Organisation\"}";
+                reqSpec = reqSpec.body(reqBody);
+            }
+        }else if(role.equalsIgnoreCase("manager")){
+            if(payload.equalsIgnoreCase("no filter")){
+                reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\"},\"startDate\":\"2022-09-29 00:00:00 +05:30\",\"endDate\":\"2022-09-30 23:59:59 +05:30\",\"orgName\":\"Testing Mrinq Tech LLP V2\"}";
+                reqSpec=reqSpec.body(reqBody);
+            } else if (payload.equalsIgnoreCase("filter")) {
+                reqBody="{\"tableOptions\":{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"}},\"filters\":{\"userIds\":[],\"terms\":[],\"roles\":\"\",\"attributes\":{},\"reportingManager\":\"\",\"search\":{\"employeeName\":\"user\"}},\"startDate\":\"2022-09-29 00:00:00 +05:30\",\"endDate\":\"2022-09-30 23:59:59 +05:30\",\"orgName\":\"Testing Mrinq Tech LLP V2\"}";
+                reqSpec=reqSpec.body(reqBody);
+            }
         }
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
     }
@@ -1528,7 +1625,7 @@ public class StepDefinition extends DriverBase {
                 reqBody = "{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false}";
                 reqSpec = reqSpec.body(reqBody);
             } else if (payload.equalsIgnoreCase("filter")) {
-                reqBody = "{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"abc\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false}";
+                reqBody = "{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"user\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false}";
                 reqSpec = reqSpec.body(reqBody);
             }
         } else if (type.equalsIgnoreCase("ot")) {
@@ -1536,7 +1633,7 @@ public class StepDefinition extends DriverBase {
                 reqBody = "{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true}";
                 reqSpec = reqSpec.body(reqBody);
             } else if (payload.equalsIgnoreCase("filter")) {
-                reqBody = "{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"abc\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true}";
+                reqBody = "{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"user\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true}";
                 reqSpec = reqSpec.body(reqBody);
             }
         }
@@ -1544,49 +1641,89 @@ public class StepDefinition extends DriverBase {
     }
 
 
-    @Given("Download excel {string} with {string}")
-    public void download_excel_with(String type, String payload) throws IOException {
+    @Given("Download excel {string} with {string} for {string}")
+    public void download_excel_with(String type, String payload, String role) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
-        if(type.equalsIgnoreCase("attendance")){
-            if (payload.equalsIgnoreCase("no filter")){
-                reqBody="{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"QA Organisation\",\"attendanceDataXlFlag\":true,\"overtimeDataXlFlag\":false}";
-                reqSpec=reqSpec.body(reqBody);
-            } else if (payload.equalsIgnoreCase("filter")) {
-                reqBody="{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"abc\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"QA Organisation\",\"attendanceDataXlFlag\":true,\"overtimeDataXlFlag\":false}";
-                reqSpec=reqSpec.body(reqBody);
+        if(role.equalsIgnoreCase("admin")) {
+            if (type.equalsIgnoreCase("attendance")) {
+                if (payload.equalsIgnoreCase("no filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"QA Organisation\",\"attendanceDataXlFlag\":true,\"overtimeDataXlFlag\":false}";
+                    reqSpec = reqSpec.body(reqBody);
+                } else if (payload.equalsIgnoreCase("filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"abc\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"QA Organisation\",\"attendanceDataXlFlag\":true,\"overtimeDataXlFlag\":false}";
+                    reqSpec = reqSpec.body(reqBody);
+                }
+            } else if (type.equalsIgnoreCase("ot")) {
+                if (payload.equalsIgnoreCase("no filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"QA Organisation\",\"attendanceDataXlFlag\":false,\"overtimeDataXlFlag\":true}";
+                    reqSpec = reqSpec.body(reqBody);
+                } else if (payload.equalsIgnoreCase("filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"user\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"QA Organisation\",\"attendanceDataXlFlag\":false,\"overtimeDataXlFlag\":true}";
+                    reqSpec = reqSpec.body(reqBody);
+                }
             }
-        } else if (type.equalsIgnoreCase("ot")) {
-            if (payload.equalsIgnoreCase("no filter")){
-                reqBody="{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"QA Organisation\",\"attendanceDataXlFlag\":false,\"overtimeDataXlFlag\":true}";
-                reqSpec=reqSpec.body(reqBody);
-            } else if (payload.equalsIgnoreCase("filter")) {
-                reqBody="{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"abc\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"QA Organisation\",\"attendanceDataXlFlag\":false,\"overtimeDataXlFlag\":true}";
-                reqSpec=reqSpec.body(reqBody);
+        }else if(role.equalsIgnoreCase("manager")) {
+            if (type.equalsIgnoreCase("attendance")) {
+                if (payload.equalsIgnoreCase("no filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"Testing Mrinq Tech LLP V2\",\"attendanceDataXlFlag\":true,\"overtimeDataXlFlag\":false}";
+                    reqSpec = reqSpec.body(reqBody);
+                } else if (payload.equalsIgnoreCase("filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"user\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"Testing Mrinq Tech LLP V2\",\"attendanceDataXlFlag\":true,\"overtimeDataXlFlag\":false}";
+                    reqSpec = reqSpec.body(reqBody);
+                }
+            } else if (type.equalsIgnoreCase("ot")) {
+                if (payload.equalsIgnoreCase("no filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"Testing Mrinq Tech LLP V2\",\"attendanceDataXlFlag\":false,\"overtimeDataXlFlag\":true}";
+                    reqSpec = reqSpec.body(reqBody);
+                } else if (payload.equalsIgnoreCase("filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"user\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"Testing Mrinq Tech LLP V2\",\"attendanceDataXlFlag\":false,\"overtimeDataXlFlag\":true}";
+                    reqSpec = reqSpec.body(reqBody);
+                }
             }
         }
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
     }
 
-    @Given("Download pdf {string} with {string}")
-    public void download_pdf_with(String type, String payload) throws IOException {
+    @Given("Download pdf {string} with {string} for {string}")
+    public void download_pdf_with(String type, String payload, String role) throws IOException {
         // Write code here that turns the phrase above into concrete actions
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
-        if(type.equalsIgnoreCase("attendance")){
-            if (payload.equalsIgnoreCase("no filter")){
-                reqBody="{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"QA Organisation\"}";
-                reqSpec=reqSpec.body(reqBody);
-            } else if (payload.equalsIgnoreCase("filter")) {
-                reqBody="{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"abc\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"QA Organisation\"}";
-                reqSpec=reqSpec.body(reqBody);
+        if(payload.equalsIgnoreCase("admin")) {
+            if (type.equalsIgnoreCase("attendance")) {
+                if (payload.equalsIgnoreCase("no filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"QA Organisation\"}";
+                    reqSpec = reqSpec.body(reqBody);
+                } else if (payload.equalsIgnoreCase("filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"abc\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"QA Organisation\"}";
+                    reqSpec = reqSpec.body(reqBody);
+                }
+            } else if (type.equalsIgnoreCase("ot")) {
+                if (payload.equalsIgnoreCase("no filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"QA Organisation\"}";
+                    reqSpec = reqSpec.body(reqBody);
+                } else if (payload.equalsIgnoreCase("filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"abc\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"QA Organisation\"}";
+                    reqSpec = reqSpec.body(reqBody);
+                }
             }
-        } else if (type.equalsIgnoreCase("ot")) {
-            if (payload.equalsIgnoreCase("no filter")){
-                reqBody="{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"QA Organisation\"}";
-                reqSpec=reqSpec.body(reqBody);
-            } else if (payload.equalsIgnoreCase("filter")) {
-                reqBody="{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"abc\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"QA Organisation\"}";
-                reqSpec=reqSpec.body(reqBody);
+        }else if(role.equalsIgnoreCase("manager")) {
+            if (type.equalsIgnoreCase("attendance")) {
+                if (payload.equalsIgnoreCase("no filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"Testing Mrinq Tech LLP V2\"}";
+                    reqSpec = reqSpec.body(reqBody);
+                } else if (payload.equalsIgnoreCase("filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"user\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":true,\"overtimeDataFlag\":false,\"orgName\":\"Testing Mrinq Tech LLP V2\"}";
+                    reqSpec = reqSpec.body(reqBody);
+                }
+            } else if (type.equalsIgnoreCase("ot")) {
+                if (payload.equalsIgnoreCase("no filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"Testing Mrinq Tech LLP V2\"}";
+                    reqSpec = reqSpec.body(reqBody);
+                } else if (payload.equalsIgnoreCase("filter")) {
+                    reqBody = "{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"search\":{\"employeeName\":\"user\"}},\"forMonth\":\"2022-09\",\"toggleReport\":1,\"attendanceDataFlag\":false,\"overtimeDataFlag\":true,\"orgName\":\"Testing Mrinq Tech LLP V2\"}";
+                    reqSpec = reqSpec.body(reqBody);
+                }
             }
         }
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
@@ -1618,5 +1755,106 @@ public class StepDefinition extends DriverBase {
             reqSpec=reqSpec.body(reqBody);
         }
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Get leave types")
+    public void get_leave_types() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+
+        reqBody="{\"filter\":{}}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Create leave with payload with name {string}")
+    public void create_leave_with_payload_with_name(String name) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"name\":\""+name+"\",\"shortName\":\"LT1\",\"paid\":true,\"accrual\":\"cycle\",\"allowCarryForward\":true,\"allowEncashment\":true,\"precedence\":\"COE\",\"holidayBetLeaves\":\"leave\",\"weekOffBetLeaves\":\"leave\",\"allowedOnProbation\":true,\"probationProrate\":true,\"clubbing\":true,\"backDatedAllowedDays\":7,\"maxCF\":0,\"applyDaysBefore\":0,\"minAllowed\":1,\"maxAllowed\":1,\"maxLeavesInMonth\":4,\"updatePolicies\":\"none\"}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+    }
+
+    @Then("verify leave is created")
+    public void verify_leave_is_created() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        String responseBody = response.then().extract().response().asString();
+
+        JsonPath js = new JsonPath(responseBody);
+        leaveId=js.getInt("data.leaveId");
+
+    }
+
+    @Then("Delete leave with payload with orgId {int}")
+    public void delete_leave_with_payload_with_orgId(Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"updatePolicies\":\"none\"}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+
+        path = "/v2/leaveManagement/leaveType/organisations/"+orgId+"/leaveTypes/"+leaveId+"/delete";
+        deleteRes = reqSpec.when().post(path);
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+    }
+
+    @Then("Delete leave with orgId {int}")
+    public void delete_leave_with_orgId(Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"updatePolicies\":\"none\"}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+
+        path = "/v2/leaveManagement/leaveType/organisations/"+orgId+"/leaveTypes/"+leaveId+"/delete";
+        deleteLeaveRes = reqSpec.when().post(path);
+
+        variableContext.setScenarioContext("METHOD","POST");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @And("Get leave details with orgId {int}")
+    public void get_leave_details_with_orgId(int orgId) throws IOException {
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        ResultManager.log("Request body: -", "Request body: -", false);
+
+        path = "/v2/leaveManagement/leaveType/organisations/"+orgId+"/leaveTypes/"+leaveId+"";
+        detailsLeaveRes = reqSpec.when().get(path);
+
+        variableContext.setScenarioContext("METHOD","GET");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+
+    }
+
+    @And("Update leave details with orgId {int}")
+    public void update_leave_details_with_orgId(int orgId) throws IOException {
+        reqBody="{\"leaveType\":{\"name\":\"LeaveTestUpdated\",\"shortName\":\"LT1\",\"paid\":true,\"allowCarryForward\":true,\"allowEncashment\":true,\"precedence\":\"COE\",\"holidayBetLeaves\":\"leave\",\"weekOffBetLeaves\":\"leave\",\"clubbing\":true,\"backDatedAllowedDays\":7,\"maxCF\":0,\"applyDaysBefore\":0,\"minAllowed\":\"1.00\",\"maxAllowed\":\"1.00\",\"maxLeavesInMonth\":4,\"id\":"+leaveId+",\"orgId\":560,\"createdAt\":\"2022-10-04T07:12:58.413Z\",\"updatedAt\":\"2022-10-04T07:12:58.413Z\"},\"updatePolicies\":\"none\"}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        ResultManager.log("Request body: " +reqBody, "Request body: " +reqBody, false);
+
+        path = "/v2/leaveManagement/leaveType/organisations/"+orgId+"/leaveTypes/"+leaveId+"";
+        updateLeaveRes = reqSpec.when().patch(path);
+
+        String res=updateLeaveRes.then().extract().response().asString();
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
     }
 }

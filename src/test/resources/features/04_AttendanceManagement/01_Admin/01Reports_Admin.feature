@@ -160,21 +160,21 @@ Feature: Reports for Admin
 
   @ra12
   Scenario: Download Monthly view Excel(Overall view) without filters
-    Given Download file monthly view with "no filter"
+    Given Download file monthly view with "no filter" for "admin"
     When user calls "excelWeeklyMontlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra12
   Scenario: Download Monthly view Excel(Overall view) with filters
-    Given Download file monthly view with "filter"
+    Given Download file monthly view with "filter" for "admin"
     When user calls "excelWeeklyMontlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra13
   Scenario: Download Weekly view Pdf(Overall view) without filters
-    Given Download file monthly view with "no filter"
+    Given Download file monthly view with "no filter" for "admin"
     When user calls "pdfWeeklyMonthlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -182,7 +182,7 @@ Feature: Reports for Admin
 
   @ra13
   Scenario: Download Daily view Pdf(Overall view) with filters
-    Given Download file monthly view with "filter"
+    Given Download file monthly view with "filter" for "admin"
     When user calls "pdfWeeklyMonthlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -190,21 +190,21 @@ Feature: Reports for Admin
 
   @ra14
   Scenario: Download Monthly view Excel(Detailed view) without filters
-    Given Download file monthly view with "no filter"
+    Given Download file monthly view with "no filter" for "admin"
     When user calls "excelWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra14
   Scenario: Download Monthly view Excel(Detailed view) with filters
-    Given Download file monthly view with "filter"
+    Given Download file monthly view with "filter" for "admin"
     When user calls "excelWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra15
   Scenario: Download Monthly view Pdf(Detailed view) without filters
-    Given Download file monthly view with "no filter"
+    Given Download file monthly view with "no filter" for "admin"
     When user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -212,7 +212,7 @@ Feature: Reports for Admin
 
   @ra15
   Scenario: Download Monthly view Pdf(Detailed view) with filters
-    Given Download file monthly view with "filter"
+    Given Download file monthly view with "filter" for "admin"
     When user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -236,21 +236,21 @@ Feature: Reports for Admin
 
   @ra17
   Scenario: Download Date range view Excel(Overall view) without filters
-    Given Download file date range view with "no filter"
+    Given Download file date range view with "no filter" for "admin"
     When user calls "excelWeeklyMontlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra17
   Scenario: Download Date range view Excel(Overall view) with filters
-    Given Download file date range view with "filter"
+    Given Download file date range view with "filter" for "admin"
     When user calls "excelWeeklyMontlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra18
   Scenario: Download Date range view Pdf(Overall view) without filters
-    Given Download file date range view with "no filter"
+    Given Download file date range view with "no filter" for "admin"
     When user calls "pdfWeeklyMonthlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -258,7 +258,7 @@ Feature: Reports for Admin
 
   @ra18
   Scenario: Download Date range view Pdf(Overall view) with filters
-    Given Download file date range view with "filter"
+    Given Download file date range view with "filter" for "admin"
     When user calls "pdfWeeklyMonthlyView" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -266,21 +266,21 @@ Feature: Reports for Admin
 
   @ra19
   Scenario: Download Date range view Excel(Detailed view) without filters
-    Given Download file date range view with "no filter"
+    Given Download file date range view with "no filter" for "admin"
     When user calls "excelWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra19
   Scenario: Download Date range view Excel(Detailed view) with filters
-    Given Download file date range view with "filter"
+    Given Download file date range view with "filter" for "admin"
     When user calls "excelWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra20
   Scenario: Download Date range view Pdf(Detailed view) without filters
-    Given Download file date range view with "no filter"
+    Given Download file date range view with "no filter" for "admin"
     When user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -288,7 +288,7 @@ Feature: Reports for Admin
 
   @ra20
   Scenario: Download Date range view Pdf(Detailed view) with filters
-    Given Download file date range view with "filter"
+    Given Download file date range view with "filter" for "admin"
     When user calls "pdfWeeklyMonthlyViewDetailed" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -312,21 +312,21 @@ Feature: Reports for Admin
 
   @ra22
   Scenario: Download Calendar-Attendance Excel without filters
-    Given Download excel "attendance" with "no filter"
+    Given Download excel "attendance" with "no filter" for "admin"
     When user calls "excelCalendar" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra22
   Scenario: Download Calendar-Attendance Excel with filters
-    Given Download excel "attendance" with "filter"
+    Given Download excel "attendance" with "filter" for "admin"
     When user calls "excelCalendar" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra23
   Scenario: Download Calendar-Attendance Pdf without filters
-    Given Download pdf "attendance" with "no filter"
+    Given Download pdf "attendance" with "no filter" for "admin"
     When user calls "pdfCalendar" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -334,7 +334,7 @@ Feature: Reports for Admin
 
   @ra23
   Scenario: Download Calendar-Attendance Pdf with filters
-    Given Download pdf "attendance" with "filter"
+    Given Download pdf "attendance" with "filter" for "admin"
     When user calls "pdfCalendar" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -358,21 +358,21 @@ Feature: Reports for Admin
 
   @ra25
   Scenario: Download Calendar-OT Excel without filters
-    Given Download excel "ot" with "no filter"
+    Given Download excel "ot" with "no filter" for "admin"
     When user calls "excelCalendar" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra25
   Scenario: Download Calendar-OT Excel with filters
-    Given Download excel "ot" with "filter"
+    Given Download excel "ot" with "filter" for "admin"
     When user calls "excelCalendar" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
 
   @ra26
   Scenario: Download Calendar-OT Pdf without filters
-    Given Download pdf "ot" with "no filter"
+    Given Download pdf "ot" with "no filter" for "admin"
     When user calls "pdfCalendar" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -380,7 +380,7 @@ Feature: Reports for Admin
 
   @ra26
   Scenario: Download Calendar-OT Pdf with filters
-    Given Download pdf "ot" with "filter"
+    Given Download pdf "ot" with "filter" for "admin"
     When user calls "pdfCalendar" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
