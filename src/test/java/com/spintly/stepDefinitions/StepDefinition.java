@@ -29,10 +29,12 @@ public class StepDefinition extends DriverBase {
     ResponseSpecification resSpec;
     Response response, updateDoorRes, deleteRes, accHistoryRes, detailsUserRes,
             shiftDetailsUserRes, editUserRes, getPermissionRes, patchPermissionRes,
-            deactivateUserRes, activateUserRes, detailsLeaveRes,updateLeaveRes, deleteLeaveRes;
+            deactivateUserRes, activateUserRes, detailsLeaveRes,updateLeaveRes, deleteLeaveRes,
+            detailsLCRes, updateLCRes, addLPUnderLCRes, getLPUnderLCRes, getDetailsLPUnderLCRes,
+            assignUsersLPRes, updateLPRes, getDetailsHPRes, assignUsersHPRes;
     ValidatableResponse valRes;
 
-    static int userId, leaveId;
+    static int userId, leaveId, leaveCycleId, leavePolicyId, holidayPolicyId;
 
     String reqBody = null, path = null;
     DriverBase driverBase = new DriverBase();
@@ -581,6 +583,55 @@ public class StepDefinition extends DriverBase {
                         utils.getGlobalValue("saamsApiURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
                 break;
+
+            case "getLeaveCycles":
+                path="/v2/leaveManagement/leaveCycle/organisations/"+orgId+"/leaveCycles";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "createLC":
+                path="/v2/leaveManagement/leaveCycle/organisations/"+orgId+"/leaveCycles/";
+                response = reqSpec
+                        .when().put(path);
+
+                variableContext.setScenarioContext("METHOD","PUT");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "getHolidayPolicies":
+                path="/v2/leaveManagement/holidays/organisations/"+orgId+"/holidayPolicies";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "createHolidayPolicy":
+                path="/v2/leaveManagement/holidays/organisations/"+orgId+"/holidayPolicy";
+                response = reqSpec
+                        .when().put(path);
+
+                variableContext.setScenarioContext("METHOD","PUT");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
         }
     }
 
@@ -649,6 +700,12 @@ public class StepDefinition extends DriverBase {
             reqSpec=reqSpec.body(reqBody);
         } else if (payload.equalsIgnoreCase("lop")) {
             reqBody="[\"users\"]";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("leavePolicy")) {
+            reqBody="{\"fields\":[\"users\",\"admins\"]}";
+            reqSpec=reqSpec.body(reqBody);
+        }else if(payload.equalsIgnoreCase("detailedView")){
+            reqBody="{\"fields\":[\"users\"]}";
             reqSpec=reqSpec.body(reqBody);
         }
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -881,15 +938,106 @@ public class StepDefinition extends DriverBase {
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
+
+            case "getHolidays":
+                path="/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+id+"/holidays";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "getLeaveDetails":
+                path="/v2/leaveManagement/leaveReports/organisations/"+orgId+"/leaveCycles/"+id+"/getLeaveDetails/1/25";
+                response = reqSpec
+                        .when().post(path).then().extract().response();
+
+                String res=response.asString();
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "getExcelDetailedView":
+                path="/v2/leaveManagement/leaveReports/organisations/"+orgId+"/leaveCycles/"+id+"/getExcelDetailedView/1/25";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "allUsersLeave":
+                path="/v2/leaveManagement/leaveReports/organisations/"+orgId+"/leaveCycles/"+id+"/allUserLeaves/1/25";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "getExcelCalenderView":
+                path="/v2/leaveManagement/leaveReports/organisations/"+orgId+"/leaveCycles/"+id+"/getExcelCalenderView/1/25";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "pendingLeaves":
+                path="/v2/leaveManagement/leaveReports/organisations/"+orgId+"/leaveCycles/"+id+"/pendingLeaves/0/25";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "notifyUser":
+                path="/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+id+"/eocNotify";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
         }
     }
 
     @Given("Get List of users with {string}")
     public void get_list_of_users_with(String payload) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody = "{\"pagination\":{\"page\":1,\"perPage\":-1,\"per_page\":-1},\"filters\":{}}";
-        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
-                .body(reqBody);
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+        if(payload.equalsIgnoreCase("assignAP")) {
+            reqBody = "{\"pagination\":{\"page\":1,\"perPage\":-1,\"per_page\":-1},\"filters\":{}}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("assignLeave")) {
+            reqBody = "{\"pagination\":{\"page\":1,\"perPage\":-1,\"per_page\":-1},\"filters\":{\"createdOn\":null,\"userType\":[\"active\"],\"terms\":[]}}";
+            reqSpec=reqSpec.body(reqBody);
+        }
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
     }
@@ -1111,6 +1259,51 @@ public class StepDefinition extends DriverBase {
                         "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + deleteLeaveRes.getStatusLine());
                 break;
             }
+            case "getLCDetails":{
+                driverBase.testStepAssert.isEquals(detailsLCRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + detailsLCRes.getStatusLine());
+                break;
+            }
+            case "updateLCDetails":{
+                driverBase.testStepAssert.isEquals(updateLCRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + updateLCRes.getStatusLine());
+                break;
+            }
+            case "addLPUnderLC":{
+                driverBase.testStepAssert.isEquals(addLPUnderLCRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + addLPUnderLCRes.getStatusLine());
+                break;
+            }
+            case "getLPUnderLC":{
+                driverBase.testStepAssert.isEquals(getLPUnderLCRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + getLPUnderLCRes.getStatusLine());
+                break;
+            }
+            case "getDetailsLPUnderLC":{
+                driverBase.testStepAssert.isEquals(getDetailsLPUnderLCRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + getDetailsLPUnderLCRes.getStatusLine());
+                break;
+            }
+            case "assignUsersLP":{
+                driverBase.testStepAssert.isEquals(assignUsersLPRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + assignUsersLPRes.getStatusLine());
+                break;
+            }
+            case "updateLP":{
+                driverBase.testStepAssert.isEquals(updateLPRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + updateLPRes.getStatusLine());
+                break;
+            }
+            case "getDetailsHP":{
+                driverBase.testStepAssert.isEquals(getDetailsHPRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + getDetailsHPRes.getStatusLine());
+                break;
+            }
+            case "assignUsersHP":{
+                driverBase.testStepAssert.isEquals(assignUsersHPRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + assignUsersHPRes.getStatusLine());
+                break;
+            }
         }
     }
 
@@ -1174,6 +1367,51 @@ public class StepDefinition extends DriverBase {
             }
             case "deleteLeaveResponse":{
                 driverBase.testStepAssert.isEquals(utils.getJsonPath(deleteLeaveRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "getLCDetails":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(detailsLCRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "updateLCDetails":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(updateLCRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "addLPUnderLC":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(addLPUnderLCRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "getLPUnderLC":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(getLPUnderLCRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "getDetailsLPUnderLC":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(getDetailsLPUnderLCRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "assignUsersLP":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(assignUsersLPRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "updateLP":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(updateLPRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "getDetailsHP":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(getDetailsHPRes, keyValue), expectedValue,
+                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
+                break;
+            }
+            case "assignUsersHP":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(assignUsersHPRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
@@ -1304,6 +1542,78 @@ public class StepDefinition extends DriverBase {
 
                 driverBase.testStepAssert.isLess(deleteLeaveRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+deleteLeaveRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "getLCDetails":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(detailsLCRes.time()));
+
+                driverBase.testStepAssert.isLess(detailsLCRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+detailsLCRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "updateLCDetails":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(updateLCRes.time()));
+
+                driverBase.testStepAssert.isLess(updateLCRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+updateLCRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "addLPUnderLC":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(addLPUnderLCRes.time()));
+
+                driverBase.testStepAssert.isLess(addLPUnderLCRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+addLPUnderLCRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "getLPUnderLC":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(getLPUnderLCRes.time()));
+
+                driverBase.testStepAssert.isLess(getLPUnderLCRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+getLPUnderLCRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "getDetailsLPUnderLC":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(getDetailsLPUnderLCRes.time()));
+
+                driverBase.testStepAssert.isLess(getDetailsLPUnderLCRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+getDetailsLPUnderLCRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "assignUsersLP":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(assignUsersLPRes.time()));
+
+                driverBase.testStepAssert.isLess(assignUsersLPRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+assignUsersLPRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "updateLP":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(updateLPRes.time()));
+
+                driverBase.testStepAssert.isLess(updateLPRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+updateLPRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "getDetailsHP":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(getDetailsHPRes.time()));
+
+                driverBase.testStepAssert.isLess(getDetailsHPRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+getDetailsHPRes.time(),
+                        "Response time greater than 500ms");
+                break;
+            }
+            case "assignUsersHP":{
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(assignUsersHPRes.time()));
+
+                driverBase.testStepAssert.isLess(assignUsersHPRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+assignUsersHPRes.time(),
                         "Response time greater than 500ms");
                 break;
             }
@@ -1856,5 +2166,393 @@ public class StepDefinition extends DriverBase {
         ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
                 utils.getGlobalValue("saamsApiURL") + path, false);
         variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @Given("Get leave cycles under {string}")
+    public void get_leave_cycles_under(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        if(payload.equalsIgnoreCase("leaveCyclePolicy")){
+            reqBody="{\"filter\":{},\"fields\":[\"id\",\"name\",\"startDate\",\"endDate\",\"leavePolicies\"]}";
+            reqSpec=reqSpec.body(reqBody);
+        }else if(payload.equalsIgnoreCase("holidayPolicy")){
+            reqBody="{\"filter\":{},\"fields\":[\"id\",\"name\"]}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Create leave cycle with payload with name {string}")
+    public void create_leave_cycle_with_payload_with_name(String name) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"name\":\""+name+"\",\"type\":\"Calendar\",\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"eocReminderDate\":\"2024-08-22\",\"year\":2024}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Then("verify leave cycle is created")
+    public void verify_leave_cycle_is_created() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        String responseBody = response.then().extract().response().asString();
+
+        JsonPath js = new JsonPath(responseBody);
+        leaveCycleId=js.getInt("data.cycleId");
+
+    }
+
+    @When("Delete leave cycle with payload with orgId {int}")
+    public void delete_leave_cycle_with_payload_with_orgId(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        path = "/v2/leaveManagement/leaveCycle/organisations/"+orgId+"/leaveCycles/"+leaveCycleId;
+        deleteRes = reqSpec.when().delete(path);
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+    }
+
+    @And("Get leave cycle details with orgId {int}")
+    public void get_leave_cycle_details_with_orgId(int orgId) throws IOException {
+
+        reqBody="{\"fields\":[\"id\",\"name\",\"type\",\"startDate\",\"endDate\",\"eocReminderDate\"]}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+
+        path = "/v2/leaveManagement/leaveCycle/organisations/"+orgId+"/leaveCycles/"+leaveCycleId;
+        detailsLCRes = reqSpec.when().post(path);
+
+        variableContext.setScenarioContext("METHOD","POST");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+
+    }
+
+    @And("Update leave cycle details with orgId {int} with name {string}")
+    public void update_leave_cycle_details_with_orgId_with_name(int orgId, String name) throws IOException {
+
+        reqBody="{\"name\":\""+name+"\",\"type\":\"Calendar\",\"startDate\":\"2024-01-01\",\"endDate\":\"2024-12-31\",\"eocReminderDate\":\"2024-08-22\",\"year\":2024}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+
+        path = "/v2/leaveManagement/leaveCycle/organisations/"+orgId+"/leaveCycles/"+leaveCycleId;
+        updateLCRes = reqSpec.when().patch(path);
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+
+    }
+
+    @And("Add Leave Policy under Leave Cycle with orgId {int} with name {string}")
+    public void add_leave_policy_under_leave_cycle_with_orgId_with_name(int orgId, String name) throws IOException {
+
+        reqBody="{\"name\":\""+name+"\",\"leaveTypes\":[{\"cycleLimit\":11,\"accrualLimit\":11,\"carryForwardLimit\":0,\"encashmentLimit\":0,\"allowCarryForward\":false,\"allowEncashment\":false,\"accrual\":\"cycle\",\"leaveId\":102,\"allowedOnProbation\":true,\"applyDaysBefore\":0,\"backDatedAllowedDays\":10,\"clubbing\":true,\"holidayBetLeaves\":\"holiday\",\"maxAllowed\":10,\"maxCF\":0,\"minAllowed\":0.5,\"name\":\"Casual Leave\",\"paid\":true,\"precedence\":\"EOC\",\"probationProrate\":true,\"shortName\":\"CL\",\"weekOffBetLeaves\":\"holiday\"}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":true,\"cOHalfDayHours\":0,\"cOFullDayHours\":0},\"compOff\":{\"allowCF\":true,\"holidayBetLeaves\":\"leave\",\"weekOffBetLeaves\":\"leave\",\"allowedOnProbation\":true,\"probationProrate\":true,\"clubbing\":true},\"leaveApplicationSettings\":{\"notifyUserEmails\":[{\"admins\":[26875],\"users\":[117774]}],\"approvalRule\":\"RMOnly\"},\"assignedUsers\":[19303]}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+
+        path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies";
+        addLPUnderLCRes = reqSpec.when().put(path);
+
+        variableContext.setScenarioContext("METHOD","PUT");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+
+    }
+
+    @Then("verify leave policy under leave cycle is created")
+    public void verify_leave_policy_under_leave_cycle_is_created() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        String responseBody = addLPUnderLCRes.then().extract().response().asString();
+
+        JsonPath js = new JsonPath(responseBody);
+        leavePolicyId=js.getInt("data.policyId");
+
+    }
+
+    @When("Delete Leave Policy under Leave Cycle with orgId {int}")
+    public void delete_leave_policy_under_leave_cycle_with_orgId(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies/"+leavePolicyId;
+        deleteLeaveRes = reqSpec.when().delete(path);
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+    }
+
+    @When("Get assigned users leave policy under leave cycle with orgId {int}")
+    public void get_assigned_users_leave_policy_under_leave_cycle_with_orgId(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+
+        reqBody="{\"filter\":{},\"fields\":[\"id\",\"name\",\"assignedUsers\"]}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies/";
+        getLPUnderLCRes = reqSpec.when().post(path);
+
+        variableContext.setScenarioContext("METHOD","POST");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @When("Get leave policy under leave cycle details with orgId {int}")
+    public void get_leave_policy_under_leave_cycle_details_with_orgId(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies/"+leavePolicyId;
+        getDetailsLPUnderLCRes = reqSpec.when().post(path);
+
+        variableContext.setScenarioContext("METHOD","POST");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @And("Assign-unassign users to Leave Policy under Leave Cycle with orgId {int}")
+    public void assign_users_to_leave_policy_under_leave_cycle_with_orgId(int orgId) throws IOException {
+
+        reqBody="{\"name\":\"LeavePolicy\",\"leaveTypes\":[{\"id\":697,\"name\":\"Casual Leave\",\"paid\":true,\"maxCF\":0,\"accrual\":\"cycle\",\"leaveId\":102,\"clubbing\":true,\"shortName\":\"CL\",\"cycleLimit\":11,\"maxAllowed\":10,\"minAllowed\":0.5,\"precedence\":\"EOC\",\"accrualLimit\":11,\"allowEncashment\":false,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowCarryForward\":false,\"carryForwardLimit\":0,\"allowedOnProbation\":true,\"backDatedAllowedDays\":10}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":true,\"cOFullDayHours\":0,\"cOHalfDayHours\":0},\"compOff\":{\"allowCF\":true,\"clubbing\":true,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowedOnProbation\":true},\"leaveApplicationSettings\":{\"approvalRule\":\"RMOnly\",\"notifyUserEmails\":[{\"admins\":[26875],\"users\":[29035]}]},\"assignedUsers\":[31072,148887],\"cycleId\":"+leaveCycleId+",\"skipMaxUsedCheck\":true}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies/"+leavePolicyId;
+        assignUsersLPRes = reqSpec.when().patch(path);
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @When("Update Leave Policy under Leave Cycle with orgId {int} with name {string}")
+    public void update_Leave_Policy_under_Leave_Cycle_with_orgId_with_name(Integer orgId, String name) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"name\":\"" + name + "\",\"leaveTypes\":[{\"id\":697,\"name\":\"Casual Leave\",\"paid\":true,\"maxCF\":0,\"accrual\":\"cycle\",\"leaveId\":102,\"clubbing\":true,\"shortName\":\"CL\",\"cycleLimit\":11,\"maxAllowed\":10,\"minAllowed\":0.5,\"precedence\":\"EOC\",\"accrualLimit\":11,\"allowEncashment\":false,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowCarryForward\":false,\"carryForwardLimit\":0,\"allowedOnProbation\":true,\"backDatedAllowedDays\":10}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":true,\"cOFullDayHours\":0,\"cOHalfDayHours\":0},\"compOff\":{\"allowCF\":true,\"clubbing\":true,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowedOnProbation\":true},\"leaveApplicationSettings\":{\"approvalRule\":\"RMOnly\",\"notifyUserEmails\":[{\"admins\":[26875],\"users\":[117774]}]},\"assignedUsers\":[19303],\"cycleId\":" + leaveCycleId + ",\"skipMaxUsedCheck\":false}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        path = "/v2/leaveManagement/leavePolicy/organisations/" + orgId + "/leaveCycles/" + leaveCycleId + "/leavePolicies/" + leavePolicyId;
+        updateLPRes = reqSpec.when().patch(path);
+
+        variableContext.setScenarioContext("METHOD", "PATCH");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL", utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @When("Delete Leave Policy under Leave Cycle with payload with orgId {int}")
+    public void delete_leave_policy_under_leave_cycle_with_payload_with_orgId(int orgId) throws IOException {
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies/"+leavePolicyId;
+        deleteLeaveRes = reqSpec.when().delete(path);
+
+        variableContext.setScenarioContext("METHOD", "DELETE");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL", utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @Given("Get holiday policies")
+    public void get_holiday_policies() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"filter\":{},\"fields\":[\"id\",\"name\",\"cycleId\",\"cycleName\",\"country\"]}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+
+    }
+
+    @Given("Get holidays under a leave cycle")
+    public void get_holidays_under_a_leave_cycle() throws IOException {
+        reqBody="{\"country\":\"IN\"}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @Given("Create holiday policy with {string} with cycleId {int}")
+    public void create_holiday_policy_with_with_cycleId(String name, int cycleId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"holidayPolicy\":{\"name\":\""+name+"\",\"cycleId\":"+cycleId+",\"country\":\"IN\",\"holidays\":[{\"holidayId\":1,\"holidayName\":\"New Year's Day\",\"date\":\"2021-01-01T00:00:00.000Z\",\"discretionary\":false,\"country\":\"IN\"},{\"holidayId\":2,\"holidayName\":\"Lohri\",\"date\":\"2021-01-13T00:00:00.000Z\",\"discretionary\":false,\"country\":\"IN\"}],\"assignedUserIds\":[123178],\"discretionaryLimit\":1}}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @When("verify holiday policy is created")
+    public void verify_holiday_policy_is_created() {
+        // Write code here that turns the phrase above into concrete actions
+        String responseBody = response.then().extract().response().asString();
+
+        JsonPath js = new JsonPath(responseBody);
+        holidayPolicyId = js.getInt("data.id");
+    }
+
+    @When("Delete holiday policy with orgId {int} with cycleId {int}")
+    public void delete_holiday_policy_with_orgId_with_cycleId(Integer orgId, int cycleId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+cycleId+"/holidayPolicies/"+holidayPolicyId;
+        deleteRes = reqSpec.when().delete(path);
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+    }
+
+    @When("get holiday policy details with orgId {int} with cycleId {int}")
+    public void get_holiday_policy_details_with_orgId(int orgId, int cycleId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"filter\":{}}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+cycleId+"/holidayPolicies/"+holidayPolicyId;
+        getDetailsHPRes = reqSpec.when().post(path);
+
+        variableContext.setScenarioContext("METHOD","POST");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @When("assign users to holiday policy with orgId {int} with cycleId {int}")
+    public void assign_users_to_holiday_policy_with_orgId_with_cycleId(Integer orgId, Integer cycleId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"holidayPolicy\":{\"name\":\"HolPol1Details\",\"cycleId\":"+cycleId+",\"country\":\"IN\",\"holidays\":[{\"policyHolidayId\":1144,\"holidayId\":1,\"holidayName\":\"New Year's Day\",\"date\":\"2021-01-01T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":1145,\"holidayId\":2,\"holidayName\":\"Lohri\",\"date\":\"2021-01-13T00:00:00.000Z\",\"discretionary\":false}],\"assignedUserIds\":[119240,28947],\"discretionaryLimit\":1,\"id\":"+holidayPolicyId+"}}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+cycleId+"/holidayPolicies/"+holidayPolicyId;
+        assignUsersHPRes = reqSpec.when().patch(path).then().extract().response();
+
+        String res=assignUsersHPRes.asString();
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @When("update holiday policy with orgId {int} with cycleId {int} with {string}")
+    public void update_holiday_policy_with_orgId_with_cycleId(Integer orgId, Integer cycleId, String name) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"holidayPolicy\":{\"name\":\""+name+"\",\"cycleId\":"+cycleId+",\"country\":\"IN\",\"holidays\":[{\"policyHolidayId\":1144,\"holidayId\":1,\"holidayName\":\"New Year's Day\",\"date\":\"2021-01-01T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":1145,\"holidayId\":2,\"holidayName\":\"Lohri\",\"date\":\"2021-01-13T00:00:00.000Z\",\"discretionary\":false}],\"assignedUserIds\":[119240,28947],\"discretionaryLimit\":1,\"id\":"+holidayPolicyId+"}}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+cycleId+"/holidayPolicies/"+holidayPolicyId;
+        assignUsersHPRes = reqSpec.when().patch(path).then().extract().response();
+
+        String res=assignUsersHPRes.asString();
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @When("Delete holiday policy with payload with orgId {int} with cycleId {int}")
+    public void delete_holiday_policy_with_payload_with_orgId_with_cycleId(Integer orgId, int cycleId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+cycleId+"/holidayPolicies/"+holidayPolicyId;
+        deleteRes = reqSpec.when().delete(path).then().extract().response();
+
+        String res=deleteRes.asString();
+
+        variableContext.setScenarioContext("METHOD","DELETE");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @Given("Get leave details with {string}")
+    public void get_leave_details_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        if(payload.equalsIgnoreCase("no filter")){
+            reqBody="{\"filters\":{\"orgUserIds\":[],\"search\":{\"pendingCount\":null}}}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filter")) {
+            reqBody="{\"filters\":{\"orgUserIds\":[26792],\"search\":{\"pendingCount\":null}}}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Get calendar view of leave reports")
+    public void get_calendar_view_of_leave_reports() throws IOException {
+        reqBody="{\"filter\":{\"month\":10,\"orgUserIds\":[],\"year\":2022}}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Get pending leaves with payload")
+    public void get_pending_leaves_with_payload() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"filter\":{\"search\":{\"usersName\":\"\",\"reportingManager\":\"\",\"leaveName\":\"\"}}}";
+
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("notify {string} user")
+    public void notify_user(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        if(payload.equalsIgnoreCase("one")){
+            reqBody="{\"users\":[{\"orgUserId\":26793,\"userLeaveId\":22139}]}";
+            reqSpec=reqSpec.body(reqBody);
+        }else if(payload.equalsIgnoreCase("all")) {
+            reqBody="{\"users\":[{\"orgUserId\":117774,\"userLeaveId\":23447},{\"orgUserId\":117774,\"userLeaveId\":23446},{\"orgUserId\":117774,\"userLeaveId\":23448},{\"orgUserId\":19166,\"userLeaveId\":22087},{\"orgUserId\":19178,\"userLeaveId\":22097},{\"orgUserId\":19303,\"userLeaveId\":12676},{\"orgUserId\":19303,\"userLeaveId\":22098},{\"orgUserId\":83070,\"userLeaveId\":22103},{\"orgUserId\":26793,\"userLeaveId\":22139},{\"orgUserId\":26792,\"userLeaveId\":12678}]}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
     }
 }

@@ -10,7 +10,7 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import static io.restassured.RestAssured.given;
 
-@CucumberOptions(features = "src/test/resources/features", monochrome = true, tags ="@lt4", plugin = {
+@CucumberOptions(features = "src/test/resources/features", monochrome = true, tags ="@ep3", plugin = {
         "pretty", "html:target/cucumber-report/single",
         "json:target/cucumber-report/single/cucumber.json",
         "com.spintly.base.support.cucumberEvents.EventsHandler"},
