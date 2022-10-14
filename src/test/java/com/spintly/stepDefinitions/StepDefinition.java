@@ -46,10 +46,15 @@ public class StepDefinition extends DriverBase {
 
 
     @Given("Get {string}")
-    public void get_(String str1) throws IOException {
+    public void get_(String url) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
-        ResultManager.log("-", "-", false);
+        if(url.equalsIgnoreCase("api.spintly")) {
+            reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+            ResultManager.log("-", "-", false);
+        }else if(url.equalsIgnoreCase("saams.api.spintly")){
+            reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+            ResultManager.log("-", "-", false);
+        }
     }
 
 
@@ -111,7 +116,6 @@ public class StepDefinition extends DriverBase {
 
                 ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
-
 
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
@@ -632,6 +636,54 @@ public class StepDefinition extends DriverBase {
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
                 break;
 
+            case "shiftRoster":
+                path="/v2/attendanceManagement/organisations/"+orgId+"/shiftRooster";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "shiftRosterPdf":
+                path="/v2/attendanceManagement/organisations/"+orgId+"/shiftRooster/getPdf";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "assignShifts":
+                path="/v2/attendanceManagement/organisations/"+orgId+"/assignShifts";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "assignShiftRoster":
+                path="/v2/attendanceManagement/organisations/"+orgId+"/assignShiftsRooster";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
         }
     }
 
@@ -706,6 +758,12 @@ public class StepDefinition extends DriverBase {
             reqSpec=reqSpec.body(reqBody);
         }else if(payload.equalsIgnoreCase("detailedView")){
             reqBody="{\"fields\":[\"users\"]}";
+            reqSpec=reqSpec.body(reqBody);
+        }else if(payload.equalsIgnoreCase("shiftRoster")){
+            reqBody="{\"fields\":[\"attributes\",\"roles\",\"reportingManagers\",\"users\"]}";
+            reqSpec=reqSpec.body(reqBody);
+        }else if(payload.equalsIgnoreCase("assignShift")){
+            reqBody="{\"fields\":[\"users\"],\"decativatedUsers\":false}";
             reqSpec=reqSpec.body(reqBody);
         }
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -1024,7 +1082,33 @@ public class StepDefinition extends DriverBase {
                         utils.getGlobalValue("saamsApiURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
                 break;
+
+            case "assignedUsersLP":
+                path="/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+id+"/leavePolicies/";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
         }
+    }
+
+    @When("user calls {string} with orgId {int} for {int} for {int}")
+    public void user_calls_with_orgId_for_for(String module, Integer orgId, Integer lcId, Integer lpId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+lcId+"/leavePolicies/"+lpId;
+        response = reqSpec
+                .when().post(path);
+
+        variableContext.setScenarioContext("METHOD","GET");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
     }
 
     @Given("Get List of users with {string}")
@@ -1630,8 +1714,11 @@ public class StepDefinition extends DriverBase {
         path = "/organisationManagement/v6/organisations/" + orgId + "/accessHistory";
         accHistoryRes = reqSpec.when().post(path);
 
+        variableContext.setScenarioContext("METHOD","POST");
+
         ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                 utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
     }
 
     @And("Display user details with orgId {int}")
@@ -1641,8 +1728,12 @@ public class StepDefinition extends DriverBase {
         path = "/organisationManagement/v1/organisations/" + orgId + "/users/" + userId;
         detailsUserRes = reqSpec.when().get(path);
 
+        variableContext.setScenarioContext("METHOD","GET");
+
         ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                 utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
     }
 
     @When("Display user shift details")
@@ -1653,8 +1744,12 @@ public class StepDefinition extends DriverBase {
         path = "/v2/attendanceManagement/users/" + userId + "/userDetails";
         shiftDetailsUserRes = reqSpec.when().get(path);
 
+        variableContext.setScenarioContext("METHOD","GET");
+
         ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                 utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
     }
 
     @When("Patch user details with orgId {int}")
@@ -1670,8 +1765,11 @@ public class StepDefinition extends DriverBase {
         path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + userId;
         editUserRes = reqSpec.when().patch(path);
 
+        variableContext.setScenarioContext("METHOD","PATCH");
+
         ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                 utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
     }
 
     @When("Get Permissions of user with orgId {int}")
@@ -1682,8 +1780,12 @@ public class StepDefinition extends DriverBase {
         path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + userId + "/permissions";
         getPermissionRes = reqSpec.when().get(path);
 
+        variableContext.setScenarioContext("METHOD","GET");
+
         ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                 utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
     }
 
     @When("Update Permissions of user with orgId {int}")
@@ -1698,9 +1800,11 @@ public class StepDefinition extends DriverBase {
         path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + userId + "/permissions";
         patchPermissionRes = reqSpec.when().patch(path);
 
+        variableContext.setScenarioContext("METHOD","PATCH");
 
         ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                 utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
     }
 
     @When("Deactivate a user with orgId {int}")
@@ -1715,8 +1819,11 @@ public class StepDefinition extends DriverBase {
         path = "/v2/organisationManagement/organisations/" + orgId + "/users/deactivate";
         deactivateUserRes = reqSpec.when().post(path);
 
+        variableContext.setScenarioContext("METHOD","POST");
+
         ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                 utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
     }
 
 
@@ -1732,8 +1839,11 @@ public class StepDefinition extends DriverBase {
         path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + userId + "/activate";
         activateUserRes = reqSpec.when().patch(path);
 
+        variableContext.setScenarioContext("METHOD","PATCH");
+
         ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                 utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
     }
 
     @Given("Get List of devices with {string}")
@@ -2109,8 +2219,11 @@ public class StepDefinition extends DriverBase {
         path = "/v2/leaveManagement/leaveType/organisations/"+orgId+"/leaveTypes/"+leaveId+"/delete";
         deleteRes = reqSpec.when().post(path);
 
+        variableContext.setScenarioContext("METHOD","POST");
+
         ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
                 utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
     }
 
     @Then("Delete leave with orgId {int}")
@@ -2494,9 +2607,7 @@ public class StepDefinition extends DriverBase {
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
 
         path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+cycleId+"/holidayPolicies/"+holidayPolicyId;
-        deleteRes = reqSpec.when().delete(path).then().extract().response();
-
-        String res=deleteRes.asString();
+        deleteRes = reqSpec.when().delete(path);
 
         variableContext.setScenarioContext("METHOD","DELETE");
 
@@ -2552,7 +2663,141 @@ public class StepDefinition extends DriverBase {
             reqBody="{\"users\":[{\"orgUserId\":117774,\"userLeaveId\":23447},{\"orgUserId\":117774,\"userLeaveId\":23446},{\"orgUserId\":117774,\"userLeaveId\":23448},{\"orgUserId\":19166,\"userLeaveId\":22087},{\"orgUserId\":19178,\"userLeaveId\":22097},{\"orgUserId\":19303,\"userLeaveId\":12676},{\"orgUserId\":19303,\"userLeaveId\":22098},{\"orgUserId\":83070,\"userLeaveId\":22103},{\"orgUserId\":26793,\"userLeaveId\":22139},{\"orgUserId\":26792,\"userLeaveId\":12678}]}";
             reqSpec=reqSpec.body(reqBody);
         }
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("get shift rooster with {string}")
+    public void get_shift_rooster_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if(payload.equalsIgnoreCase("no filter")){
+            reqBody="{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{}},\"forMonth\":\"2022-10\"}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filter")) {
+            reqBody="{\"pagination\":{\"page\":1,\"per_page\":25},\"order\":{\"name\":\"ASC\"},\"filters\":{\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{\"employeeName\":\"aru\"}},\"forMonth\":\"2022-10\"}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Download Shift Roster pdf with {string}")
+    public void download_shift_rooster_pdf_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if(payload.equalsIgnoreCase("no filter")){
+            reqBody="{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{}},\"forMonth\":\"2022-10\",\"orgName\":\"QA Organisation\"}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filter")) {
+            reqBody="{\"pagination\":{\"page\":1,\"per_page\":-1},\"order\":{\"name\":\"ASC\"},\"filters\":{\"userIds\":[],\"terms\":null,\"reportingManager\":null,\"roles\":null,\"search\":{\"employeeName\":\"aru\"}},\"forMonth\":\"2022-10\",\"orgName\":\"QA Organisation\"}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("Assign shift to a user")
+    public void assign_shift_to_a_user() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"shift\":{\"applicableFrom\":\"2022-10-12\",\"applicableUntil\":null,\"shiftId\":1024,\"userIds\":[28947],\"overrideHoliday\":false}}";
+
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
 
         ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @Given("assign shift roster to a user")
+    public void assign_shift_roster_to_a_user() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"rosterData\":[{\"shiftId\":1024,\"weekOff\":true,\"day\":\"2022-10-03\",\"overrideHoliday\":null,\"approvedLeaves\":null,\"compulsoryHoliday\":null,\"approvedHoliday\":null,\"changed\":true,\"userId\":28947,\"dateString\":\"2022-10-03\"}]}";
+
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody,"Request body: "+reqBody,false);
+    }
+
+    @When("Assign a card to user with orgId {int}")
+    public void assign_a_card_to_user_with_orgId(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"cardType\":\"spintly_card\",\"cardId\":1006088}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+
+        path = "/organisationManagement/v1/organisations/"+orgId+"/users/"+userId+"/assignCredential";
+        patchPermissionRes = reqSpec.when().post(path);
+
+        variableContext.setScenarioContext("METHOD","POST");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @When("Edit access type of a user with orgId {int}")
+    public void edit_access_type_of_a_user_with_orgId(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"clickToAccessRange\":\"max\",\"proximityAccess\":false,\"remoteAccess\":false,\"tapToAccess\":true,\"deviceLock\":false,\"mobile\":true}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+
+        path = "/v2/organisationManagement/organisations/"+orgId+"/users/"+userId+"/unlockSettings";
+        patchPermissionRes = reqSpec.when().patch(path);
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @When("get leaves assigned to a user with orgId {int} with cycleId {int}")
+    public void get_leaves_assigned_to_a_user_with_orgId_with_cycleId(int orgId, int cycleId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        ResultManager.log("Request body: -", "Request body: -", false);
+
+        path = "/v2/leaveManagement/userLeave/organisations/"+orgId+"/users/"+userId+"/leaveCycles/"+cycleId+"/leaves";
+        patchPermissionRes = reqSpec.when().get(path);
+
+        variableContext.setScenarioContext("METHOD","GET");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @Given("Get assigned users to leave policy")
+    public void get_assigned_users_to_leave_policy() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"filter\":{},\"fields\":[\"id\",\"name\",\"assignedUsers\"]}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+    }
+
+    @When("assign new user to Leave Policy with orgId {int} with cycleId {int} with leavePId {int}")
+    public void assign_new_user_to_Leave_Policy_with_orgId_with_cycleId_with_leavePId(Integer orgId, Integer cycleId, Integer leavePId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"name\":\"Priviledged Policy\",\"leaveTypes\":[{\"id\":770,\"name\":\"Vacation Leave\",\"paid\":false,\"maxCF\":0,\"accrual\":\"workingDays\",\"leaveId\":131,\"clubbing\":true,\"shortName\":\"VL\",\"cycleLimit\":12,\"maxAllowed\":3,\"minAllowed\":0.5,\"precedence\":\"COE\",\"accrualLimit\":0.5,\"allowEncashment\":true,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"leave\",\"probationProrate\":false,\"weekOffBetLeaves\":\"leave\",\"allowCarryForward\":true,\"carryForwardLimit\":0,\"allowedOnProbation\":false,\"backDatedAllowedDays\":30},{\"id\":771,\"name\":\"Monthly End\",\"paid\":true,\"maxCF\":0,\"accrual\":\"monthlyEnd\",\"leaveId\":299,\"clubbing\":true,\"shortName\":\"ME\",\"cycleLimit\":12,\"maxAllowed\":1,\"minAllowed\":1,\"precedence\":\"COE\",\"accrualLimit\":0.5,\"allowEncashment\":true,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowCarryForward\":true,\"carryForwardLimit\":0,\"allowedOnProbation\":false,\"backDatedAllowedDays\":7},{\"id\":768,\"name\":\"Monthly Start\",\"paid\":true,\"maxCF\":0,\"accrual\":\"monthlyStart\",\"leaveId\":298,\"clubbing\":true,\"shortName\":\"MS\",\"cycleLimit\":12,\"maxAllowed\":1,\"minAllowed\":1,\"precedence\":\"COE\",\"accrualLimit\":0.5,\"allowEncashment\":true,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowCarryForward\":true,\"carryForwardLimit\":0,\"allowedOnProbation\":false,\"backDatedAllowedDays\":7},{\"id\":769,\"name\":\"Casual Leave\",\"paid\":true,\"maxCF\":0,\"accrual\":\"cycle\",\"leaveId\":102,\"clubbing\":true,\"shortName\":\"CL\",\"cycleLimit\":4,\"maxAllowed\":10,\"minAllowed\":0.5,\"precedence\":\"EOC\",\"accrualLimit\":4,\"allowEncashment\":false,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowCarryForward\":false,\"carryForwardLimit\":0,\"allowedOnProbation\":true,\"backDatedAllowedDays\":10}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":false,\"cOFullDayHours\":0,\"cOHalfDayHours\":0},\"compOff\":{\"allowCF\":false,\"clubbing\":true,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowedOnProbation\":true},\"leaveApplicationSettings\":{\"approvalRule\":\"RMOrAdmin\",\"notifyUserEmails\":[{\"admins\":[26793],\"users\":[]}]},\"assignedUsers\":["+userId+",28947,117818,149153],\"cycleId\":588,\"skipMaxUsedCheck\":true}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+
+        path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+cycleId+"/leavePolicies/"+leavePId;
+        patchPermissionRes = reqSpec.when().patch(path);
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
     }
 }
