@@ -17,6 +17,7 @@ import io.restassured.specification.ResponseSpecification;
 
 
 import java.io.IOException;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
@@ -34,7 +35,7 @@ public class StepDefinition extends DriverBase {
             assignUsersLPRes, updateLPRes, getDetailsHPRes, assignUsersHPRes;
     ValidatableResponse valRes;
 
-    static int userId, leaveId, leaveCycleId, leavePolicyId, holidayPolicyId;
+    static int userId, leaveId, leaveCycleId, leavePolicyId, holidayPolicyId, customId, termId;
 
     String reqBody = null, path = null;
     DriverBase driverBase = new DriverBase();
@@ -684,6 +685,57 @@ public class StepDefinition extends DriverBase {
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
 
+            case "orgDetails":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/details";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "orgDetailsUpdate":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/details";
+                response = reqSpec
+                        .when().patch(path);
+
+                variableContext.setScenarioContext("METHOD","PATCH");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "customAtt":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/attributes";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "createCustomAtt":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/attributes";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
         }
     }
 
@@ -1093,6 +1145,18 @@ public class StepDefinition extends DriverBase {
                 ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
                         utils.getGlobalValue("saamsApiURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "attAllUsers":
+                path="/v2/organisationManagement/organisations/"+orgId+"/attributes/"+id+"/allUsers";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
         }
     }
@@ -2800,4 +2864,111 @@ public class StepDefinition extends DriverBase {
                 utils.getGlobalValue("saamsApiURL") + path, false);
         variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
     }
+
+    @Given("update org information with {int}")
+    public void update_org_information_with(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"name\":\"QA Organisation\",\"email\":\"priyanka.k@spintly.com\",\"phone\":\"+917875722802\",\"location\":\"Goa\",\"id\":"+orgId+"}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+    }
+
+    @Given("Create a customer attribute with name {string}")
+    public void create_a_customer_attribute_with_name(String name) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="[{\"attributeName\":\""+name+"\",\"terms\":[\"0-1 Years\",\"1-2 Years\"]}]";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+    }
+
+    @And("verify custom attribute {string} is added in {int}")
+    public void verify_ca_is_added(String name, int orgId) throws IOException {
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        String responseBody = reqSpec.when().get("/v2/organisationManagement/organisations/"+orgId+"/attributes")
+                .then().extract().response().asString();
+
+        //System.out.println(responseBody);
+        JsonPath js = new JsonPath(responseBody);
+        List att=js.getList("message.attributes");
+        for(int i=0;i<att.size();i++)
+        if(name.equalsIgnoreCase(js.getString("message.attributes["+i+"].attributeName"))){
+            customId=js.getInt("message.attributes["+i+"].id");
+            termId=js.getInt("message.attributes["+i+"].terms[0].id");
+        }
+
+    }
+
+    @When("Delete custom attribute with orgId {int}")
+    public void delete_custom_attribute_with_orgId(Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        ResultManager.log("Request body: -", "Request body: -", false);
+
+        path = "/v2/organisationManagement/organisations/"+orgId+"/attributes/"+customId;
+        deleteRes = reqSpec.when().delete(path);
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+    }
+
+    @When("update custom attribute with name {string} with orgId {int}")
+    public void update_custom_attribute_with_name(String name, int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\""+customId+"\":{\"attributeName\":\""+name+"\",\"newTerms\":[],\"updatedTerms\":{},\"deletedTerms\":[]}}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+
+        path = "/v2/organisationManagement/organisations/"+orgId+"/attributes";
+        response = reqSpec.when().patch(path);
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @Given("Bulk assign users to a custom attribute with orgId {int}")
+    public void bulk_assign_users_to_a_custom_attribute_with_orgId(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"bulkAssign\":{\"attributeId\":"+customId+",\"terms\":["+termId+"],\"userIds\":[26535]}}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+
+        path = "/v2/organisationManagement/organisations/"+orgId+"/attributes/bulkAssign";
+        response = reqSpec.when().post(path);
+
+        variableContext.setScenarioContext("METHOD","POST");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+    @When("Delete custom attribute with orgId {int} with payload")
+    public void delete_custom_attribute_with_orgId_with_orgId(Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        ResultManager.log("Request body: -", "Request body: -", false);
+
+        path = "/v2/organisationManagement/organisations/"+orgId+"/attributes/"+customId;
+        deleteRes = reqSpec.when().delete(path);
+
+        variableContext.setScenarioContext("METHOD","DELETE");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
 }
