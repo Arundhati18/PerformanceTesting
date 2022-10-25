@@ -54,8 +54,8 @@ Feature: Access Points
   Scenario: Update name of the Access Point
     Given Update the door name to "Test door 101"
     When user calls "updateDoor" with orgId 560 for 2655
-    Then the API call got success with status code 200
     And again update the door name to "Test door" with orgId 560 for 2655
+    Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
 

@@ -26,7 +26,7 @@ Feature: Leave and Holidays-> Holiday Setup
   @hs3
   Scenario: Get Holidays under Leave Cycle
     Given Get holidays under a leave cycle
-    When user calls "getHolidays" with orgId 560 for 385
+    When user calls "getHolidays" with orgId 560 for 588
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
@@ -52,10 +52,10 @@ Feature: Leave and Holidays-> Holiday Setup
   @addHolidayPolicy
   @hs6
   Scenario: Create Holiday Policy
-    Given Create holiday policy with "HolidayPol1" with cycleId 385
+    Given Create holiday policy with "HolidayPol1" with cycleId 588
     When user calls "createHolidayPolicy" with orgId 560
     And verify holiday policy is created
-    And Delete holiday policy with orgId 560 with cycleId 385
+    And Delete holiday policy with orgId 560 with cycleId 588
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
@@ -63,14 +63,14 @@ Feature: Leave and Holidays-> Holiday Setup
   @addHolidayPolicy
   @hs7
   Scenario: Get Details of Holiday Policy
-    Given Create holiday policy with "HolPol1Details" with cycleId 385
+    Given Create holiday policy with "HolPol1Details" with cycleId 588
     When user calls "createHolidayPolicy" with orgId 560
     And verify holiday policy is created
-    And get holiday policy details with orgId 560 with cycleId 385
-    And Delete holiday policy with orgId 560 with cycleId 385
-    Then the API call got success with status code 200 for "getDetailsHP"
-    And "type" in response is "success" for "getDetailsHP"
-    And response time is less than 500 ms for "getDetailsHP"
+    And get holiday policy details with orgId 560 with cycleId 588
+    And Delete holiday policy with orgId 560 with cycleId 588
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @addHolidayPolicy
   @hs8
@@ -92,27 +92,29 @@ Feature: Leave and Holidays-> Holiday Setup
 
   @addHolidayPolicy
   @hs10
-  Scenario: Assign/Unassign Holiday Policy
-    Given Create holiday policy with "HolPol1Details" with cycleId 385
+  Scenario: Assign/Unassign Users to Holiday Policy
+    Given Create holiday policy with "HolPol1Details" with cycleId 588
     When user calls "createHolidayPolicy" with orgId 560
     And verify holiday policy is created
-    And assign users to holiday policy with orgId 560 with cycleId 385
-    And Delete holiday policy with orgId 560 with cycleId 385
-    Then the API call got success with status code 200 for "assignUsersHP"
-    And "type" in response is "success" for "assignUsersHP"
-    And response time is less than 500 ms for "assignUsersHP"
+    And get holiday Ids under Holiday Policy with "HolPol1Details" with orgId 560
+    And assign users to holiday policy with orgId 560 with cycleId 588
+    And Delete holiday policy with orgId 560 with cycleId 588
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @addHolidayPolicy
   @hs11
   Scenario: Update Holiday Policy Details
-    Given Create holiday policy with "HolPol1Details" with cycleId 385
+    Given Create holiday policy with "HolPol1Details" with cycleId 588
     When user calls "createHolidayPolicy" with orgId 560
     And verify holiday policy is created
-    And update holiday policy with orgId 560 with cycleId 385 with "HolPol1Updated"
-    And Delete holiday policy with orgId 560 with cycleId 385
-    Then the API call got success with status code 200 for "assignUsersHP"
-    And "type" in response is "success" for "assignUsersHP"
-    And response time is less than 500 ms for "assignUsersHP"
+    And get holiday Ids under Holiday Policy with "HolPol1Details" with orgId 560
+    And update holiday policy with orgId 560 with cycleId 588 with "HolPol1Updated"
+    And Delete holiday policy with orgId 560 with cycleId 588
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @addHolidayPolicy
   @hs12

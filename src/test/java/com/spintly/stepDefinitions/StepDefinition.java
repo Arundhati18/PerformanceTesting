@@ -17,10 +17,11 @@ import io.restassured.specification.ResponseSpecification;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-
+import static io.restassured.RestAssured.patch;
 
 
 public class StepDefinition extends DriverBase {
@@ -30,12 +31,15 @@ public class StepDefinition extends DriverBase {
     ResponseSpecification resSpec;
     Response response, updateDoorRes, deleteRes, accHistoryRes, detailsUserRes,
             shiftDetailsUserRes, editUserRes, getPermissionRes, patchPermissionRes,
-            deactivateUserRes, activateUserRes, detailsLeaveRes,updateLeaveRes, deleteLeaveRes,
-            detailsLCRes, updateLCRes, addLPUnderLCRes, getLPUnderLCRes, getDetailsLPUnderLCRes,
-            assignUsersLPRes, updateLPRes, getDetailsHPRes, assignUsersHPRes;
+            deactivateUserRes, activateUserRes, deleteLeaveRes, getLPUnderLCRes,
+            assignUsersHPRes;
+
     ValidatableResponse valRes;
 
-    static int userId, leaveId, leaveCycleId, leavePolicyId, holidayPolicyId, customId, termId;
+    static int userId, leaveId, leaveCycleId, leavePolicyId,
+            leaveTypeId, holidayPolicyId, customId, termId, policyHolidayId;
+
+    ArrayList<Integer> arr=new ArrayList<Integer>(10);
 
     String reqBody = null, path = null;
     DriverBase driverBase = new DriverBase();
@@ -1306,7 +1310,7 @@ public class StepDefinition extends DriverBase {
     @Given("Add user with payload with name {string}")
     public void add_user_with_payload(String name) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody = "{\"users\":[{\"accessExpiresAt\":null,\"email\":\"\",\"employeeCode\":\"\",\"gps\":false,\"name\":\"" + name + "\",\"phone\":\"+919878980990\",\"reportingTo\":\"\",\"roles\":[1397],\"terms\":[],\"accessPoints\":[717],\"gender\":\"\",\"joiningDate\":\"2022-08-11\",\"probationPeriod\":0,\"probationPeriodEnabled\":false,\"mobile\":true}]}";
+        reqBody = "{\"users\":[{\"accessExpiresAt\":null,\"email\":\"\",\"employeeCode\":\"\",\"gps\":false,\"name\":\"" + name + "\",\"phone\":\"+919878980990\",\"reportingTo\":\"\",\"roles\":[1397],\"terms\":[],\"accessPoints\":[2655],\"gender\":\"\",\"joiningDate\":\"2022-08-11\",\"probationPeriod\":0,\"probationPeriodEnabled\":false,\"mobile\":true}]}";
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
@@ -1392,64 +1396,14 @@ public class StepDefinition extends DriverBase {
                         "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + activateUserRes.getStatusLine());
                 break;
             }
-            case "getLeaveDetails":{
-                driverBase.testStepAssert.isEquals(detailsLeaveRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + detailsLeaveRes.getStatusLine());
-                break;
-            }
-            case "updateLeaveDetails":{
-                driverBase.testStepAssert.isEquals(updateLeaveRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + updateLeaveRes.getStatusLine());
-                break;
-            }
-            case "deleteLeaveResponse":{
-                driverBase.testStepAssert.isEquals(deleteLeaveRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + deleteLeaveRes.getStatusLine());
-                break;
-            }
-            case "getLCDetails":{
-                driverBase.testStepAssert.isEquals(detailsLCRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + detailsLCRes.getStatusLine());
-                break;
-            }
-            case "updateLCDetails":{
-                driverBase.testStepAssert.isEquals(updateLCRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + updateLCRes.getStatusLine());
-                break;
-            }
-            case "addLPUnderLC":{
-                driverBase.testStepAssert.isEquals(addLPUnderLCRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + addLPUnderLCRes.getStatusLine());
-                break;
-            }
             case "getLPUnderLC":{
                 driverBase.testStepAssert.isEquals(getLPUnderLCRes.getStatusCode(), expectedStatusCode,
                         "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + getLPUnderLCRes.getStatusLine());
                 break;
             }
-            case "getDetailsLPUnderLC":{
-                driverBase.testStepAssert.isEquals(getDetailsLPUnderLCRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + getDetailsLPUnderLCRes.getStatusLine());
-                break;
-            }
-            case "assignUsersLP":{
-                driverBase.testStepAssert.isEquals(assignUsersLPRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + assignUsersLPRes.getStatusLine());
-                break;
-            }
-            case "updateLP":{
-                driverBase.testStepAssert.isEquals(updateLPRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + updateLPRes.getStatusLine());
-                break;
-            }
-            case "getDetailsHP":{
-                driverBase.testStepAssert.isEquals(getDetailsHPRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + getDetailsHPRes.getStatusLine());
-                break;
-            }
-            case "assignUsersHP":{
-                driverBase.testStepAssert.isEquals(assignUsersHPRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + assignUsersHPRes.getStatusLine());
+            case "deleteLeaveResponse":{
+                driverBase.testStepAssert.isEquals(deleteLeaveRes.getStatusCode(), expectedStatusCode,
+                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + deleteLeaveRes.getStatusLine());
                 break;
             }
         }
@@ -1503,63 +1457,13 @@ public class StepDefinition extends DriverBase {
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
-            case "getLeaveDetails":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(detailsLeaveRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "updateLeaveDetails":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(updateLeaveRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "deleteLeaveResponse":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(deleteLeaveRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "getLCDetails":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(detailsLCRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "updateLCDetails":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(updateLCRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "addLPUnderLC":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(addLPUnderLCRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
             case "getLPUnderLC":{
                 driverBase.testStepAssert.isEquals(utils.getJsonPath(getLPUnderLCRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
-            case "getDetailsLPUnderLC":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(getDetailsLPUnderLCRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "assignUsersLP":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(assignUsersLPRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "updateLP":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(updateLPRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "getDetailsHP":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(getDetailsHPRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "assignUsersHP":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(assignUsersHPRes, keyValue), expectedValue,
+            case "deleteLeaveResponse":{
+                driverBase.testStepAssert.isEquals(utils.getJsonPath(deleteLeaveRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
@@ -1571,9 +1475,7 @@ public class StepDefinition extends DriverBase {
         // Write code here that turns the phrase above into concrete actions
         switch (request) {
             case "accessHistory": {
-//                valRes = accHistoryRes.then();
-//                valRes.time(Matchers.lessThan(expectedResponseTime));
-//                System.out.printf(accHistoryRes.time() + "\n");
+                Long responseTime = accHistoryRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(accHistoryRes.time()));
 
                 driverBase.testStepAssert.isLess(accHistoryRes.time(),expectedResponseTime ,
@@ -1582,9 +1484,7 @@ public class StepDefinition extends DriverBase {
                 break;
             }
             case "deleteResponse": {
-                /*valRes = deleteRes.then();
-                valRes.time(Matchers.lessThan(expectedResponseTime));
-                System.out.printf(deleteRes.time() + "\n");*/
+                Long responseTime = deleteRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(deleteRes.time()));
 
                 driverBase.testStepAssert.isLess(deleteRes.time(),expectedResponseTime ,
@@ -1593,9 +1493,7 @@ public class StepDefinition extends DriverBase {
                 break;
             }
             case "userDetails": {
-                /*valRes = detailsUserRes.then();
-                valRes.time(Matchers.lessThan(expectedResponseTime));
-                System.out.printf(detailsUserRes.time() + "\n");*/
+                Long responseTime = detailsUserRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(detailsUserRes.time()));
 
                 driverBase.testStepAssert.isLess(detailsUserRes.time(),expectedResponseTime ,
@@ -1604,9 +1502,7 @@ public class StepDefinition extends DriverBase {
                 break;
             }
             case "userShiftDetails": {
-                /*valRes = shiftDetailsUserRes.then();
-                valRes.time(Matchers.lessThan(expectedResponseTime));
-                System.out.printf(shiftDetailsUserRes.time() + "\n");*/
+                Long responseTime = shiftDetailsUserRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(shiftDetailsUserRes.time()));
 
                 driverBase.testStepAssert.isLess(shiftDetailsUserRes.time(),expectedResponseTime ,
@@ -1615,9 +1511,7 @@ public class StepDefinition extends DriverBase {
                 break;
             }
             case "editUser": {
-                /*valRes = editUserRes.then();
-                valRes.time(Matchers.lessThan(expectedResponseTime));
-                System.out.printf(editUserRes.time() + "\n");*/
+                Long responseTime = editUserRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(editUserRes.time()));
 
                 driverBase.testStepAssert.isLess(editUserRes.time(),expectedResponseTime ,
@@ -1626,9 +1520,7 @@ public class StepDefinition extends DriverBase {
                 break;
             }
             case "getPermission": {
-                /*valRes = getPermissionRes.then();
-                valRes.time(Matchers.lessThan(expectedResponseTime));
-                System.out.printf(getPermissionRes.time() + "\n");*/
+                Long responseTime = getPermissionRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(getPermissionRes.time()));
 
                 driverBase.testStepAssert.isLess(getPermissionRes.time(),expectedResponseTime ,
@@ -1637,9 +1529,7 @@ public class StepDefinition extends DriverBase {
                 break;
             }
             case "patchPermission": {
-                /*valRes = patchPermissionRes.then();
-                valRes.time(Matchers.lessThan(expectedResponseTime));
-                System.out.printf(patchPermissionRes.time() + "\n");*/
+                Long responseTime = patchPermissionRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(patchPermissionRes.time()));
 
                 driverBase.testStepAssert.isLess(patchPermissionRes.time(),expectedResponseTime ,
@@ -1648,9 +1538,7 @@ public class StepDefinition extends DriverBase {
                 break;
             }
             case "deactivateUser": {
-                /*valRes = deactivateUserRes.then();
-                valRes.time(Matchers.lessThan(expectedResponseTime));
-                System.out.printf(deactivateUserRes.time() + "\n");*/
+                Long responseTime = deactivateUserRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(deactivateUserRes.time()));
 
                 driverBase.testStepAssert.isLess(deactivateUserRes.time(),expectedResponseTime ,
@@ -1659,9 +1547,7 @@ public class StepDefinition extends DriverBase {
                 break;
             }
             case "activateUser": {
-               /* valRes = activateUserRes.then();
-                valRes.time(Matchers.lessThan(expectedResponseTime));
-                System.out.printf(activateUserRes.time() + "\n");*/
+                Long responseTime = activateUserRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(activateUserRes.time()));
 
                 driverBase.testStepAssert.isLess(activateUserRes.time(),expectedResponseTime ,
@@ -1669,55 +1555,8 @@ public class StepDefinition extends DriverBase {
                         "Response time greater than 500ms");
                 break;
             }
-            case "getLeaveDetails":{
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(detailsLeaveRes.time()));
-
-                driverBase.testStepAssert.isLess(detailsLeaveRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+detailsLeaveRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "updateLeaveDetails":{
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(updateLeaveRes.time()));
-
-                driverBase.testStepAssert.isLess(updateLeaveRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+updateLeaveRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "deleteLeaveResponse":{
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(deleteLeaveRes.time()));
-
-                driverBase.testStepAssert.isLess(deleteLeaveRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+deleteLeaveRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "getLCDetails":{
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(detailsLCRes.time()));
-
-                driverBase.testStepAssert.isLess(detailsLCRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+detailsLCRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "updateLCDetails":{
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(updateLCRes.time()));
-
-                driverBase.testStepAssert.isLess(updateLCRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+updateLCRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "addLPUnderLC":{
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(addLPUnderLCRes.time()));
-
-                driverBase.testStepAssert.isLess(addLPUnderLCRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+addLPUnderLCRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
             case "getLPUnderLC":{
+                Long responseTime = getLPUnderLCRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(getLPUnderLCRes.time()));
 
                 driverBase.testStepAssert.isLess(getLPUnderLCRes.time(),expectedResponseTime ,
@@ -1725,43 +1564,12 @@ public class StepDefinition extends DriverBase {
                         "Response time greater than 500ms");
                 break;
             }
-            case "getDetailsLPUnderLC":{
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(getDetailsLPUnderLCRes.time()));
+            case "deleteLeaveResponse":{
+                Long responseTime = deleteLeaveRes.time();
+                variableContext.setScenarioContext("ResponseTime",String.valueOf(deleteLeaveRes.time()));
 
-                driverBase.testStepAssert.isLess(getDetailsLPUnderLCRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+getDetailsLPUnderLCRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "assignUsersLP":{
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(assignUsersLPRes.time()));
-
-                driverBase.testStepAssert.isLess(assignUsersLPRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+assignUsersLPRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "updateLP":{
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(updateLPRes.time()));
-
-                driverBase.testStepAssert.isLess(updateLPRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+updateLPRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "getDetailsHP":{
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(getDetailsHPRes.time()));
-
-                driverBase.testStepAssert.isLess(getDetailsHPRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+getDetailsHPRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "assignUsersHP":{
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(assignUsersHPRes.time()));
-
-                driverBase.testStepAssert.isLess(assignUsersHPRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+assignUsersHPRes.time(),
+                driverBase.testStepAssert.isLess(deleteLeaveRes.time(),expectedResponseTime ,
+                        "Response time: Less than "+expectedResponseTime, "Response time: "+deleteLeaveRes.time(),
                         "Response time greater than 500ms");
                 break;
             }
@@ -2268,7 +2076,6 @@ public class StepDefinition extends DriverBase {
 
         JsonPath js = new JsonPath(responseBody);
         leaveId=js.getInt("data.leaveId");
-
     }
 
     @Then("Delete leave with payload with orgId {int}")
@@ -2300,13 +2107,10 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
 
         path = "/v2/leaveManagement/leaveType/organisations/"+orgId+"/leaveTypes/"+leaveId+"/delete";
-        deleteLeaveRes = reqSpec.when().post(path);
-
-        variableContext.setScenarioContext("METHOD","POST");
+        deleteRes = reqSpec.when().post(path);
 
         ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
                 utils.getGlobalValue("saamsApiURL") + path, false);
-        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
     }
 
     @And("Get leave details with orgId {int}")
@@ -2315,8 +2119,8 @@ public class StepDefinition extends DriverBase {
 
         ResultManager.log("Request body: -", "Request body: -", false);
 
-        path = "/v2/leaveManagement/leaveType/organisations/"+orgId+"/leaveTypes/"+leaveId+"";
-        detailsLeaveRes = reqSpec.when().get(path);
+        path = "/v2/leaveManagement/leaveType/organisations/"+orgId+"/leaveTypes/"+leaveId;
+        response = reqSpec.when().get(path);
 
         variableContext.setScenarioContext("METHOD","GET");
 
@@ -2334,9 +2138,10 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: " +reqBody, "Request body: " +reqBody, false);
 
         path = "/v2/leaveManagement/leaveType/organisations/"+orgId+"/leaveTypes/"+leaveId+"";
-        updateLeaveRes = reqSpec.when().patch(path);
+        response = reqSpec.when().patch(path);
 
-        String res=updateLeaveRes.then().extract().response().asString();
+        int sc=response.getStatusCode();
+        long rt=response.time();
 
         variableContext.setScenarioContext("METHOD","PATCH");
 
@@ -2404,7 +2209,7 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
 
         path = "/v2/leaveManagement/leaveCycle/organisations/"+orgId+"/leaveCycles/"+leaveCycleId;
-        detailsLCRes = reqSpec.when().post(path);
+        response = reqSpec.when().post(path);
 
         variableContext.setScenarioContext("METHOD","POST");
 
@@ -2424,7 +2229,7 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
 
         path = "/v2/leaveManagement/leaveCycle/organisations/"+orgId+"/leaveCycles/"+leaveCycleId;
-        updateLCRes = reqSpec.when().patch(path);
+        response = reqSpec.when().patch(path);
 
         variableContext.setScenarioContext("METHOD","PATCH");
 
@@ -2437,14 +2242,14 @@ public class StepDefinition extends DriverBase {
     @And("Add Leave Policy under Leave Cycle with orgId {int} with name {string}")
     public void add_leave_policy_under_leave_cycle_with_orgId_with_name(int orgId, String name) throws IOException {
 
-        reqBody="{\"name\":\""+name+"\",\"leaveTypes\":[{\"cycleLimit\":11,\"accrualLimit\":11,\"carryForwardLimit\":0,\"encashmentLimit\":0,\"allowCarryForward\":false,\"allowEncashment\":false,\"accrual\":\"cycle\",\"leaveId\":102,\"allowedOnProbation\":true,\"applyDaysBefore\":0,\"backDatedAllowedDays\":10,\"clubbing\":true,\"holidayBetLeaves\":\"holiday\",\"maxAllowed\":10,\"maxCF\":0,\"minAllowed\":0.5,\"name\":\"Casual Leave\",\"paid\":true,\"precedence\":\"EOC\",\"probationProrate\":true,\"shortName\":\"CL\",\"weekOffBetLeaves\":\"holiday\"}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":true,\"cOHalfDayHours\":0,\"cOFullDayHours\":0},\"compOff\":{\"allowCF\":true,\"holidayBetLeaves\":\"leave\",\"weekOffBetLeaves\":\"leave\",\"allowedOnProbation\":true,\"probationProrate\":true,\"clubbing\":true},\"leaveApplicationSettings\":{\"notifyUserEmails\":[{\"admins\":[26875],\"users\":[117774]}],\"approvalRule\":\"RMOnly\"},\"assignedUsers\":[19303]}";
+        reqBody="{\"name\":\""+name+"\",\"leaveTypes\":[{\"cycleLimit\":11,\"accrualLimit\":11,\"carryForwardLimit\":0,\"encashmentLimit\":0,\"allowCarryForward\":false,\"allowEncashment\":false,\"accrual\":\"cycle\",\"leaveId\":102,\"allowedOnProbation\":true,\"applyDaysBefore\":0,\"backDatedAllowedDays\":10,\"clubbing\":true,\"holidayBetLeaves\":\"holiday\",\"maxAllowed\":10,\"maxCF\":0,\"minAllowed\":0.5,\"name\":\"Casual Leave\",\"paid\":true,\"precedence\":\"EOC\",\"probationProrate\":true,\"shortName\":\"CL\",\"weekOffBetLeaves\":\"holiday\"}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":false,\"cOHalfDayHours\":0,\"cOFullDayHours\":0},\"compOff\":{\"allowCF\":true,\"holidayBetLeaves\":\"leave\",\"weekOffBetLeaves\":\"leave\",\"allowedOnProbation\":true,\"probationProrate\":true,\"clubbing\":true},\"leaveApplicationSettings\":{\"notifyUserEmails\":[{\"admins\":[28947],\"users\":[]}],\"approvalRule\":\"RMOnly\"},\"assignedUsers\":[156377]}";
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
 
         path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies";
-        addLPUnderLCRes = reqSpec.when().put(path);
+        response = reqSpec.when().put(path);
 
         variableContext.setScenarioContext("METHOD","PUT");
 
@@ -2457,12 +2262,27 @@ public class StepDefinition extends DriverBase {
     @Then("verify leave policy under leave cycle is created")
     public void verify_leave_policy_under_leave_cycle_is_created() throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        String responseBody = addLPUnderLCRes.then().extract().response().asString();
+        String responseBody = response.then().extract().response().asString();
 
         JsonPath js = new JsonPath(responseBody);
         leavePolicyId=js.getInt("data.policyId");
 
     }
+
+    @When("verify new leave type is added with orgId {int}")
+    public void verify_new_leave_type_is_added_with_orgId(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies/"+leavePolicyId;
+        response = reqSpec.when().post(path);
+
+        String responseBody = response.then().extract().response().asString();
+
+        JsonPath js = new JsonPath(responseBody);
+        leaveTypeId=js.getInt("data.leavePolicy.leaveTypes[0].id");
+    }
+
 
     @When("Delete Leave Policy under Leave Cycle with orgId {int}")
     public void delete_leave_policy_under_leave_cycle_with_orgId(int orgId) throws IOException {
@@ -2471,7 +2291,7 @@ public class StepDefinition extends DriverBase {
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
 
         path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies/"+leavePolicyId;
-        deleteLeaveRes = reqSpec.when().delete(path);
+        deleteRes = reqSpec.when().delete(path);
 
         ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
                 utils.getGlobalValue("saamsApiURL") + path, false);
@@ -2485,7 +2305,7 @@ public class StepDefinition extends DriverBase {
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
 
         path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies/";
-        getLPUnderLCRes = reqSpec.when().post(path);
+        response = reqSpec.when().post(path);
 
         variableContext.setScenarioContext("METHOD","POST");
 
@@ -2501,7 +2321,7 @@ public class StepDefinition extends DriverBase {
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
 
         path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies/"+leavePolicyId;
-        getDetailsLPUnderLCRes = reqSpec.when().post(path);
+        response = reqSpec.when().post(path);
 
         variableContext.setScenarioContext("METHOD","POST");
 
@@ -2513,12 +2333,12 @@ public class StepDefinition extends DriverBase {
     @And("Assign-unassign users to Leave Policy under Leave Cycle with orgId {int}")
     public void assign_users_to_leave_policy_under_leave_cycle_with_orgId(int orgId) throws IOException {
 
-        reqBody="{\"name\":\"LeavePolicy\",\"leaveTypes\":[{\"id\":697,\"name\":\"Casual Leave\",\"paid\":true,\"maxCF\":0,\"accrual\":\"cycle\",\"leaveId\":102,\"clubbing\":true,\"shortName\":\"CL\",\"cycleLimit\":11,\"maxAllowed\":10,\"minAllowed\":0.5,\"precedence\":\"EOC\",\"accrualLimit\":11,\"allowEncashment\":false,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowCarryForward\":false,\"carryForwardLimit\":0,\"allowedOnProbation\":true,\"backDatedAllowedDays\":10}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":true,\"cOFullDayHours\":0,\"cOHalfDayHours\":0},\"compOff\":{\"allowCF\":true,\"clubbing\":true,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowedOnProbation\":true},\"leaveApplicationSettings\":{\"approvalRule\":\"RMOnly\",\"notifyUserEmails\":[{\"admins\":[26875],\"users\":[29035]}]},\"assignedUsers\":[31072,148887],\"cycleId\":"+leaveCycleId+",\"skipMaxUsedCheck\":true}";
-
+        reqBody="{\"name\":\"LeavePolicy1\",\"leaveTypes\":[{\"id\":"+leaveTypeId+",\"name\":\"Casual Leave\",\"paid\":true,\"maxCF\":0,\"accrual\":\"cycle\",\"leaveId\":102,\"clubbing\":true,\"shortName\":\"CL\",\"cycleLimit\":11,\"maxAllowed\":10,\"minAllowed\":0.5,\"precedence\":\"EOC\",\"accrualLimit\":11,\"allowEncashment\":false,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowCarryForward\":false,\"carryForwardLimit\":0,\"allowedOnProbation\":true,\"backDatedAllowedDays\":10}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":false,\"cOFullDayHours\":0,\"cOHalfDayHours\":0},\"compOff\":{\"allowCF\":true,\"clubbing\":true,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowedOnProbation\":true},\"leaveApplicationSettings\":{\"approvalRule\":\"RMOnly\",\"notifyUserEmails\":[{\"admins\":[28947],\"users\":[]}]},\"assignedUsers\":[156378,156377],\"cycleId\":"+leaveCycleId+",\"skipMaxUsedCheck\":true}";
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
 
         path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+leaveCycleId+"/leavePolicies/"+leavePolicyId;
-        assignUsersLPRes = reqSpec.when().patch(path);
+        response = reqSpec.when().patch(path);
+
 
         variableContext.setScenarioContext("METHOD","PATCH");
 
@@ -2530,12 +2350,12 @@ public class StepDefinition extends DriverBase {
     @When("Update Leave Policy under Leave Cycle with orgId {int} with name {string}")
     public void update_Leave_Policy_under_Leave_Cycle_with_orgId_with_name(Integer orgId, String name) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody = "{\"name\":\"" + name + "\",\"leaveTypes\":[{\"id\":697,\"name\":\"Casual Leave\",\"paid\":true,\"maxCF\":0,\"accrual\":\"cycle\",\"leaveId\":102,\"clubbing\":true,\"shortName\":\"CL\",\"cycleLimit\":11,\"maxAllowed\":10,\"minAllowed\":0.5,\"precedence\":\"EOC\",\"accrualLimit\":11,\"allowEncashment\":false,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowCarryForward\":false,\"carryForwardLimit\":0,\"allowedOnProbation\":true,\"backDatedAllowedDays\":10}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":true,\"cOFullDayHours\":0,\"cOHalfDayHours\":0},\"compOff\":{\"allowCF\":true,\"clubbing\":true,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowedOnProbation\":true},\"leaveApplicationSettings\":{\"approvalRule\":\"RMOnly\",\"notifyUserEmails\":[{\"admins\":[26875],\"users\":[117774]}]},\"assignedUsers\":[19303],\"cycleId\":" + leaveCycleId + ",\"skipMaxUsedCheck\":false}";
+        reqBody = "{\"name\":\""+name+"\",\"leaveTypes\":[{\"id\":"+leaveTypeId+",\"name\":\"Casual Leave\",\"paid\":true,\"maxCF\":0,\"accrual\":\"cycle\",\"leaveId\":102,\"clubbing\":true,\"shortName\":\"CL\",\"cycleLimit\":11,\"maxAllowed\":10,\"minAllowed\":0.5,\"precedence\":\"EOC\",\"accrualLimit\":11,\"allowEncashment\":false,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowCarryForward\":false,\"carryForwardLimit\":0,\"allowedOnProbation\":true,\"backDatedAllowedDays\":10}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":false,\"cOFullDayHours\":0,\"cOHalfDayHours\":0},\"compOff\":{\"allowCF\":true,\"clubbing\":true,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowedOnProbation\":true},\"leaveApplicationSettings\":{\"approvalRule\":\"RMOnly\",\"notifyUserEmails\":[{\"admins\":[28947],\"users\":[]}]},\"assignedUsers\":[156378,156377],\"cycleId\":"+leaveCycleId+",\"skipMaxUsedCheck\":true}";
 
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
 
         path = "/v2/leaveManagement/leavePolicy/organisations/" + orgId + "/leaveCycles/" + leaveCycleId + "/leavePolicies/" + leavePolicyId;
-        updateLPRes = reqSpec.when().patch(path);
+        response = reqSpec.when().patch(path);
 
         variableContext.setScenarioContext("METHOD", "PATCH");
 
@@ -2582,7 +2402,7 @@ public class StepDefinition extends DriverBase {
     @Given("Create holiday policy with {string} with cycleId {int}")
     public void create_holiday_policy_with_with_cycleId(String name, int cycleId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody="{\"holidayPolicy\":{\"name\":\""+name+"\",\"cycleId\":"+cycleId+",\"country\":\"IN\",\"holidays\":[{\"holidayId\":1,\"holidayName\":\"New Year's Day\",\"date\":\"2021-01-01T00:00:00.000Z\",\"discretionary\":false,\"country\":\"IN\"},{\"holidayId\":2,\"holidayName\":\"Lohri\",\"date\":\"2021-01-13T00:00:00.000Z\",\"discretionary\":false,\"country\":\"IN\"}],\"assignedUserIds\":[123178],\"discretionaryLimit\":1}}";
+        reqBody="{\"holidayPolicy\":{\"name\":\""+name+"\",\"cycleId\":"+cycleId+",\"country\":\"IN\",\"holidays\":[{\"holidayId\":155,\"holidayName\":\"New Year's Day\",\"date\":\"2023-01-01T00:00:00.000Z\",\"discretionary\":false,\"country\":\"IN\"},{\"holidayId\":156,\"holidayName\":\"Lohri\",\"date\":\"2023-01-14T00:00:00.000Z\",\"discretionary\":false,\"country\":\"IN\"}],\"assignedUserIds\":[156355,156351],\"discretionaryLimit\":1}}";
 
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
 
@@ -2618,7 +2438,7 @@ public class StepDefinition extends DriverBase {
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
 
         path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+cycleId+"/holidayPolicies/"+holidayPolicyId;
-        getDetailsHPRes = reqSpec.when().post(path);
+        response = reqSpec.when().post(path);
 
         variableContext.setScenarioContext("METHOD","POST");
 
@@ -2627,17 +2447,41 @@ public class StepDefinition extends DriverBase {
         variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
     }
 
+    @When("get holiday Ids under Holiday Policy with {string} with orgId {int}")
+    public void get_holiday_Ids_under_Holiday_Policy(String name, int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"filter\":{},\"fields\":[\"id\",\"name\",\"cycleId\",\"cycleName\",\"country\"]}";
+
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
+
+        path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/holidayPolicies";
+        response = reqSpec.when().post(path);
+
+        String responseBody = response.then().extract().response().asString();
+
+        JsonPath js = new JsonPath(responseBody);
+        List holidayPolicies=js.getList("data.holidayPolicies");
+        for(int i=0;i<holidayPolicies.size();i++) {
+            if (name.equalsIgnoreCase(js.getString("data.holidayPolicies[" + i + "].name"))) {
+                List holidays = js.getList("data.holidayPolicies[" + i + "].holidays");
+                for (int j = 0; j < holidays.size(); j++) {
+                    policyHolidayId = js.getInt("data.holidayPolicies[" + i + "].holidays[" + j + "].id");
+                    arr.add(policyHolidayId);
+                }
+            }
+        }
+    }
+
+
     @When("assign users to holiday policy with orgId {int} with cycleId {int}")
     public void assign_users_to_holiday_policy_with_orgId_with_cycleId(Integer orgId, Integer cycleId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody="{\"holidayPolicy\":{\"name\":\"HolPol1Details\",\"cycleId\":"+cycleId+",\"country\":\"IN\",\"holidays\":[{\"policyHolidayId\":1144,\"holidayId\":1,\"holidayName\":\"New Year's Day\",\"date\":\"2021-01-01T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":1145,\"holidayId\":2,\"holidayName\":\"Lohri\",\"date\":\"2021-01-13T00:00:00.000Z\",\"discretionary\":false}],\"assignedUserIds\":[119240,28947],\"discretionaryLimit\":1,\"id\":"+holidayPolicyId+"}}";
+        reqBody="{\"holidayPolicy\":{\"name\":\"HolPol1Details\",\"cycleId\":"+cycleId+",\"country\":\"IN\",\"holidays\":[{\"policyHolidayId\":"+ arr.get(0) +",\"holidayId\":155,\"holidayName\":\"New Year's Day\",\"date\":\"2023-01-01T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":"+ arr.get(1) +",\"holidayId\":156,\"holidayName\":\"Lohri\",\"date\":\"2023-01-14T00:00:00.000Z\",\"discretionary\":false}],\"assignedUserIds\":[156377,156378],\"discretionaryLimit\":1,\"id\":"+holidayPolicyId+"}}";
 
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
 
         path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+cycleId+"/holidayPolicies/"+holidayPolicyId;
-        assignUsersHPRes = reqSpec.when().patch(path).then().extract().response();
-
-        String res=assignUsersHPRes.asString();
+        response = reqSpec.when().patch(path);
 
         variableContext.setScenarioContext("METHOD","PATCH");
 
@@ -2649,14 +2493,15 @@ public class StepDefinition extends DriverBase {
     @When("update holiday policy with orgId {int} with cycleId {int} with {string}")
     public void update_holiday_policy_with_orgId_with_cycleId(Integer orgId, Integer cycleId, String name) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody="{\"holidayPolicy\":{\"name\":\""+name+"\",\"cycleId\":"+cycleId+",\"country\":\"IN\",\"holidays\":[{\"policyHolidayId\":1144,\"holidayId\":1,\"holidayName\":\"New Year's Day\",\"date\":\"2021-01-01T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":1145,\"holidayId\":2,\"holidayName\":\"Lohri\",\"date\":\"2021-01-13T00:00:00.000Z\",\"discretionary\":false}],\"assignedUserIds\":[119240,28947],\"discretionaryLimit\":1,\"id\":"+holidayPolicyId+"}}";
+        reqBody="{\"holidayPolicy\":{\"name\":\""+name+"\",\"cycleId\":"+cycleId+",\"country\":\"IN\",\"holidays\":[{\"policyHolidayId\":"+ arr.get(0) +",\"holidayId\":155,\"holidayName\":\"New Year's Day\",\"date\":\"2023-01-01T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":"+ arr.get(1) +",\"holidayId\":156,\"holidayName\":\"Lohri\",\"date\":\"2023-01-14T00:00:00.000Z\",\"discretionary\":false}],\"assignedUserIds\":[156377,156378],\"discretionaryLimit\":1,\"id\":"+holidayPolicyId+"}}";
 
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
 
         path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+cycleId+"/holidayPolicies/"+holidayPolicyId;
-        assignUsersHPRes = reqSpec.when().patch(path).then().extract().response();
+        response = reqSpec.when().patch(path).then().extract().response();
 
-        String res=assignUsersHPRes.asString();
+        int sc=response.getStatusCode();
+        long rt=response.time();
 
         variableContext.setScenarioContext("METHOD","PATCH");
 
