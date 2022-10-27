@@ -119,10 +119,10 @@ Feature: Leave and Holidays-> Holiday Setup
   @addHolidayPolicy
   @hs12
   Scenario: Delete a Holiday Policy
-    Given Create holiday policy with "HolPol1Details" with cycleId 385
+    Given Create holiday policy with "HolPol1Details" with cycleId 588
     When user calls "createHolidayPolicy" with orgId 560
     And verify holiday policy is created
-    And Delete holiday policy with payload with orgId 560 with cycleId 385
+    And Delete holiday policy with payload with orgId 560 with cycleId 588
     Then the API call got success with status code 200 for "deleteResponse"
     And "type" in response is "success" for "deleteResponse"
     And response time is less than 500 ms for "deleteResponse"

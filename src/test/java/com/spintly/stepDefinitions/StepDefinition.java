@@ -740,6 +740,58 @@ public class StepDefinition extends DriverBase {
 
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
+
+            case "unlockSetting":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/unlockSettings";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "unlockSettingPatch":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/unlockSettings";
+                response = reqSpec
+                        .when().patch(path);
+
+                variableContext.setScenarioContext("METHOD","PATCH");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "profilePic":
+                path = "/organisationManagement/v2/organisations/"+orgId+"/profilePicture";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "profilePicPatch":
+                path = "/organisationManagement/v2/organisations/"+orgId+"/profilePicture";
+                response = reqSpec
+                        .when().patch(path);
+
+                variableContext.setScenarioContext("METHOD","PATCH");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
         }
     }
 
@@ -2814,6 +2866,48 @@ public class StepDefinition extends DriverBase {
         ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
                 utils.getGlobalValue("apiSpintlyURL") + path, false);
         variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @Given("Update organisation unlock setting with {string}")
+    public void update_organisation_unlock_setting_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if(payload.equalsIgnoreCase("enable")){
+            reqBody="{\"remoteAccess\":true,\"clickToAccess\":true,\"clickToAccessRange\":1,\"proximityAccessRange\":1,\"proximityAccess\":true,\"deviceLock\":true,\"mobile\":true,\"tapToAccess\":false,\"card\":true,\"fingerprint\":true,\"mfa\":true}";
+            reqSpec=reqSpec.body(reqBody);
+        }else if(payload.equalsIgnoreCase("disable")){
+            reqBody="{\"remoteAccess\":false,\"clickToAccess\":true,\"clickToAccessRange\":\"1\",\"proximityAccessRange\":\"1\",\"proximityAccess\":false,\"deviceLock\":false,\"mobile\":true,\"tapToAccess\":true,\"card\":true,\"fingerprint\":true,\"mfa\":false}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @Given("Update Profile Picture settings of the User with {string}")
+    public void update_Profile_Picture_settings_of_the_User_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if(payload.equalsIgnoreCase("enable")){
+            reqBody="{\"profilePictureEnabled\":true}";
+            reqSpec=reqSpec.body(reqBody);
+        }else if(payload.equalsIgnoreCase("disable")){
+            reqBody="{\"profilePictureEnabled\":false}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @Given("Get sites under organisation")
+    public void get_sites_under_organisation() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"filters\":{\"name\":\"\"},\"pagination\":{\"perPage\":7,\"total\":1,\"currentPage\":1}}";
+
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
     }
 
 }
