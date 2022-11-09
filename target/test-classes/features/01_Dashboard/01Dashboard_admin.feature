@@ -11,7 +11,6 @@ Feature: Dashboard Module for Admin
     And response time is less than 500 ms
     And "type" in response is "success"
 
-
   @da2
   Scenario: Access history on Dashboard
     Given Get Access history with "no filter"
