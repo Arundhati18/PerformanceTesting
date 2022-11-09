@@ -37,7 +37,8 @@ public class StepDefinition extends DriverBase {
     ValidatableResponse valRes;
 
     static int userId, leaveId, leaveCycleId, leavePolicyId,
-            leaveTypeId, holidayPolicyId, customId, termId, policyHolidayId;
+            leaveTypeId, holidayPolicyId, customId, termId,
+            policyHolidayId, kioskId, visitorCardId;
 
     ArrayList<Integer> arr=new ArrayList<Integer>(10);
 
@@ -792,6 +793,123 @@ public class StepDefinition extends DriverBase {
 
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
+
+            case "sites":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/sites";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "vmsSetting":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/visitors/settings";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "VMSUpload":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitors/upload";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "vmsSettingUpdate":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/visitors/settings";
+                response = reqSpec
+                        .when().patch(path);
+
+                variableContext.setScenarioContext("METHOD","PATCH");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "kiosk":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/kiosks";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "addKiosk":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/kiosk";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "accessAssignment":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/accessAssignment";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "accessAssignmentUpdate":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/accessAssignment";
+                response = reqSpec
+                        .when().patch(path);
+
+                variableContext.setScenarioContext("METHOD","PATCH");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "visitorCards":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitorCards/list";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
         }
     }
 
@@ -1214,6 +1332,18 @@ public class StepDefinition extends DriverBase {
                         utils.getGlobalValue("apiSpintlyURL") + path, false);
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
+
+            case "addCardVK":
+                path="/v2/organisationManagement/organisations/"+orgId+"/attributes/"+id+"/allUsers";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
         }
     }
 
@@ -1238,7 +1368,7 @@ public class StepDefinition extends DriverBase {
         if(payload.equalsIgnoreCase("assignAP")) {
             reqBody = "{\"pagination\":{\"page\":1,\"perPage\":-1,\"per_page\":-1},\"filters\":{}}";
             reqSpec=reqSpec.body(reqBody);
-        } else if (payload.equalsIgnoreCase("assignLeave")) {
+        } else if (payload.equalsIgnoreCase("activeUser")) {
             reqBody = "{\"pagination\":{\"page\":1,\"perPage\":-1,\"per_page\":-1},\"filters\":{\"createdOn\":null,\"userType\":[\"active\"],\"terms\":[]}}";
             reqSpec=reqSpec.body(reqBody);
         }
@@ -1273,6 +1403,9 @@ public class StepDefinition extends DriverBase {
             reqSpec = reqSpec.body(reqBody);
         } else if (payload.equalsIgnoreCase("filter")) {
             reqBody = "{\"filters\":{\"credentialId\":\"1006088\"},\"pagination\":{\"perPage\":25,\"currentPage\":1,\"page\":1}}";
+            reqSpec = reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("visitorCardFilter")) {
+            reqBody = "{\"filter\":{}}";
             reqSpec = reqSpec.body(reqBody);
         }
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
@@ -2910,4 +3043,192 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
     }
 
+    @Given("Upload vms with {string}")
+    public void upload_vms_with(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="------WebKitFormBoundaryLiNThkzQOwBCIBAD\n" +
+                "Content-Disposition: form-data; name=\"defaultTAndCEnabled\"\n" +
+                "\n" +
+                "true\n" +
+                "------WebKitFormBoundaryLiNThkzQOwBCIBAD--";
+
+        reqSpec=given().spec(utils.requestSpecification()).contentType("multipart/form-data").baseUri(utils.getGlobalValue("apiSpintlyURL")).multiPart("defaultTAndCEnabled",true);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @Given("Update vms settings with {string}")
+    public void update_vms_settings_with(String string) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"allowAllUsers\":false,\"selectedUsers\":[153977],\"emailEnabled\":true,\"smsEnabled\":false,\"covidEnabled\":true,\"photoIdEnabled\":true,\"defaultTAndCEnabled\":true,\"meetingPurposes\":[{\"id\":326,\"meetingPurpose\":\"meet\",\"checked\":false},{\"id\":200,\"meetingPurpose\":\"meeting2\",\"checked\":true},{\"id\":197,\"meetingPurpose\":\"meeting1\",\"checked\":false},{\"id\":145,\"meetingPurpose\":\"Interview\",\"checked\":true},{\"id\":146,\"meetingPurpose\":\"Delivery\",\"checked\":true},{\"id\":147,\"meetingPurpose\":\"Maintenance\",\"checked\":true},{\"id\":344,\"meetingPurpose\":\"Interview123\",\"checked\":true},{\"id\":144,\"meetingPurpose\":\"Business meeting\",\"checked\":true}],\"visitorPhotoEnabled\":false,\"visitorNameEnabled\":true,\"visitorPhoneEnabled\":true,\"visitorEmailEnabled\":true,\"visitorEmailRequired\":true,\"purposeOfMeetingEnabled\":true,\"meetingDurationEnabled\":true,\"tAndCFormEnabled\":true,\"autoApproveVisit\":false,\"personToMeetEnabled\":true,\"additionalInfoEnabled\":true,\"hostAdditionalInfo\":true,\"visitorAdditionalInfo\":true,\"printVisitorDetailsEnabled\":true}";
+
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @Given("Add a kiosk with name {string}")
+    public void add_a_kiosk_with_name(String name) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"kioskName\":\""+name+"\"}";
+
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @And("verify kiosk {string} is added in {int}")
+    public void verify_kiosk_is_added(String name, int orgId) throws IOException {
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        String responseBody = reqSpec.when().get("/v2/visitorManagement/organisations/"+orgId+"/kiosks")
+                .then().extract().response().asString();
+
+        //System.out.println(responseBody);
+        JsonPath js = new JsonPath(responseBody);
+
+        List kiosks=js.getList("message.kiosks");
+        for(int i=0;i<kiosks.size();i++)
+            if(name.equalsIgnoreCase(js.getString("message.kiosks["+i+"].kioskName"))){
+                kioskId=js.getInt("message.kiosks["+i+"].id");
+            }
+    }
+
+    @And("Delete kiosk with orgId {int}")
+    public void delete_kiosk_with_orgId(int orgId) throws IOException{
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        ResultManager.log("Request body: -", "Request body: -", false);
+
+        path = "/v2/visitorManagement/organisations/"+orgId+"/kiosks/"+kioskId;
+        deleteRes = reqSpec.when().delete(path);
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+    }
+
+    @When("Update kiosk with {string} with orgId {int}")
+    public void update_kiosk_with_with_orgId(String name, Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"kioskName\":\""+name+"\"}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+
+        path = "/v2/visitorManagement/organisations/"+orgId+"/kiosks/"+kioskId;
+        response = reqSpec.when().patch(path);
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @When("Download pdf of kiosk with orgId {int}")
+    public void download_pdf_of_kiosk_with_orgId(Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        ResultManager.log("Request body: -", "Request body: -", false);
+
+        path = "/v2/visitorManagement/organisations/"+orgId+"/kiosks/"+kioskId+"/pdf";
+        response = reqSpec.when().get(path);
+
+        variableContext.setScenarioContext("METHOD","GET");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @And("Delete kiosk with orgId {int} with payload")
+    public void delete_kiosk_with_orgId_with_payload(int orgId) throws IOException{
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        ResultManager.log("Request body: -", "Request body: -", false);
+
+        path = "/v2/visitorManagement/organisations/"+orgId+"/kiosks/"+kioskId;
+        deleteRes = reqSpec.when().delete(path);
+
+        variableContext.setScenarioContext("METHOD","DELETE");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @Given("Update access settings under vms kiosk")
+    public void update_access_settings_under_vms_kiosk() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"accessAssignmentEnabled\":true,\"accessModes\":{\"qr\":true,\"card\":true},\"autoAccessExpiryEnabled\":true,\"accessPoints\":[{\"id\":\"2655\",\"name\":\"Test door\",\"checked\":true,\"qr\":\"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\"}]}";
+
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @Given("Add a Card to Visitor Kiosk with credentialId {int}")
+    public void add_a_Card_to_Visitor_Kiosk_with_credentialId(int credId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"credentialId\":\""+credId+"\"}";
+
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @When("verify card {int} is added in visitor kiosk with orgId {int}")
+    public void verify_card_is_added_in_visitor_kiosk_with_orgId(int credId, int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        String responseBody = reqSpec.when().get("/v2/visitorManagement/organisations/"+orgId+"/visitorCards/list")
+                .then().extract().response().asString();
+
+        //System.out.println(responseBody);
+        JsonPath js = new JsonPath(responseBody);
+        List visitorCards=js.getList("message.visitorCards");
+        for(int i=0;i<visitorCards.size();i++) {
+            if (credId == js.getInt("message.visitorCards[" + i + "].credentialId")) {
+                visitorCardId = js.getInt("message.visitorCards[" + i + "].id");
+            }
+        }
+    }
+
+    @When("remove card from Visitor Kiosk with orgId {int}")
+    public void remove_card_from_Visitor_Kiosk_with_orgId(Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        ResultManager.log("Request body: -", "Request body: -", false);
+
+        path = "/v2/visitorManagement/organisations/"+orgId+"/visitorCard/"+visitorCardId;
+        deleteRes = reqSpec.when().delete(path);
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+    }
+
+    @When("remove card from Visitor Kiosk with orgId {int} with payload")
+    public void remove_card_from_Visitor_Kiosk_with_orgId_with_payload(Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        ResultManager.log("Request body: -", "Request body: -", false);
+
+        path = "/v2/visitorManagement/organisations/"+orgId+"/visitorCard/"+visitorCardId;
+        deleteRes = reqSpec.when().delete(path);
+
+        variableContext.setScenarioContext("METHOD","DELETE");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
 }

@@ -43,7 +43,7 @@ Feature: Leave and Holidays-> Holiday Setup
   @addHolidayPolicy
   @hs5
   Scenario: Get list of users
-    Given Get List of users with "assignLeave"
+    Given Get List of users with "activeUser"
     When user calls "UserList" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
@@ -84,7 +84,7 @@ Feature: Leave and Holidays-> Holiday Setup
   @addHolidayPolicy
   @hs9
   Scenario: Get list of users
-    Given Get List of users with "assignLeave"
+    Given Get List of users with "activeUser"
     When user calls "UserList" with orgId 560
     Then the API call got success with status code 200
     And response time is less than 500 ms
