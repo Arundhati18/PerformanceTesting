@@ -80,10 +80,22 @@ Feature: Card Management
     And response time is less than 500 ms
     And "type" in response is "success"
 
-#  @cm7
-#  Scenario: Assign card to a visitor
-#    Given "assign" card to "visitor"
-#    When user calls "assignCardVisitor" with orgId 560
-#    Then the API call got success with status code 200
-#    And response time is less than 500 ms
-#    And "type" in response is "success"
+  @cm7
+  Scenario: Assign card to a Visitor
+    Given "assign" card to "visitor"
+    When user calls "assignCardVisitor" with orgId 560
+    And verify card was assigned to a visitor with orgId 560
+    And unassign card from a visitor with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @cm8
+  Scenario: Unassign card from a Visitor
+    Given "assign" card to "visitor"
+    When user calls "assignCardVisitor" with orgId 560
+    And verify card was assigned to a visitor with orgId 560
+    And unassign card from a visitor with orgId 560
+    Then the API call got success with status code 200 for "deleteResponse"
+    And response time is less than 500 ms for "deleteResponse"
+    And "type" in response is "success" for "deleteResponse"

@@ -86,11 +86,11 @@ Feature: User Management for Admin
   Scenario: Add a new user
     Given Add user with payload with name "addUser1"
     When user calls "addUser" with orgId 560
-    Then the API call got success with status code 200
-    And "type" in response is "success"
     And verify user "addUser1" is added in 560
     And Delete user with payload with orgId 560
+    Then the API call got success with status code 200
     And response time is less than 500 ms
+    And "type" in response is "success"
 
   @user
   @uma9
@@ -100,9 +100,9 @@ Feature: User Management for Admin
     And verify user "accessHistory1" is added in 560
     And Display access history with orgId 560
     And Delete user with payload with orgId 560
-    And the API call got success with status code 200 for "accessHistory"
-    And "type" in response is "success" for "accessHistory"
-    And response time is less than 500 ms for "accessHistory"
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @user
   @uma10
@@ -112,9 +112,9 @@ Feature: User Management for Admin
     And verify user "userDetails1" is added in 560
     And Display user details with orgId 560
     And Delete user with payload with orgId 560
-    And the API call got success with status code 200 for "userDetails"
-    And "type" in response is "success" for "userDetails"
-    And response time is less than 500 ms for "userDetails"
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @user
   @uma11
@@ -124,9 +124,9 @@ Feature: User Management for Admin
     And verify user "userShiftDetails1" is added in 560
     And Display user shift details
     And Delete user with payload with orgId 560
-    And the API call got success with status code 200 for "userShiftDetails"
-    And "type" in response is "success" for "userShiftDetails"
-    And response time is less than 500 ms for "userShiftDetails"
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @user
   @uma12
@@ -136,9 +136,9 @@ Feature: User Management for Admin
     And verify user "editUser1" is added in 560
     And Patch user details with orgId 560
     And Delete user with payload with orgId 560
-    And the API call got success with status code 200 for "editUser"
-    And "type" in response is "success" for "editUser"
-    And response time is less than 500 ms for "editUser"
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @user
   @uma13
@@ -148,9 +148,9 @@ Feature: User Management for Admin
     And verify user "getPermission1" is added in 560
     And Get Permissions of user with orgId 560
     And Delete user with payload with orgId 560
-    And the API call got success with status code 200 for "getPermission"
-    And "type" in response is "success" for "getPermission"
-    And response time is less than 500 ms for "getPermission"
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @user
   @uma14
@@ -160,9 +160,9 @@ Feature: User Management for Admin
     And verify user "patchPermission1" is added in 560
     And Update Permissions of user with orgId 560
     And Delete user with payload with orgId 560
-    And the API call got success with status code 200 for "patchPermission"
-    And "type" in response is "success" for "patchPermission"
-    And response time is less than 500 ms for "patchPermission"
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @user
   @uma15
@@ -172,9 +172,9 @@ Feature: User Management for Admin
     And verify user "assignCrendential1" is added in 560
     And Assign a card to user with orgId 560
     And Delete user with payload with orgId 560
-    And the API call got success with status code 200 for "patchPermission"
-    And "type" in response is "success" for "patchPermission"
-    And response time is less than 500 ms for "patchPermission"
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @user
   @uma16
@@ -184,12 +184,36 @@ Feature: User Management for Admin
     And verify user "editAccessType1" is added in 560
     And Edit access type of a user with orgId 560
     And Delete user with payload with orgId 560
-    And the API call got success with status code 200 for "patchPermission"
-    And "type" in response is "success" for "patchPermission"
-    And response time is less than 500 ms for "patchPermission"
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @user
   @uma17
+  Scenario: Get User Visitor Privilege Details
+    Given Add user with payload with name "getVisitorPrivilege1"
+    When user calls "addUser" with orgId 560
+    And verify user "getVisitorPrivilege1" is added in 560
+    And Get user visitor privilege of a user with orgId 560
+    And Delete user with payload with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @user
+  @uma18
+  Scenario: Update User Visitor Privilege Details
+    Given Add user with payload with name "getVisitorPrivilege1"
+    When user calls "addUser" with orgId 560
+    And verify user "getVisitorPrivilege1" is added in 560
+    And Update user visitor privilege of a user with orgId 560
+    And Delete user with payload with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @user
+  @uma19
   Scenario: Get Leave Cycles
     Given Get leave cycles under "holidayPolicy"
     When user calls "getLeaveCycles" with orgId 560
@@ -198,20 +222,19 @@ Feature: User Management for Admin
     And "type" in response is "success"
 
   @user
-  @uma18
+  @uma20
   Scenario: Get leaves assigned to a user
     Given Add user with payload with name "getAssignedLeaves1"
     When user calls "addUser" with orgId 560
     And verify user "getAssignedLeaves1" is added in 560
     And get leaves assigned to a user with orgId 560 with cycleId 423
     And Delete user with payload with orgId 560
-    And the API call got success with status code 200 for "patchPermission"
-    And "type" in response is "success" for "patchPermission"
-    And response time is less than 500 ms for "patchPermission"
-
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
   @user
   @assignLeave
-  @uma19
+  @uma21
   Scenario: Get Leave Cycles
     Given Get leave cycles under "leaveCyclePolicy"
     When user calls "getLeaveCycles" with orgId 560
@@ -221,7 +244,7 @@ Feature: User Management for Admin
 
   @user
   @assignLeave
-  @uma20
+  @uma22
   Scenario: Get assigned users to leave policy
     Given Get assigned users to leave policy
     When user calls "assignedUsersLP" with orgId 560 for 588
@@ -231,7 +254,7 @@ Feature: User Management for Admin
 
   @user
   @assignLeave
-  @uma21
+  @uma23
   Scenario: Get Form Data for users
     Given Get "api.spintly"
     When user calls "FormData" with orgId 560
@@ -241,7 +264,7 @@ Feature: User Management for Admin
 
   @user
   @assignLeave
-  @uma22
+  @uma24
   Scenario: Get list of users
     Given Get List of users with "activeUser"
     When user calls "UserList" with orgId 560
@@ -251,7 +274,7 @@ Feature: User Management for Admin
 
   @user
   @assignLeave
-  @uma23
+  @uma25
   Scenario: Get details of Leave Policy under Leave Cycle
     Given Get "saams.api.spintly"
     When user calls "detailsLP" with orgId 560 for 588 for 613
@@ -261,19 +284,84 @@ Feature: User Management for Admin
 
   @user
   @assignLeave
-  @uma24
+  @uma26
   Scenario: Assign new user to Leave Policy under Leave Cycle
     Given Add user with payload with name "assignUser1"
     When user calls "addUser" with orgId 560
     And verify user "assignUser1" is added in 560
     And assign new user to Leave Policy with orgId 560 with cycleId 588 with leavePId 613
     And Delete user with payload with orgId 560
-    And the API call got success with status code 200 for "patchPermission"
-    And "type" in response is "success" for "patchPermission"
-    And response time is less than 500 ms for "patchPermission"
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @user
-  @uma
+  @assignLeave
+  @uma27
+  Scenario: Get holidays assigned to a user
+    Given Add user with payload with name "getAssignedHolidays1"
+    When user calls "addUser" with orgId 560
+    And verify user "getAssignedHolidays1" is added in 560
+    And get holidays assigned to a user with orgId 560 with cycleId 423
+    And Delete user with payload with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @user
+  @uma28
+  Scenario: Get Holiday Policies
+    Given Get holiday policies
+    When user calls "getHolidayPolicies" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @user
+  @assignLeave
+  @uma29
+  Scenario: Get assigned users to holiday policy
+    Given Get assigned users to holiday policy
+    When user calls "assignedUserHP" with orgId 560 for 423 for 155
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @user
+  @assignLeave
+  @uma30
+  Scenario: Get Form Data for users
+    Given Get "api.spintly"
+    When user calls "FormData" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @user
+  @assignLeave
+  @uma31
+  Scenario: Get list of users
+    Given Get List of users with "activeUser"
+    When user calls "UserList" with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @user
+  @assignLeave
+  @uma32
+  Scenario: Assign new user to Holiday Policy under Leave Cycle
+    Given Add user with payload with name "assignUser1"
+    When user calls "addUser" with orgId 560
+    And verify user "assignUser1" is added in 560
+    And assign new user to Holiday Policy with orgId 560 with cycleId 423 with holidayPId 155
+    And Delete user with payload with orgId 560
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
+
+  @user
+  @uma33
   Scenario: Deactivate a user
     Given Add user with payload with name "deactivateUser1"
     When user calls "addUser" with orgId 560
@@ -282,29 +370,29 @@ Feature: User Management for Admin
     And Activate a user with orgId 560
     And Delete user with payload with orgId 560
     And the API call got success with status code 200 for "deactivateUser"
-    And "type" in response is "success" for "deactivateUser"
     And response time is less than 500 ms for "deactivateUser"
+    And "type" in response is "success" for "deactivateUser"
 
   @user
-  @uma
+  @uma34
   Scenario: Activate a user
     Given Add user with payload with name "activateUser1"
     When user calls "addUser" with orgId 560
     And verify user "activateUser1" is added in 560
     And Deactivate a user with orgId 560
-    And Activate a user with orgId 560
+    And Activate a user with orgId 560 with payload
     And Delete user with payload with orgId 560
-    And the API call got success with status code 200 for "activateUser"
-    And "type" in response is "success" for "activateUser"
-    And response time is less than 500 ms for "activateUser"
+    Then the API call got success with status code 200
+    And response time is less than 500 ms
+    And "type" in response is "success"
 
   @user
-  @uma
+  @uma35
   Scenario: Delete user
     Given Add user with payload with name "deleteUser1"
     When user calls "addUser" with orgId 560
     And verify user "deleteUser1" is added in 560
     And Delete user with payload with orgId 560
     And the API call got success with status code 200 for "deleteResponse"
-    And "type" in response is "success" for "deleteResponse"
     And response time is less than 500 ms for "deleteResponse"
+    And "type" in response is "success" for "deleteResponse"

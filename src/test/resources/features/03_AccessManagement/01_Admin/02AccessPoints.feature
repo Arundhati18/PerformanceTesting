@@ -62,7 +62,7 @@ Feature: Access Points
   @ap6
   Scenario: Remote unlock
     Given Post remote unlock
-    When user calls "remoteUnlock" with orgId 560 for 717
+    When user calls "remoteUnlock" with orgId 560 for 2655
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
@@ -94,7 +94,7 @@ Feature: Access Points
   @ap10
   Scenario: Get Access point user permissions
     Given Get "api.spintly"
-    When user calls "apPermissions" with orgId 560 for 717
+    When user calls "apPermissions" with orgId 560 for 2655
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
@@ -102,7 +102,7 @@ Feature: Access Points
   @ap11
   Scenario: Assign user permissions to Access Point
     Given Patch users permission with "assign"
-    When user calls "patchPermissions" with orgId 560 for 717
+    When user calls "patchPermissions" with orgId 560 for 2655
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"
@@ -110,7 +110,7 @@ Feature: Access Points
   @ap11
   Scenario: Unassign user permissions to Access Point
     Given Patch users permission with "unassign"
-    When user calls "patchPermissions" with orgId 560 for 717
+    When user calls "patchPermissions" with orgId 560 for 2655
     Then the API call got success with status code 200
     And response time is less than 500 ms
     And "type" in response is "success"

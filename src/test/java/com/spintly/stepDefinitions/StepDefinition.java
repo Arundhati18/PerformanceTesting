@@ -29,16 +29,15 @@ public class StepDefinition extends DriverBase {
     RequestSpecification reqSpec;
     Utils utils = new Utils();
     ResponseSpecification resSpec;
-    Response response, updateDoorRes, deleteRes, accHistoryRes, detailsUserRes,
-            shiftDetailsUserRes, editUserRes, getPermissionRes, patchPermissionRes,
-            deactivateUserRes, activateUserRes, deleteLeaveRes, getLPUnderLCRes,
-            assignUsersHPRes;
+    Response response, updateDoorRes, deleteRes,
+            deactivateUserRes, deleteLeaveRes;
 
     ValidatableResponse valRes;
 
     static int userId, leaveId, leaveCycleId, leavePolicyId,
             leaveTypeId, holidayPolicyId, customId, termId,
-            policyHolidayId, kioskId, visitorCardId;
+            policyHolidayId, kioskId, visitorCardId, purposeOfMeetId,
+            cardId;
 
     ArrayList<Integer> arr=new ArrayList<Integer>(10);
 
@@ -379,7 +378,7 @@ public class StepDefinition extends DriverBase {
                 break;
 
             case "addUser":
-                path = "/v2/organisationManagement/organisations/" + orgId + "/users/";
+                path = "/organisationManagement/v3/organisations/"+orgId+"/users";
                 response = reqSpec
                         .when().post(path);
 
@@ -910,6 +909,149 @@ public class StepDefinition extends DriverBase {
 
                 variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
                 break;
+
+            case "expectedVisitor":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitors/expected";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "vmsFilterData":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitors/filter-data";
+                response = reqSpec
+                        .when().get(path);
+
+                variableContext.setScenarioContext("METHOD","GET");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "addPOM":
+                path = "/v2/organisationManagement/organisations/"+orgId+"/addMeetingPurpose";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "expectedVisitorExcel":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitors/expected/excel";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "expectedVisitorPdf":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitors/expected/getPdf";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "visitorHistory":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitors/history";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "visitorHistoryExcel":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitors/history/excel";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "visitorHistoryPdf":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitors/history/getPdf";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "visitorAccessHistory":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitors/accessHistory";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "visitorAccessHistoryExcel":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitors/accessHistory/excel";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
+
+            case "visitorAccessHistoryPdf":
+                path = "/v2/visitorManagement/organisations/"+orgId+"/visitors/accessHistory/getPdf";
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD","POST");
+
+                ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                        utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+                variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+                break;
         }
     }
 
@@ -1348,17 +1490,33 @@ public class StepDefinition extends DriverBase {
     }
 
     @When("user calls {string} with orgId {int} for {int} for {int}")
-    public void user_calls_with_orgId_for_for(String module, Integer orgId, Integer lcId, Integer lpId) throws IOException {
+    public void user_calls_with_orgId_for_for(String module, Integer orgId, Integer lcId, Integer id) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+lcId+"/leavePolicies/"+lpId;
-        response = reqSpec
-                .when().post(path);
+        switch (module){
+            case "detailsLP":
+                path = "/v2/leaveManagement/leavePolicy/organisations/" + orgId + "/leaveCycles/" + lcId + "/leavePolicies/" + id;
+                response = reqSpec
+                        .when().post(path);
 
-        variableContext.setScenarioContext("METHOD","GET");
+                variableContext.setScenarioContext("METHOD", "POST");
 
-        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
-                utils.getGlobalValue("saamsApiURL") + path, false);
-        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL", utils.getGlobalValue("saamsApiURL") + path);
+                break;
+
+            case "assignedUserHP":
+                path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+lcId+"/holidayPolicies/"+id;
+                response = reqSpec
+                        .when().post(path);
+
+                variableContext.setScenarioContext("METHOD", "POST");
+
+                ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                        utils.getGlobalValue("saamsApiURL") + path, false);
+                variableContext.setScenarioContext("ReqURL", utils.getGlobalValue("saamsApiURL") + path);
+                break;
+        }
     }
 
     @Given("Get List of users with {string}")
@@ -1452,6 +1610,34 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
     }
 
+    @When("verify card was assigned to a visitor with orgId {int}")
+    public void verify_card_was_assigned_to_a_visitor(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
+                .body("{\"filters\":{\"credentialId\":\"1006089\"},\"pagination\":{\"perPage\":25,\"currentPage\":1,\"page\":1}}");
+
+        String responseBody = reqSpec.when().post("/v2/organisationManagement/organisations/"+orgId+"/cards/list")
+                .then().extract().response().asString();
+
+        //System.out.println(responseBody);
+        JsonPath js = new JsonPath(responseBody);
+        cardId = js.getInt("message.cards[0].assignedTo.cardId");
+    }
+
+    @When("unassign card from a visitor with orgId {int}")
+    public void unassign_card_from_a_visitor(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        ResultManager.log("Request body: -" , "Request body: -" , false);
+
+        path = "/v2/visitorManagement/organisations/"+orgId+"/visitorCard/"+cardId;
+        deleteRes = reqSpec.when().delete(path);
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+    }
+
     @Given("Organisation data for admin for Active User")
     public void organisation_data_for_admin_for_active_user() throws IOException {
         // Write code here that turns the phrase above into concrete actions
@@ -1495,7 +1681,7 @@ public class StepDefinition extends DriverBase {
     @Given("Add user with payload with name {string}")
     public void add_user_with_payload(String name) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody = "{\"users\":[{\"accessExpiresAt\":null,\"email\":\"\",\"employeeCode\":\"\",\"gps\":false,\"name\":\"" + name + "\",\"phone\":\"+919878980990\",\"reportingTo\":\"\",\"roles\":[1397],\"terms\":[],\"accessPoints\":[2655],\"gender\":\"\",\"joiningDate\":\"2022-08-11\",\"probationPeriod\":0,\"probationPeriodEnabled\":false,\"mobile\":true}]}";
+        reqBody = "{\"users\":[{\"accessExpiresAt\":null,\"email\":\"\",\"employeeCode\":\"\",\"gps\":false,\"name\":\""+name+"\",\"phone\":\"+919878980990\",\"reportingTo\":\"\",\"roles\":[1397],\"terms\":[],\"accessPoints\":[2655],\"gender\":\"\",\"joiningDate\":\"2022-11-15\",\"probationPeriod\":0,\"probationPeriodEnabled\":false,\"skipFrAccessPoints\":false,\"mobile\":true,\"profilePicture\":\"\"}]}";
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
@@ -1536,54 +1722,14 @@ public class StepDefinition extends DriverBase {
     public void the_API_call_got_success_with_status_code_for(int expectedStatusCode, String request) {
 
         switch (request) {
-            case "accessHistory": {
-                driverBase.testStepAssert.isEquals(accHistoryRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + accHistoryRes.getStatusLine());
-                break;
-            }
             case "deleteResponse": {
                 driverBase.testStepAssert.isEquals(deleteRes.getStatusCode(), expectedStatusCode,
                         "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + deleteRes.getStatusLine());
                 break;
             }
-            case "userDetails": {
-                driverBase.testStepAssert.isEquals(detailsUserRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + detailsUserRes.getStatusLine());
-                break;
-            }
-            case "userShiftDetails": {
-                driverBase.testStepAssert.isEquals(shiftDetailsUserRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + shiftDetailsUserRes.getStatusLine());
-                break;
-            }
-            case "editUser": {
-                driverBase.testStepAssert.isEquals(editUserRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + editUserRes.getStatusLine());
-                break;
-            }
-            case "getPermission": {
-                driverBase.testStepAssert.isEquals(getPermissionRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + getPermissionRes.getStatusLine());
-                break;
-            }
-            case "patchPermission": {
-                driverBase.testStepAssert.isEquals(patchPermissionRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + patchPermissionRes.getStatusLine());
-                break;
-            }
             case "deactivateUser": {
                 driverBase.testStepAssert.isEquals(deactivateUserRes.getStatusCode(), expectedStatusCode,
                         "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + deactivateUserRes.getStatusLine());
-                break;
-            }
-            case "activateUser": {
-                driverBase.testStepAssert.isEquals(activateUserRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + activateUserRes.getStatusLine());
-                break;
-            }
-            case "getLPUnderLC":{
-                driverBase.testStepAssert.isEquals(getLPUnderLCRes.getStatusCode(), expectedStatusCode,
-                        "Status code: 200 OK", "Status code: 200 OK", "Error! Status Code: " + getLPUnderLCRes.getStatusLine());
                 break;
             }
             case "deleteLeaveResponse":{
@@ -1597,53 +1743,13 @@ public class StepDefinition extends DriverBase {
     @And("{string} in response is {string} for {string}")
     public void in_response_is_for(String keyValue, String expectedValue, String request) {
         switch (request) {
-            case "accessHistory": {
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(accHistoryRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
             case "deleteResponse": {
                 driverBase.testStepAssert.isEquals(utils.getJsonPath(deleteRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
-            case "userDetails": {
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(detailsUserRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "userShiftDetails": {
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(shiftDetailsUserRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "editUser": {
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(editUserRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "getPermission": {
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(getPermissionRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "patchPermission": {
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(patchPermissionRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
             case "deactivateUser": {
                 driverBase.testStepAssert.isEquals(utils.getJsonPath(deactivateUserRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "activateUser": {
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(activateUserRes, keyValue), expectedValue,
-                        "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
-                break;
-            }
-            case "getLPUnderLC":{
-                driverBase.testStepAssert.isEquals(utils.getJsonPath(getLPUnderLCRes, keyValue), expectedValue,
                         "\"type\":\"success\"", "\"" + keyValue + "\":\"" + expectedValue + "\"", "Error message!");
                 break;
             }
@@ -1659,15 +1765,6 @@ public class StepDefinition extends DriverBase {
     public void response_time_is_less_than_ms_for(long expectedResponseTime, String request) {
         // Write code here that turns the phrase above into concrete actions
         switch (request) {
-            case "accessHistory": {
-                Long responseTime = accHistoryRes.time();
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(accHistoryRes.time()));
-
-                driverBase.testStepAssert.isLess(accHistoryRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+accHistoryRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
             case "deleteResponse": {
                 Long responseTime = deleteRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(deleteRes.time()));
@@ -1677,75 +1774,12 @@ public class StepDefinition extends DriverBase {
                         "Response time greater than 500ms");
                 break;
             }
-            case "userDetails": {
-                Long responseTime = detailsUserRes.time();
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(detailsUserRes.time()));
-
-                driverBase.testStepAssert.isLess(detailsUserRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+detailsUserRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "userShiftDetails": {
-                Long responseTime = shiftDetailsUserRes.time();
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(shiftDetailsUserRes.time()));
-
-                driverBase.testStepAssert.isLess(shiftDetailsUserRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+shiftDetailsUserRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "editUser": {
-                Long responseTime = editUserRes.time();
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(editUserRes.time()));
-
-                driverBase.testStepAssert.isLess(editUserRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+editUserRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "getPermission": {
-                Long responseTime = getPermissionRes.time();
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(getPermissionRes.time()));
-
-                driverBase.testStepAssert.isLess(getPermissionRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+getPermissionRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "patchPermission": {
-                Long responseTime = patchPermissionRes.time();
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(patchPermissionRes.time()));
-
-                driverBase.testStepAssert.isLess(patchPermissionRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+patchPermissionRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
             case "deactivateUser": {
                 Long responseTime = deactivateUserRes.time();
                 variableContext.setScenarioContext("ResponseTime",String.valueOf(deactivateUserRes.time()));
 
                 driverBase.testStepAssert.isLess(deactivateUserRes.time(),expectedResponseTime ,
                         "Response time: Less than "+expectedResponseTime, "Response time: "+deactivateUserRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "activateUser": {
-                Long responseTime = activateUserRes.time();
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(activateUserRes.time()));
-
-                driverBase.testStepAssert.isLess(activateUserRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+activateUserRes.time(),
-                        "Response time greater than 500ms");
-                break;
-            }
-            case "getLPUnderLC":{
-                Long responseTime = getLPUnderLCRes.time();
-                variableContext.setScenarioContext("ResponseTime",String.valueOf(getLPUnderLCRes.time()));
-
-                driverBase.testStepAssert.isLess(getLPUnderLCRes.time(),expectedResponseTime ,
-                        "Response time: Less than "+expectedResponseTime, "Response time: "+getLPUnderLCRes.time(),
                         "Response time greater than 500ms");
                 break;
             }
@@ -1768,8 +1802,8 @@ public class StepDefinition extends DriverBase {
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
 
-        path = "/organisationManagement/v6/organisations/" + orgId + "/accessHistory";
-        accHistoryRes = reqSpec.when().post(path);
+        path = "/organisationManagement/v8/organisations/"+orgId+"/accessHistory";
+        response = reqSpec.when().post(path);
 
         variableContext.setScenarioContext("METHOD","POST");
 
@@ -1783,7 +1817,7 @@ public class StepDefinition extends DriverBase {
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         path = "/organisationManagement/v1/organisations/" + orgId + "/users/" + userId;
-        detailsUserRes = reqSpec.when().get(path);
+        response = reqSpec.when().get(path);
 
         variableContext.setScenarioContext("METHOD","GET");
 
@@ -1799,7 +1833,7 @@ public class StepDefinition extends DriverBase {
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
         path = "/v2/attendanceManagement/users/" + userId + "/userDetails";
-        shiftDetailsUserRes = reqSpec.when().get(path);
+        response = reqSpec.when().get(path);
 
         variableContext.setScenarioContext("METHOD","GET");
 
@@ -1820,7 +1854,7 @@ public class StepDefinition extends DriverBase {
 
 
         path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + userId;
-        editUserRes = reqSpec.when().patch(path);
+        response = reqSpec.when().patch(path);
 
         variableContext.setScenarioContext("METHOD","PATCH");
 
@@ -1834,8 +1868,8 @@ public class StepDefinition extends DriverBase {
         // Write code here that turns the phrase above into concrete actions
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
 
-        path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + userId + "/permissions";
-        getPermissionRes = reqSpec.when().get(path);
+        path = "/organisationManagement/v4/organisations/"+orgId+"/users/"+userId+"/permissions";
+        response = reqSpec.when().get(path);
 
         variableContext.setScenarioContext("METHOD","GET");
 
@@ -1848,14 +1882,14 @@ public class StepDefinition extends DriverBase {
     @When("Update Permissions of user with orgId {int}")
     public void update_permissions_of_user_with_orgId(int orgId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody = "{\"permissionsToAdd\":[{\"id\":2655,\"name\":\"Test door 1\"}],\"permissionsToRemove\":[{\"id\":717,\"name\":\"Main doorr\"}]}";
+        reqBody = "{\"permissionsToAdd\":[],\"permissionsToRemove\":[2655],\"pendingPermissionsToRemove\":[]}";
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
 
-        path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + userId + "/permissions";
-        patchPermissionRes = reqSpec.when().patch(path);
+        path = "/organisationManagement/v4/organisations/"+orgId+"/users/"+userId+"/permissions";
+        response = reqSpec.when().patch(path);
 
         variableContext.setScenarioContext("METHOD","PATCH");
 
@@ -1883,18 +1917,33 @@ public class StepDefinition extends DriverBase {
         variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
     }
 
-
     @When("Activate a user with orgId {int}")
     public void activate_a_user_with_org_id(Integer orgId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody = "{\"user\":{\"accessExpiresAt\":null,\"email\":null,\"employeeCode\":\"\",\"gps\":false,\"name\":\"deactivateUser1\",\"phone\":\"+919878980990\",\"reportingTo\":\"\",\"roles\":[1397],\"terms\":[],\"accessPoints\":[717],\"gender\":\"\",\"joiningDate\":\"2022-08-12\",\"probationPeriod\":0,\"probationPeriodEnabled\":false,\"id\":" + userId + ",\"mobile\":true}}";
+        reqBody = "{\"user\":{\"accessExpiresAt\":null,\"email\":null,\"employeeCode\":\"\",\"gps\":false,\"name\":\"activatedUser1\",\"phone\":\"+919878980990\",\"reportingTo\":\"\",\"roles\":[1397],\"terms\":[],\"accessPoints\":[2655],\"gender\":\"\",\"joiningDate\":\"2022-11-17\",\"probationPeriod\":0,\"probationPeriodEnabled\":false,\"skipFrAccessPoints\":false,\"id\":"+userId+",\"mobile\":true,\"profilePicture\":null}}";
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
 
-        path = "/v2/organisationManagement/organisations/" + orgId + "/users/" + userId + "/activate";
-        activateUserRes = reqSpec.when().patch(path);
+        path = "/organisationManagement/v3/organisations/"+orgId+"/users/"+userId+"/activate";
+        response = reqSpec.when().patch(path);
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+    }
+
+    @When("Activate a user with orgId {int} with payload")
+    public void activate_a_user_with_org_id_with_payload(Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"user\":{\"accessExpiresAt\":null,\"email\":null,\"employeeCode\":\"\",\"gps\":false,\"name\":\"activatedUser1\",\"phone\":\"+919878980990\",\"reportingTo\":\"\",\"roles\":[1397],\"terms\":[],\"accessPoints\":[2655],\"gender\":\"\",\"joiningDate\":\"2022-11-17\",\"probationPeriod\":0,\"probationPeriodEnabled\":false,\"skipFrAccessPoints\":false,\"id\":"+userId+",\"mobile\":true,\"profilePicture\":null}}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+
+        path = "/organisationManagement/v3/organisations/"+orgId+"/users/"+userId+"/activate";
+        response = reqSpec.when().patch(path);
 
         variableContext.setScenarioContext("METHOD","PATCH");
 
@@ -2539,7 +2588,7 @@ public class StepDefinition extends DriverBase {
 
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL")).body(reqBody);
 
-        path = "/v2/leaveManagement/leavePolicy/organisations/" + orgId + "/leaveCycles/" + leaveCycleId + "/leavePolicies/" + leavePolicyId;
+        path = "/v2/leaveManagement/leavePolicy/organisations/560/leaveCycles/749/leavePolicies/744";
         response = reqSpec.when().patch(path);
 
         variableContext.setScenarioContext("METHOD", "PATCH");
@@ -2820,7 +2869,7 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
 
         path = "/organisationManagement/v1/organisations/"+orgId+"/users/"+userId+"/assignCredential";
-        patchPermissionRes = reqSpec.when().post(path);
+        response = reqSpec.when().post(path);
 
         variableContext.setScenarioContext("METHOD","POST");
 
@@ -2839,7 +2888,44 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
 
         path = "/v2/organisationManagement/organisations/"+orgId+"/users/"+userId+"/unlockSettings";
-        patchPermissionRes = reqSpec.when().patch(path);
+        response = reqSpec.when().patch(path);
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @When("Get user visitor privilege of a user with orgId {int}")
+    public void get_user_visitor_privilege_of_a_user_with_orgId(Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: -", "Request body: -", false);
+
+        path = "/v2/organisationManagement/organisations/"+orgId+"/users/"+userId+"/visitorPrivilege";
+        response = reqSpec.when().get(path);
+
+        variableContext.setScenarioContext("METHOD","GET");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @When("Update user visitor privilege of a user with orgId {int}")
+    public void update_user_visitor_privilege_of_a_user_with_orgId(int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"visitorPrivilege\":true}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+
+        path = "/v2/organisationManagement/organisations/"+orgId+"/users/"+userId+"/visitorPrivilege";
+        response = reqSpec.when().patch(path);
 
         variableContext.setScenarioContext("METHOD","PATCH");
 
@@ -2856,7 +2942,7 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: -", "Request body: -", false);
 
         path = "/v2/leaveManagement/userLeave/organisations/"+orgId+"/users/"+userId+"/leaveCycles/"+cycleId+"/leaves";
-        patchPermissionRes = reqSpec.when().get(path);
+        response = reqSpec.when().get(path);
 
         variableContext.setScenarioContext("METHOD","GET");
 
@@ -2876,19 +2962,66 @@ public class StepDefinition extends DriverBase {
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
     }
 
+    @Given("Get assigned users to holiday policy")
+    public void get_assigned_users_to_holiday_policy() throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"filter\":{}}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+    }
+
     @When("assign new user to Leave Policy with orgId {int} with cycleId {int} with leavePId {int}")
     public void assign_new_user_to_Leave_Policy_with_orgId_with_cycleId_with_leavePId(Integer orgId, Integer cycleId, Integer leavePId) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody = "{\"name\":\"Priviledged Policy\",\"leaveTypes\":[{\"id\":770,\"name\":\"Vacation Leave\",\"paid\":false,\"maxCF\":0,\"accrual\":\"workingDays\",\"leaveId\":131,\"clubbing\":true,\"shortName\":\"VL\",\"cycleLimit\":12,\"maxAllowed\":3,\"minAllowed\":0.5,\"precedence\":\"COE\",\"accrualLimit\":0.5,\"allowEncashment\":true,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"leave\",\"probationProrate\":false,\"weekOffBetLeaves\":\"leave\",\"allowCarryForward\":true,\"carryForwardLimit\":0,\"allowedOnProbation\":false,\"backDatedAllowedDays\":30},{\"id\":771,\"name\":\"Monthly End\",\"paid\":true,\"maxCF\":0,\"accrual\":\"monthlyEnd\",\"leaveId\":299,\"clubbing\":true,\"shortName\":\"ME\",\"cycleLimit\":12,\"maxAllowed\":1,\"minAllowed\":1,\"precedence\":\"COE\",\"accrualLimit\":0.5,\"allowEncashment\":true,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowCarryForward\":true,\"carryForwardLimit\":0,\"allowedOnProbation\":false,\"backDatedAllowedDays\":7},{\"id\":768,\"name\":\"Monthly Start\",\"paid\":true,\"maxCF\":0,\"accrual\":\"monthlyStart\",\"leaveId\":298,\"clubbing\":true,\"shortName\":\"MS\",\"cycleLimit\":12,\"maxAllowed\":1,\"minAllowed\":1,\"precedence\":\"COE\",\"accrualLimit\":0.5,\"allowEncashment\":true,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowCarryForward\":true,\"carryForwardLimit\":0,\"allowedOnProbation\":false,\"backDatedAllowedDays\":7},{\"id\":769,\"name\":\"Casual Leave\",\"paid\":true,\"maxCF\":0,\"accrual\":\"cycle\",\"leaveId\":102,\"clubbing\":true,\"shortName\":\"CL\",\"cycleLimit\":4,\"maxAllowed\":10,\"minAllowed\":0.5,\"precedence\":\"EOC\",\"accrualLimit\":4,\"allowEncashment\":false,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowCarryForward\":false,\"carryForwardLimit\":0,\"allowedOnProbation\":true,\"backDatedAllowedDays\":10}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":false,\"cOFullDayHours\":0,\"cOHalfDayHours\":0},\"compOff\":{\"allowCF\":false,\"clubbing\":true,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowedOnProbation\":true},\"leaveApplicationSettings\":{\"approvalRule\":\"RMOrAdmin\",\"notifyUserEmails\":[{\"admins\":[26793],\"users\":[]}]},\"assignedUsers\":["+userId+",28947,117818,149153],\"cycleId\":588,\"skipMaxUsedCheck\":true}";
+        reqBody = "{\"name\":\"Priviledged Policy\",\"leaveTypes\":[{\"id\":769,\"name\":\"Casual Leave\",\"paid\":true,\"maxCF\":0,\"accrual\":\"cycle\",\"leaveId\":102,\"clubbing\":true,\"shortName\":\"CL\",\"cycleLimit\":4,\"maxAllowed\":10,\"minAllowed\":0.5,\"precedence\":\"EOC\",\"accrualLimit\":4,\"allowEncashment\":false,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowCarryForward\":false,\"carryForwardLimit\":0,\"allowedOnProbation\":true,\"backDatedAllowedDays\":10},{\"id\":770,\"name\":\"Vacation Leave\",\"paid\":false,\"maxCF\":0,\"accrual\":\"workingDays\",\"leaveId\":131,\"clubbing\":true,\"shortName\":\"VL\",\"cycleLimit\":12,\"maxAllowed\":3,\"minAllowed\":0.5,\"precedence\":\"COE\",\"accrualLimit\":0.5,\"allowEncashment\":true,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"leave\",\"probationProrate\":false,\"weekOffBetLeaves\":\"leave\",\"allowCarryForward\":true,\"carryForwardLimit\":0,\"allowedOnProbation\":false,\"backDatedAllowedDays\":30},{\"id\":771,\"name\":\"Monthly End\",\"paid\":true,\"maxCF\":0,\"accrual\":\"monthlyEnd\",\"leaveId\":299,\"clubbing\":true,\"shortName\":\"ME\",\"cycleLimit\":12,\"maxAllowed\":1,\"minAllowed\":1,\"precedence\":\"COE\",\"accrualLimit\":0.5,\"allowEncashment\":true,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowCarryForward\":true,\"carryForwardLimit\":0,\"allowedOnProbation\":false,\"backDatedAllowedDays\":7},{\"id\":768,\"name\":\"Monthly Start\",\"paid\":true,\"maxCF\":0,\"accrual\":\"monthlyStart\",\"leaveId\":298,\"clubbing\":true,\"shortName\":\"MS\",\"cycleLimit\":12,\"maxAllowed\":1,\"minAllowed\":1,\"precedence\":\"COE\",\"accrualLimit\":0.5,\"allowEncashment\":true,\"applyDaysBefore\":null,\"encashmentLimit\":0,\"holidayBetLeaves\":\"leave\",\"probationProrate\":true,\"weekOffBetLeaves\":\"leave\",\"allowCarryForward\":true,\"carryForwardLimit\":0,\"allowedOnProbation\":false,\"backDatedAllowedDays\":7}],\"overtime\":{\"payOTHours\":true,\"convertOTtoCO\":false,\"cOFullDayHours\":0,\"cOHalfDayHours\":0},\"compOff\":{\"allowCF\":false,\"clubbing\":true,\"holidayBetLeaves\":\"holiday\",\"probationProrate\":true,\"weekOffBetLeaves\":\"holiday\",\"allowedOnProbation\":true},\"leaveApplicationSettings\":{\"approvalRule\":\"RMOrAdmin\",\"notifyUserEmails\":[{\"admins\":[26793],\"users\":[]}]},\"assignedUsers\":["+userId+",28947,117818,149153],\"cycleId\":"+cycleId+",\"skipMaxUsedCheck\":true}";
         reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
                 .body(reqBody);
 
         ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
 
         path = "/v2/leaveManagement/leavePolicy/organisations/"+orgId+"/leaveCycles/"+cycleId+"/leavePolicies/"+leavePId;
-        patchPermissionRes = reqSpec.when().patch(path);
+        response = reqSpec.when().patch(path);
 
         variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @When("assign new user to Holiday Policy with orgId {int} with cycleId {int} with holidayPId {int}")
+    public void assign_new_user_to_Holiday_Policy_with_orgId_with_cycleId_with_holidayPId(Integer orgId, Integer cycleId, Integer holidayPId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody = "{\"holidayPolicy\":{\"name\":\"Holiday Policy 2022\",\"cycleId\":"+cycleId+",\"country\":\"IN\",\"holidays\":[{\"policyHolidayId\":467,\"holidayId\":78,\"holidayName\":\"New Year's Day\",\"date\":\"2022-01-01T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":468,\"holidayId\":79,\"holidayName\":\"Guru Govind Singh Jayanti\",\"date\":\"2022-01-09T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":469,\"holidayId\":80,\"holidayName\":\"Lohri\",\"date\":\"2022-01-13T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":470,\"holidayId\":83,\"holidayName\":\"Republic Day\",\"date\":\"2022-01-26T00:00:00.000Z\",\"discretionary\":true},{\"policyHolidayId\":791,\"holidayId\":94,\"holidayName\":\"Dolyatra\",\"date\":\"2022-03-18T00:00:00.000Z\",\"discretionary\":true},{\"policyHolidayId\":792,\"holidayId\":95,\"holidayName\":\"March Equinox\",\"date\":\"2022-03-20T15:33:25.000Z\",\"discretionary\":true},{\"policyHolidayId\":471,\"holidayId\":96,\"holidayName\":\"Chaitra Sukhladi\",\"date\":\"2022-04-02T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":825,\"holidayId\":108,\"holidayName\":\"Jamat Ul-Vida\",\"date\":\"2022-04-29T00:00:00.000Z\",\"discretionary\":true},{\"policyHolidayId\":826,\"holidayId\":110,\"holidayName\":\"Ramzan Id/Eid-ul-Fitar\",\"date\":\"2022-05-03T00:00:00.000Z\",\"discretionary\":true},{\"policyHolidayId\":789,\"holidayId\":0,\"holidayName\":\"hello\",\"date\":\"2022-05-17T09:42:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":790,\"holidayId\":0,\"holidayName\":\"hiiiiiii\",\"date\":\"2022-05-20T10:31:00.000Z\",\"discretionary\":true},{\"policyHolidayId\":473,\"holidayId\":115,\"holidayName\":\"Father's Day\",\"date\":\"2022-06-19T00:00:00.000Z\",\"discretionary\":true},{\"policyHolidayId\":474,\"holidayId\":118,\"holidayName\":\"Bakr Id/Eid ul-Adha\",\"date\":\"2022-07-10T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":475,\"holidayId\":119,\"holidayName\":\"Guru Purnima\",\"date\":\"2022-07-13T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":476,\"holidayId\":130,\"holidayName\":\"First Day of Sharad Navratri\",\"date\":\"2022-09-26T00:00:00.000Z\",\"discretionary\":true},{\"policyHolidayId\":477,\"holidayId\":131,\"holidayName\":\"First Day of Durga Puja Festivities\",\"date\":\"2022-10-01T00:00:00.000Z\",\"discretionary\":false},{\"policyHolidayId\":478,\"holidayId\":145,\"holidayName\":\"Halloween\",\"date\":\"2022-10-31T00:00:00.000Z\",\"discretionary\":true},{\"policyHolidayId\":479,\"holidayId\":146,\"holidayName\":\"Guru Nanak Jayanti\",\"date\":\"2022-11-08T00:00:00.000Z\",\"discretionary\":false}],\"assignedUserIds\":["+userId+",19166,19177,19178,19303,26792,26793,26875,26882,28947,28948,31066,31072,31163,58596,83070,85251,96811,117774],\"discretionaryLimit\":8,\"id\":"+holidayPId+"}}";
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: " + reqBody, "Request body: " + reqBody, false);
+
+        path = "/v2/leaveManagement/holidays/organisations/"+orgId+"/leaveCycles/"+cycleId+"/holidayPolicies/"+holidayPId;
+        response = reqSpec.when().patch(path);
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
+                utils.getGlobalValue("saamsApiURL") + path, false);
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("saamsApiURL") + path);
+    }
+
+    @When("get holidays assigned to a user with orgId {int} with cycleId {int}")
+    public void get_holidays_assigned_to_a_user_with_orgId_with_cycleId(int orgId, int cycleId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("saamsApiURL"));
+
+        ResultManager.log("Request body: -", "Request body: -", false);
+
+        path = "/v2/leaveManagement/userHoliday/organisations/"+orgId+"/users/"+userId+"/leaveCycles/"+cycleId+"/holidays";
+        response = reqSpec.when().get(path);
+
+        variableContext.setScenarioContext("METHOD","GET");
 
         ResultManager.log(utils.getGlobalValue("saamsApiURL") + path,
                 utils.getGlobalValue("saamsApiURL") + path, false);
@@ -3060,7 +3193,7 @@ public class StepDefinition extends DriverBase {
     @Given("Update vms settings with {string}")
     public void update_vms_settings_with(String string) throws IOException {
         // Write code here that turns the phrase above into concrete actions
-        reqBody="{\"allowAllUsers\":false,\"selectedUsers\":[153977],\"emailEnabled\":true,\"smsEnabled\":false,\"covidEnabled\":true,\"photoIdEnabled\":true,\"defaultTAndCEnabled\":true,\"meetingPurposes\":[{\"id\":326,\"meetingPurpose\":\"meet\",\"checked\":false},{\"id\":200,\"meetingPurpose\":\"meeting2\",\"checked\":true},{\"id\":197,\"meetingPurpose\":\"meeting1\",\"checked\":false},{\"id\":145,\"meetingPurpose\":\"Interview\",\"checked\":true},{\"id\":146,\"meetingPurpose\":\"Delivery\",\"checked\":true},{\"id\":147,\"meetingPurpose\":\"Maintenance\",\"checked\":true},{\"id\":344,\"meetingPurpose\":\"Interview123\",\"checked\":true},{\"id\":144,\"meetingPurpose\":\"Business meeting\",\"checked\":true}],\"visitorPhotoEnabled\":false,\"visitorNameEnabled\":true,\"visitorPhoneEnabled\":true,\"visitorEmailEnabled\":true,\"visitorEmailRequired\":true,\"purposeOfMeetingEnabled\":true,\"meetingDurationEnabled\":true,\"tAndCFormEnabled\":true,\"autoApproveVisit\":false,\"personToMeetEnabled\":true,\"additionalInfoEnabled\":true,\"hostAdditionalInfo\":true,\"visitorAdditionalInfo\":true,\"printVisitorDetailsEnabled\":true}";
+        reqBody="{\"allowAllUsers\":false,\"selectedUsers\":[153977],\"emailEnabled\":true,\"smsEnabled\":false,\"covidEnabled\":true,\"photoIdEnabled\":true,\"defaultTAndCEnabled\":true,\"meetingPurposes\":[{\"id\":326,\"meetingPurpose\":\"meet\",\"checked\":false},{\"id\":146,\"meetingPurpose\":\"Delivery\",\"checked\":true},{\"id\":147,\"meetingPurpose\":\"Maintenance\",\"checked\":true},{\"id\":344,\"meetingPurpose\":\"Interview123\",\"checked\":true},{\"id\":144,\"meetingPurpose\":\"Business meeting\",\"checked\":true},{\"id\":145,\"meetingPurpose\":\"Interview\",\"checked\":true}],\"visitorPhotoEnabled\":false,\"visitorNameEnabled\":true,\"visitorPhoneEnabled\":true,\"visitorEmailEnabled\":true,\"visitorEmailRequired\":true,\"purposeOfMeetingEnabled\":true,\"meetingDurationEnabled\":true,\"tAndCFormEnabled\":true,\"autoApproveVisit\":false,\"personToMeetEnabled\":true,\"additionalInfoEnabled\":true,\"hostAdditionalInfo\":true,\"visitorAdditionalInfo\":true,\"printVisitorDetailsEnabled\":true}";
 
         reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
 
@@ -3230,5 +3363,168 @@ public class StepDefinition extends DriverBase {
                 utils.getGlobalValue("apiSpintlyURL") + path, false);
 
         variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @Given("fetch expected visitors with {string}")
+    public void fetch_expected_visitors_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if(payload.equalsIgnoreCase("no filter")) {
+            reqBody = "{\"filters\":{\"startDate\":\"2022-11-14 00:00:00 +05:30\"},\"pagination\":{\"per_page\":25,\"perPage\":25,\"page\":1}}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filters")) {
+            reqBody = "{\"filters\":{\"startDate\":\"2022-11-14 00:00:00 +05:30\",\"endDate\":null,\"visitors\":[],\"users\":[],\"meetingPurpose\":\"Interview\"},\"pagination\":{\"per_page\":25,\"perPage\":25,\"page\":1}}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @Given("add purpose of meeting with name {string}")
+    public void add_purpose_of_meeting_with_name(String name) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"meetingPurpose\":\""+name+"\",\"checked\":false}";
+
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL")).body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @When("verify purpose of meeting {string} is added")
+    public void verify_purpose_of_meeting_is_added(String name) {
+        // Write code here that turns the phrase above into concrete actions
+        String responseBody = response.then().extract().response().asString();
+
+        JsonPath js = new JsonPath(responseBody);
+        List meetingPurpose = js.getList("message.meetingPurposes");
+        for (int i = 0; i < meetingPurpose.size(); i++) {
+            if (name.equalsIgnoreCase(js.getString("message.meetingPurposes["+i+"].meetingPurpose"))){
+                purposeOfMeetId=js.getInt("message.meetingPurposes["+i+"].id");
+            }
+        }
+    }
+
+    @When("delete purpose of meeting {string} with orgId {int}")
+    public void delete_purpose_of_meeting_with_orgId(String name, Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"meetingPurpose\":\""+name+"\",\"destroy\":true}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+
+        path = "/v2/organisationManagement/organisations/"+orgId+"/meetingPurpose/"+purposeOfMeetId+"/update";
+        deleteRes = reqSpec.when().patch(path);
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+    }
+
+    @When("update purpose of meeting with name {string} with orgId {int}")
+    public void update_purpose_of_meeting_with_name_with_orgId(String name, int orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"meetingPurpose\":\""+name+"\",\"checked\":false}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+
+        path = "/v2/organisationManagement/organisations/"+orgId+"/meetingPurpose/"+purposeOfMeetId+"/update";
+        response = reqSpec.when().patch(path);
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @When("delete purpose of meeting {string} with orgId {int} with payload")
+    public void delete_purpose_of_meeting_with_orgId_with_payload(String name, Integer orgId) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqBody="{\"meetingPurpose\":\""+name+"\",\"destroy\":true}";
+
+        reqSpec = given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"))
+                .body(reqBody);
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+
+        path = "/v2/organisationManagement/organisations/"+orgId+"/meetingPurpose/"+purposeOfMeetId+"/update";
+        deleteRes = reqSpec.when().patch(path);
+
+        variableContext.setScenarioContext("METHOD","PATCH");
+
+        ResultManager.log(utils.getGlobalValue("apiSpintlyURL") + path,
+                utils.getGlobalValue("apiSpintlyURL") + path, false);
+
+        variableContext.setScenarioContext("ReqURL",utils.getGlobalValue("apiSpintlyURL") + path);
+    }
+
+    @Given("download fetch expected visitors with {string}")
+    public void download_fetch_expected_visitors_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if(payload.equalsIgnoreCase("no filter")) {
+            reqBody = "{\"filters\":{\"startDate\":\"2022-11-13T18:30:00.000Z\"},\"pagination\":{\"per_page\":25,\"perPage\":25,\"page\":1}}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filters")) {
+            reqBody = "{\"filters\":{\"startDate\":\"2022-11-13T18:30:00.000Z\",\"endDate\":null,\"visitors\":[],\"users\":[],\"meetingPurpose\":\"Interview\"},\"pagination\":{\"per_page\":25,\"perPage\":25,\"page\":1}}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @Given("fetch visitor history with {string}")
+    public void fetch_visitor_history_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if(payload.equalsIgnoreCase("no filter")) {
+            reqBody = "{\"filters\":{\"startDate\":\"2022-11-07 00:00:00 +05:30\",\"endDate\":\"2022-11-14 23:59:59 +05:30\",\"isWeb\":true,\"covidStatus\":null},\"pagination\":{\"per_page\":25,\"perPage\":25,\"page\":1}}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filters")) {
+            reqBody = "{\"filters\":{\"visitors\":[],\"users\":[],\"startDate\":\"2022-11-07 00:00:00 +05:30\",\"endDate\":\"2022-11-14 23:59:59 +05:30\",\"meetingPurpose\":null,\"status\":\"Scheduled\",\"kiosks\":[],\"isWeb\":true,\"covidStatus\":null},\"pagination\":{\"per_page\":25,\"perPage\":25,\"page\":1}}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @Given("download fetch visitor history with {string}")
+    public void download_fetch_visitor_history_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if(payload.equalsIgnoreCase("no filter")) {
+            reqBody = "{\"filters\":{\"startDate\":\"2022-11-06T18:30:00.000Z\",\"endDate\":\"2022-11-14T18:29:59.999Z\",\"isWeb\":true,\"covidStatus\":null},\"pagination\":{\"per_page\":25,\"perPage\":25,\"page\":1}}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filters")) {
+            reqBody = "{\"filters\":{\"visitors\":[],\"users\":[],\"startDate\":\"2022-11-06T18:30:00.000Z\",\"endDate\":\"2022-11-14T18:29:59.999Z\",\"meetingPurpose\":null,\"status\":\"Scheduled\",\"kiosks\":[],\"isWeb\":true,\"covidStatus\":null},\"pagination\":{\"per_page\":25,\"perPage\":25,\"page\":1}}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
+    }
+
+    @Given("fetch visitors access history with {string}")
+    public void fetch_visitors_access_history_with(String payload) throws IOException {
+        // Write code here that turns the phrase above into concrete actions
+        reqSpec=given().spec(utils.requestSpecification()).baseUri(utils.getGlobalValue("apiSpintlyURL"));
+
+        if(payload.equalsIgnoreCase("no filter")) {
+            reqBody = "{\"filters\":{\"startDate\":null,\"endDate\":null,\"kiosks\":[],\"accessPoints\":[],\"visitors\":[],\"users\":[],\"accessMode\":null,\"direction\":null},\"pagination\":{\"per_page\":25,\"perPage\":25,\"page\":1}}";
+            reqSpec=reqSpec.body(reqBody);
+        } else if (payload.equalsIgnoreCase("filters")) {
+            reqBody = "{\"filters\":{\"startDate\":null,\"endDate\":null,\"kiosks\":[75],\"accessPoints\":[],\"visitors\":[],\"accessMode\":null,\"direction\":null,\"users\":[]},\"pagination\":{\"per_page\":25,\"perPage\":25,\"page\":1}}";
+            reqSpec=reqSpec.body(reqBody);
+        }
+
+        ResultManager.log("Request body: "+reqBody, "Request body: "+reqBody, false);
     }
 }
