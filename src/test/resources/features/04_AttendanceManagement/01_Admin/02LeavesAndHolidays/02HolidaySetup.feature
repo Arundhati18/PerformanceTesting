@@ -93,10 +93,10 @@ Feature: Leave and Holidays-> Holiday Setup
   @addHolidayPolicy
   @hs10
   Scenario: Assign/Unassign Users to Holiday Policy
-    Given Create holiday policy with "HolPol1Details" with cycleId 588
+    Given Create holiday policy with "AssignUserHolPol1" with cycleId 588
     When user calls "createHolidayPolicy" with orgId 560
     And verify holiday policy is created
-    And get holiday Ids under Holiday Policy with "HolPol1Details" with orgId 560
+    And get holiday Ids under Holiday Policy with "AssignUserHolPol1" with orgId 560
     And assign users to holiday policy with orgId 560 with cycleId 588
     And Delete holiday policy with orgId 560 with cycleId 588
     Then the API call got success with status code 200
@@ -106,10 +106,10 @@ Feature: Leave and Holidays-> Holiday Setup
   @addHolidayPolicy
   @hs11
   Scenario: Update Holiday Policy Details
-    Given Create holiday policy with "HolPol1Details" with cycleId 588
+    Given Create holiday policy with "UpdateHolPol1" with cycleId 588
     When user calls "createHolidayPolicy" with orgId 560
     And verify holiday policy is created
-    And get holiday Ids under Holiday Policy with "HolPol1Details" with orgId 560
+    And get holiday Ids under Holiday Policy with "UpdateHolPol1" with orgId 560
     And update holiday policy with orgId 560 with cycleId 588 with "HolPol1Updated"
     And Delete holiday policy with orgId 560 with cycleId 588
     Then the API call got success with status code 200
@@ -119,7 +119,7 @@ Feature: Leave and Holidays-> Holiday Setup
   @addHolidayPolicy
   @hs12
   Scenario: Delete a Holiday Policy
-    Given Create holiday policy with "HolPol1Details" with cycleId 588
+    Given Create holiday policy with "DeleteHolPol1" with cycleId 588
     When user calls "createHolidayPolicy" with orgId 560
     And verify holiday policy is created
     And Delete holiday policy with payload with orgId 560 with cycleId 588
